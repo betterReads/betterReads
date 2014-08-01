@@ -1,0 +1,89 @@
+html {
+    background-color: #fff;
+    color: #000;
+}
+
+body {
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+}
+
+.backfaceVisibility {
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+.button-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.back-button {
+	margin-top: 10px;
+}
+
+.back-button i {
+	vertical-align: -10%;
+}
+
+.back-button-icon {
+	margin-right: 10px;
+}
+
+.button-icon, .fa {
+	margin-top: 7px;
+}
+
+.button-text {
+	margin: 0;
+}
+
+.button-content {
+	text-align: center;
+}
+
+.button-highlight {
+	background-color: #fa5c4f;
+}
+
+.button-horizontal p {
+	display: inline-block;
+}
+
+.detail-content {
+    padding: 18px;
+}
+
+
+.fa {
+	font-size: 30px;
+}
+
+
+
+.button-text {
+	font-size: 16px;
+}
+
+.footer-background {
+    background-color: #FFFFFF;
+	border-top: 1px solid #CCCCCC;
+}
+
+.header-background {
+    background-color: #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.header-left-button-icon {
+    font-size: 40px;
+    margin-top: 0;
+}
+
+.scroll-list-item {
+	padding: 10px;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	text-align: center;
+}
+
