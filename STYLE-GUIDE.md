@@ -148,7 +148,6 @@ Any and all other view methods should be created as properties of that view's pr
     // good:
     var myView = function(){
       View.appy(this, arguments);
-      
       _createSurface.call(this);
     };
     
@@ -162,10 +161,10 @@ Any and all other view methods should be created as properties of that view's pr
       // this may be called many times, and may even be accessed by other views, so we add it to the prototype
     }
 
+
     // bad:
     var myView = function(){
       View.appy(this, arguments);
-      
       this.createSurface();
     };
     
