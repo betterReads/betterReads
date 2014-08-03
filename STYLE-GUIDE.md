@@ -139,15 +139,15 @@ When writing any block of code that is logically subordinate to the line immedia
     function stop(){...};
     ```
 
-* In Famo.us, it's good practice to write helper functions to construct surfaces and subviews in your view constructors.
+* In Famo.us, it's good practice to write helper functions to construct surfaces and subviews in your View constructors.
 These are considered exceptions to the previous rule, and should be written using function statements and named using underscores.
 This is to clearly mark them as constructor-only functions more than anything else, and as such should never be invoked outside of a constructor.
-Any and all other view methods should be created as properties of that view's prototype.
+Any and all other View methods should be created as properties of that View's prototype.
 
     ```javascript
     // good:
     var myView = function(){
-      View.appy(this, arguments);
+      View.apply(this, arguments);
       _createSurface.call(this);
     };
     
@@ -164,7 +164,7 @@ Any and all other view methods should be created as properties of that view's pr
 
     // bad:
     var myView = function(){
-      View.appy(this, arguments);
+      View.apply(this, arguments);
       this.createSurface();
     };
     
