@@ -1,6 +1,8 @@
-# betterreads
+# betterReads
 
 > A faster, cleaner, more beautiful app for goodreads users.
+
+betterReads is a mobile app that leverages the power of [Famo.us](http://famo.us/) to streamline the goodreads experience for users. The official goodreads mobile app is in need of an update, and so we're using the [betterReadsAPI](https://github.com/betterReads/betterReadsAPI) to make our own goodreads app that removes the clutter and the glut of excess features and focuses on what users want: their books.
 
 ## Team
 
