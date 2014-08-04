@@ -10,6 +10,12 @@ define(function(require, exports, module) {
     var DetailView   = require('components/DetailView');
     var aboutContent = require('components/templates/about');
 
+    var ImageSurface = require('famous/surfaces/ImageSurface');
+    var Modifier     = require('famous/core/Modifier');
+    var View         = require('famous/core/View');
+    var reqwest      = require('../../bower_components/reqwest/reqwest');
+
+
     require('famous/inputs/FastClick');
 
     var app = new TabTemplate({
@@ -101,6 +107,32 @@ define(function(require, exports, module) {
     var scrollDemo = new ScrollDemo();
     var aboutPage  = new DetailView(aboutContent);
 
+    var getBooks = function(params, callback) {
+        reqwest({
+            url: 'https://betterreadsapi.azurewebsites.net/booksOnShelf',
+            method: 'get',
+            data: params,
+            success: callback
+        });
+    };
+
+
+    //custom view
+    var libraryView = new View();
+    getBooks({id: '4067289', shelf: 'to-read', page: 2, per_page: 30, sort: 'bossy'}, function(data) {
+        var book = JSON.parse(data)[18];
+        console.log(JSON.parse(data));
+        //need to change image size so it is whatever aspect ratio of book is; there is slight variance around 100:150
+        var image = new ImageSurface({
+            size: [100, 150]
+        });
+        image.setContent(book.image_url[0]);
+        var imageModifier = new Modifier({
+            origin: [0.5, 0.5]
+        });
+        libraryView.add(imageModifier).add(image);
+    });
+
     app
     .addPage({
         title              : 'Search',
@@ -110,7 +142,7 @@ define(function(require, exports, module) {
     }).addPage({
 
         title              : 'Library',
-        renderable         : famousView,
+        renderable         : libraryView,
         footerIconPath     : 'resources/library.png',
         footerIconPosition : 1
 
