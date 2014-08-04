@@ -101,28 +101,27 @@ define(function(require, exports, module) {
     var scrollDemo = new ScrollDemo();
     var aboutPage  = new DetailView(aboutContent);
 
-    app.addPage({
-
-        title              : 'Famous',
-        renderable         : famousView,
-        footerIconPath     : 'resources/famous_logo.png',
+    app
+    .addPage({
+        title              : 'Search',
+        renderable         : scrollDemo,
+        footerIconName     : 'fa-search',
         footerIconPosition : 0
-
     }).addPage({
 
-        title              : 'Scroll',
-        renderable         : scrollDemo,
-        footerIconName     : 'fa-list',
+        title              : 'Library',
+        renderable         : famousView,
+        footerIconPath     : 'resources/library.png',
         footerIconPosition : 1
 
     }).addPage({
 
-        title              : 'About',
+        title              : 'Explore',
         renderable         : aboutPage,
-        footerIconName     : 'fa-info-circle',
+        footerIconName     : 'fa-globe',
         footerIconPosition : 2
 
-    }).showPage('Famous');
+    }).showPage('Library');
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
