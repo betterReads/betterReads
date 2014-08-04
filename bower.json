@@ -1,0 +1,19 @@
+{
+  "name": "betterReads",
+  "version": "0.0.0",
+  "homepage": "https://github.com/austentalbot/betterReads",
+  "authors": [
+    "Austen Talbot <austentalbot@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reqwest": "~1.1.2"
+  }
+}
