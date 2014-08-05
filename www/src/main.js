@@ -182,24 +182,25 @@ define(function(require, exports, module) {
 
     app
     .addPage({
+        title              : 'Library',
+        renderable         : libraryView,
+        footerIconPath     : 'resources/book.svg',
+        footerIconPosition : 0
+    }).addPage({
+        title              : 'Shelves',
+        renderable         : famousView,
+        footerIconPath     : 'resources/library.png',
+        footerIconPosition : 1
+    }).addPage({
+        title              : 'Friends',
+        renderable         : aboutPage,
+        footerIconName     : 'fa-group  ',
+        footerIconPosition : 2
+    }).addPage({
         title              : 'Search',
         renderable         : scrollDemo,
         footerIconName     : 'fa-search',
-        footerIconPosition : 0
-    }).addPage({
-
-        title              : 'Library',
-        renderable         : libraryView,
-        footerIconPath     : 'resources/library.png',
-        footerIconPosition : 1
-
-    }).addPage({
-
-        title              : 'Explore',
-        renderable         : aboutPage,
-        footerIconName     : 'fa-globe',
-        footerIconPosition : 2
-
+        footerIconPosition : 3
     }).showPage('Library');
 
     document.addEventListener("deviceready", onDeviceReady, false);
