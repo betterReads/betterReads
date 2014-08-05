@@ -20,6 +20,7 @@ define(function(require, exports, module) {
     var ScrollItem   = require('components/ScrollListItem');
 
     var ShelfView = require('views/ShelfView');
+    var CollectionsView = require('views/CollectionsView');
 
 
     require('famous/inputs/FastClick');
@@ -114,6 +115,7 @@ define(function(require, exports, module) {
     var aboutPage  = new DetailView(aboutContent);
 
     var libraryView = new ShelfView();
+    var collectionsView = new CollectionsView();
 
     app
     .addPage({
@@ -123,7 +125,7 @@ define(function(require, exports, module) {
         footerIconPosition : 0
     }).addPage({
         title              : 'Shelves',
-        renderable         : famousView,
+        renderable         : collectionsView,
         footerIconPath     : 'resources/library.png',
         footerIconPosition : 1
     }).addPage({

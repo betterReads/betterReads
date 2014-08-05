@@ -8,14 +8,29 @@ define(function(require, exports, module){
 
     var reqwest      = require('../../../bower_components/reqwest/reqwest');
 
-    function ShelfView(){
+    function CollectionsView(){
         View.apply(this, arguments);
+
+        _addSurface.call(this);
     }
 
-    ShelfView.prototype = Object.create(View.prototype);
-    ShelfView.prototype.constructor = ShelfView;
+    CollectionsView.prototype = Object.create(View.prototype);
+    CollectionsView.prototype.constructor = CollectionsView;
 
-    ShelfView.DEFAULT_OPTIONS = {};
+    CollectionsView.DEFAULT_OPTIONS = {};
 
-    module.exports = ShelfView;
+    function _addSurface(){
+        var surface = new Surface({
+            content: "Shelf View",
+            size: [undefined, undefined],
+            properties: {
+                textAlign: 'center',
+                backgroundColor: '#ddd'
+            }
+        });
+
+        this.add(surface);
+    }
+
+    module.exports = CollectionsView;
 })

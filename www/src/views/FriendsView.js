@@ -8,14 +8,14 @@ define(function(require, exports, module){
 
     var reqwest      = require('../../../bower_components/reqwest/reqwest');
 
-    function ShelfView(){
+    function FriendsView(){
         View.apply(this, arguments);
     }
 
-    ShelfView.prototype = Object.create(View.prototype);
-    ShelfView.prototype.constructor = ShelfView;
+    FriendsView.prototype = Object.create(View.prototype);
+    FriendsView.prototype.constructor = FriendsView;
 
-    ShelfView.DEFAULT_OPTIONS = {};
+    FriendsView.DEFAULT_OPTIONS = {};
 
-    module.exports = ShelfView;
+    module.exports = FriendsView;
 })
