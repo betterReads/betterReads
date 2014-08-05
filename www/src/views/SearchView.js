@@ -10,12 +10,27 @@ define(function(require, exports, module){
 
     function SearchView(){
         View.apply(this, arguments);
+
+        _addSurface.call(this);
     }
 
     SearchView.prototype = Object.create(View.prototype);
     SearchView.prototype.constructor = SearchView;
 
     SearchView.DEFAULT_OPTIONS = {};
+
+    function _addSurface(){
+        var surface = new Surface({
+            content: "Search View",
+            size: [undefined, undefined],
+            properties: {
+                textAlign: 'center',
+                backgroundColor: '#999'
+            }
+        });
+
+        this.add(surface);
+    }
 
     module.exports = SearchView;
 })

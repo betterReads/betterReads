@@ -21,6 +21,8 @@ define(function(require, exports, module) {
 
     var ShelfView = require('views/ShelfView');
     var CollectionsView = require('views/CollectionsView');
+    var FriendsView = require('views/FriendsView');
+    var SearchView = require('views/SearchView');
 
 
     require('famous/inputs/FastClick');
@@ -116,6 +118,8 @@ define(function(require, exports, module) {
 
     var libraryView = new ShelfView();
     var collectionsView = new CollectionsView();
+    var friendsView = new FriendsView();
+    var searchView = new SearchView();
 
     app
     .addPage({
@@ -130,12 +134,12 @@ define(function(require, exports, module) {
         footerIconPosition : 1
     }).addPage({
         title              : 'Friends',
-        renderable         : aboutPage,
+        renderable         : friendsView,
         footerIconName     : 'fa-group  ',
         footerIconPosition : 2
     }).addPage({
         title              : 'Search',
-        renderable         : scrollDemo,
+        renderable         : searchView,
         footerIconName     : 'fa-search',
         footerIconPosition : 3
     }).showPage('Library');
