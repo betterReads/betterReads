@@ -125,7 +125,7 @@ define(function(require, exports, module) {
     .addPage({
         title              : 'Library',
         renderable         : libraryView,
-        footerIconPath     : 'resources/book.svg',
+        footerIconName     : 'fa-book',
         footerIconPosition : 0
     }).addPage({
         title              : 'Shelves',
