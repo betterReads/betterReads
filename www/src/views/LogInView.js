@@ -55,14 +55,22 @@ define(function(require, exports, module){
         //open window to authenticate
         window.open(results.url);
         //request oauth access tokens
-        reqwest({
-          url: 'http:localhost:8045/authenticate',
-          method: 'get',
-          data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
-        }).then(function(results) {
-          console.log(results);
-          //load content and switch views
-        });
+        setTimeout(function(){
+          reqwest({
+            url: 'http:localhost:8045/authenticate',
+            method: 'get',
+            data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
+          }).then(function(results) {
+            console.log(results);
+            if (results.statusCode) {
+              alert('Error logging in');
+            } else {
+              window.auth = results;
+              //load content and switch views
+              console.log('Logged in');
+            }
+          }, 1000);
+        })
       });
     });
 

@@ -3,6 +3,7 @@ define(function(require, exports, module){
 
   var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
+  var ImageSurface = require('famous/surfaces/ImageSurface');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
@@ -12,6 +13,7 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addSurface.call(this);
+    _addButton.call(this);
   }
 
   FriendsView.prototype = Object.create(View.prototype);
@@ -21,15 +23,41 @@ define(function(require, exports, module){
 
   function _addSurface(){
     var surface = new Surface({
-      content: "Friends View",
+      content: "Friend Updates",
       size: [undefined, undefined],
       properties: {
         textAlign: 'center',
+        lineHeight: '200px',
         backgroundColor: '#bbb'
       }
     });
 
     this.add(surface);
+  }
+  function _addButton(){
+    var button = new ImageSurface({
+      size: [100, 100]
+    });
+    button.setContent('./resources/goodreads-icon.png');
+
+    var modifier = new StateModifier({
+      align: [0.5, 0.5],
+      origin: [0.5, 0.5]
+    });
+
+    button.on('click', function() {
+      console.log('clicked');
+      //request oauth request token
+      reqwest({
+        url: 'http:localhost:8045/friendUpdates',
+        method: 'get',
+        data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
+      }).then(function(results) {
+        console.log(results);
+      });
+    });
+
+    this.add(modifier).add(button);
   }
 
   module.exports = FriendsView;
