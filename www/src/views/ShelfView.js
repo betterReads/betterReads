@@ -22,7 +22,8 @@ define(function(require, exports, module){
 
   function _addBooks(){
 
-    betterReads.getBooks({id: '4067289', shelf: 'to-read', page: 1, per_page: 50}, function(data) {
+    betterReads.getBooks({id: '4067289', shelf: 'to-read', page: 1, per_page: 50})
+    .then(function(data) {
       // var book = JSON.parse(data)[18];
       var books = JSON.parse(data);
       console.log(books);

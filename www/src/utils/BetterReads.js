@@ -6,7 +6,7 @@ define(function(require, exports, module){
   var BetterReads = {};
 
   BetterReads.getBooks = function(params, callback) {
-    reqwest({
+    return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/booksOnShelf',
       method: 'get',
       data: params,
