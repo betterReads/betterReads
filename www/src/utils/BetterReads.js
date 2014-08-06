@@ -22,6 +22,7 @@ define(function(require, exports, module){
   };
 
   BetterReads.searchBooks = function(params){
+    params.query = encodeURI(params.query);
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/searchBooks',
       method: 'get',
