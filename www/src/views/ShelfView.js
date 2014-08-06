@@ -36,7 +36,7 @@ define(function(require, exports, module){
       var colors = ['white', '#E5EBEB'];
       for (var i = 0; i < books.length; i++) {
         var tab = new Surface({
-          content: books[i].name[0] + ': ' + books[i].book_count[0]._ + ' books',
+          content: '<b>' + books[i].name[0] + '</b> <font color="#403E39"> ' + books[i].book_count[0]._ + ' books </font>',
           size: [undefined, 50],
           properties: {
             textAlign: 'center',
