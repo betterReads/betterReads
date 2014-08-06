@@ -1,7 +1,7 @@
 define(function(require, exports, module){
   'use strict';
 
-  var reqwest = require('../../../bower_components/reqwest/reqwest');
+  var reqwest = require('../bower_components/reqwest/reqwest');
 
   var BetterReads = {};
 

@@ -6,8 +6,6 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
-  var reqwest      = require('../../../bower_components/reqwest/reqwest');
-
   function FriendsView(){
     View.apply(this, arguments);
 
