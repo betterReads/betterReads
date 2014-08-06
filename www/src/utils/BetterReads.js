@@ -14,5 +14,14 @@ define(function(require, exports, module){
     });
   };
 
+  BetterReads.getShelves = function(params, callback) {
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/userShelves',
+      method: 'get',
+      data: params,
+      success: callback
+    });    
+  };
+
   module.exports = BetterReads;
 });

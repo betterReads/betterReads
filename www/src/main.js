@@ -20,6 +20,7 @@ define(function(require, exports, module) {
   var ScrollItem   = require('components/ScrollListItem');
 
   var ShelfView = require('views/ShelfView');
+  var LibraryView = require('views/LibraryView');
   var CollectionsView = require('views/CollectionsView');
   var FriendsView = require('views/FriendsView');
   var SearchView = require('views/SearchView');
@@ -116,8 +117,8 @@ define(function(require, exports, module) {
   var scrollDemo = new ScrollDemo();
   var aboutPage  = new DetailView(aboutContent);
 
-  var libraryView = new ShelfView();
-  var collectionsView = new CollectionsView();
+  var libraryView = new LibraryView();
+  var shelvesView = new ShelfView();
   var friendsView = new FriendsView();
   var searchView = new SearchView();
 
@@ -129,7 +130,7 @@ define(function(require, exports, module) {
     footerIconPosition : 0
   }).addPage({
     title              : 'Shelves',
-    renderable         : collectionsView,
+    renderable         : shelvesView,
     footerIconPath     : 'resources/library.png',
     footerIconPosition : 1
   }).addPage({
