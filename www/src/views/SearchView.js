@@ -1,36 +1,36 @@
 define(function(require, exports, module){
-    'use strict';
+  'use strict';
 
-    var View = require('famous/core/View');
-    var Surface = require('famous/core/Surface');
-    var StateModifier = require('famous/modifiers/StateModifier');
-    var ScrollView = require('famous/views/ScrollView');
+  var View = require('famous/core/View');
+  var Surface = require('famous/core/Surface');
+  var StateModifier = require('famous/modifiers/StateModifier');
+  var ScrollView = require('famous/views/ScrollView');
 
-    var reqwest      = require('../../../bower_components/reqwest/reqwest');
+  var reqwest      = require('../../../bower_components/reqwest/reqwest');
 
-    function SearchView(){
-        View.apply(this, arguments);
+  function SearchView(){
+    View.apply(this, arguments);
 
-        _addSurface.call(this);
-    }
+    _addSurface.call(this);
+  }
 
-    SearchView.prototype = Object.create(View.prototype);
-    SearchView.prototype.constructor = SearchView;
+  SearchView.prototype = Object.create(View.prototype);
+  SearchView.prototype.constructor = SearchView;
 
-    SearchView.DEFAULT_OPTIONS = {};
+  SearchView.DEFAULT_OPTIONS = {};
 
-    function _addSurface(){
-        var surface = new Surface({
-            content: "Search View",
-            size: [undefined, undefined],
-            properties: {
-                textAlign: 'center',
-                backgroundColor: '#999'
-            }
-        });
+  function _addSurface(){
+    var surface = new Surface({
+      content: "Search View",
+      size: [undefined, undefined],
+      properties: {
+        textAlign: 'center',
+        backgroundColor: '#999'
+      }
+    });
 
-        this.add(surface);
-    }
+    this.add(surface);
+  }
 
-    module.exports = SearchView;
+  module.exports = SearchView;
 });
