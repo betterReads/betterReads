@@ -12,17 +12,19 @@ define(function(require, exports, module){
   function SearchView(){
     View.apply(this, arguments);
 
-    _addSurface.call(this);
+    _addSearchField.call(this);
 
-    this.searchInput.setValue('hemingway');
+    // this.searchInput.setValue('hemingway');
 
-    this.search();
+    // this.search();
   }
 
   SearchView.prototype = Object.create(View.prototype);
   SearchView.prototype.constructor = SearchView;
 
-  SearchView.DEFAULT_OPTIONS = {};
+  SearchView.DEFAULT_OPTIONS = {
+    inputSize: 50
+  };
 
   SearchView.prototype.search = function(){
     var query = this.searchInput.getValue();
@@ -33,17 +35,35 @@ define(function(require, exports, module){
     });
   }
 
-  function _addSurface(){
+  function _addSearchField(){
     this.searchInput = new InputSurface({
-      size: [undefined, 50],
-      placeholder: 'Type Here',
+      size: [window.innerWidth - this.options.inputSize, this.options.inputSize],
+      placeholder: '    Type Here',
       properties: {
-        textAlign: 'center',
+        textAlign: 'left',
         backgroundColor: '#999',
-        border: 'none'
+        border: 'none',
+        padding: 50,
       }
     });
 
+    this.searchButton = new Surface({
+      size: [this.options.inputSize, this.options.inputSize],
+      content: 'GO',
+      properties: {
+        textAlign: 'center',
+        lineHeight: 3,
+        backgroundColor: 'crimson',
+        color: 'black'
+      }
+    });
+
+    this.searchButtonModifier = new StateModifier({
+      align: [1, 0],
+      origin: [1, 0]
+    });
+
+    this.add(this.searchButtonModifier).add(this.searchButton);
     this.add(this.searchInput);
   }
 
