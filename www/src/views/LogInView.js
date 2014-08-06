@@ -1,6 +1,5 @@
 define(function(require, exports, module){
-  'use strict';
-
+  'use strict'
   var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
   var ImageSurface = require('famous/surfaces/ImageSurface');
@@ -27,6 +26,7 @@ define(function(require, exports, module){
       size: [undefined, undefined],
       properties: {
         textAlign: 'center',
+        lineHeight: '200px',
         backgroundColor: '#bbb'
       }
     });
@@ -42,6 +42,28 @@ define(function(require, exports, module){
     var modifier = new StateModifier({
       align: [0.5, 0.5],
       origin: [0.5, 0.5]
+    });
+
+    button.on('click', function() {
+      console.log('clicked');
+      //request oauth request token
+      reqwest({
+        url: 'http:localhost:8045/preAuthenticate',
+        method: 'get'
+      }).then(function(results) {
+        console.log(results);
+        //open window to authenticate
+        window.open(results.url);
+        //request oauth access tokens
+        reqwest({
+          url: 'http:localhost:8045/authenticate',
+          method: 'get',
+          data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
+        }).then(function(results) {
+          console.log(results);
+          //load content and switch views
+        });
+      });
     });
 
     this.add(modifier).add(button);
