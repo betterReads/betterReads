@@ -13,6 +13,7 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addSearchField.call(this);
+    _bindEvents.call(this);
 
     // this.searchInput.setValue('hemingway');
 
@@ -27,6 +28,7 @@ define(function(require, exports, module){
   };
 
   SearchView.prototype.search = function(){
+    console.log('searching for "'+ this.searchInput.getValue() + '"...');
     var query = this.searchInput.getValue();
     betterReads.searchBooks({query: query})
     .then(function(data) {
@@ -48,6 +50,10 @@ define(function(require, exports, module){
       }
     });
 
+    this.searchInput.getValue = function(){
+      return this._element.value;
+    };
+
     this.searchButton = new Surface({
       size: [this.options.inputSize, this.options.inputSize],
       content: '<i class="fa fa-search"></i>',
@@ -67,6 +73,10 @@ define(function(require, exports, module){
 
     this.add(this.searchButtonModifier).add(this.searchButton);
     this.add(this.searchInput);
+  }
+
+  function _bindEvents(){
+    this.searchButton.on('click', this.search.bind(this));
   }
 
   module.exports = SearchView;
