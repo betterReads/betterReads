@@ -8,6 +8,8 @@ define(function(require, exports, module){
   var ScrollView = require('famous/views/ScrollView');
 
   var reqwest      = require('../../../bower_components/reqwest/reqwest');
+  var betterReads = require('../utils/BetterReads');
+
 
   function FriendsView(){
     View.apply(this, arguments);
@@ -47,12 +49,7 @@ define(function(require, exports, module){
 
     button.on('click', function() {
       console.log('clicked');
-      //request oauth request token
-      reqwest({
-        url: 'http:localhost:8045/friendUpdates',
-        method: 'get',
-        data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
-      }).then(function(results) {
+      betterReads.getUpdates().then(function(results) {
         console.log(results);
       });
     });

@@ -29,5 +29,41 @@ define(function(require, exports, module){
     });
   };
 
+  BetterReads.authenticate = function() {
+    return reqwest({
+      url: 'http:localhost:8045/preAuthenticate',
+      method: 'get'
+    }).then(function(results) {
+      console.log(results);
+      //open window to authenticate
+      window.open(results.url);
+      //request oauth access tokens
+      setTimeout(function(){
+        reqwest({
+          url: 'http:localhost:8045/authenticate',
+          method: 'get',
+          data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
+        }).then(function(results) {
+          console.log(results);
+          if (results.statusCode) {
+            alert('Error logging in');
+          } else {
+            window.auth = results;
+            //load content and switch views
+            console.log('Logged in');
+          }
+        }, 1000);
+      });
+    });
+  };
+
+  BetterReads.getUpdates = function() {
+    return reqwest({
+      url: 'http:localhost:8045/friendUpdates',
+      method: 'get',
+      data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
+    });
+  };
+
   module.exports = BetterReads;
 });

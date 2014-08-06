@@ -6,7 +6,7 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
-  var reqwest = require('../../../bower_components/reqwest/reqwest');
+  var betterReads = require('../utils/BetterReads');
 
   function LogInView(){
     View.apply(this, arguments);
@@ -46,32 +46,7 @@ define(function(require, exports, module){
 
     button.on('click', function() {
       console.log('clicked');
-      //request oauth request token
-      reqwest({
-        url: 'http:localhost:8045/preAuthenticate',
-        method: 'get'
-      }).then(function(results) {
-        console.log(results);
-        //open window to authenticate
-        window.open(results.url);
-        //request oauth access tokens
-        setTimeout(function(){
-          reqwest({
-            url: 'http:localhost:8045/authenticate',
-            method: 'get',
-            data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
-          }).then(function(results) {
-            console.log(results);
-            if (results.statusCode) {
-              alert('Error logging in');
-            } else {
-              window.auth = results;
-              //load content and switch views
-              console.log('Logged in');
-            }
-          }, 1000);
-        })
-      });
+      betterReads.authenticate();
     });
 
     this.add(modifier).add(button);
