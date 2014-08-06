@@ -22,12 +22,11 @@ define(function(require, exports, module){
 
   function _addSurface(){
     var surface = new Surface({
-      content: "Log In With Goodreads",
+      content: "<font size='50px'>Log In With Goodreads</font>",
       size: [undefined, undefined],
       properties: {
         textAlign: 'center',
-        lineHeight: '200px',
-        backgroundColor: '#bbb'
+        backgroundColor: '#E5EBEB'
       }
     });
 
@@ -40,7 +39,7 @@ define(function(require, exports, module){
     button.setContent('./resources/goodreads-icon.png');
 
     var modifier = new StateModifier({
-      align: [0.5, 0.5],
+      align: [0.5, 0.6],
       origin: [0.5, 0.5]
     });
 
