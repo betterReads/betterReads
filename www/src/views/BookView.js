@@ -18,4 +18,4 @@ define(function(require, exports, module){
     ShelfView.DEFAULT_OPTIONS = {};
 
     module.exports = ShelfView;
-})
+});
