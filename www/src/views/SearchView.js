@@ -44,17 +44,19 @@ define(function(require, exports, module){
         backgroundColor: '#999',
         border: 'none',
         padding: 50,
+        outline: 'none'
       }
     });
 
     this.searchButton = new Surface({
       size: [this.options.inputSize, this.options.inputSize],
-      content: 'GO',
+      content: '<i class="fa fa-search"></i>',
       properties: {
         textAlign: 'center',
-        lineHeight: 3,
-        backgroundColor: 'crimson',
-        color: 'black'
+        lineHeight: 2.5,
+        backgroundColor: '#393',
+        color: 'black',
+        cursor: 'pointer',
       }
     });
 
