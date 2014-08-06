@@ -14,6 +14,8 @@ define(function(require, exports, module){
 
     _addSurface.call(this);
 
+    this.searchInput.setValue('hemingway');
+
     this.search();
   }
 
@@ -23,7 +25,8 @@ define(function(require, exports, module){
   SearchView.DEFAULT_OPTIONS = {};
 
   SearchView.prototype.search = function(){
-    betterReads.searchBooks({query: 'vonnegut'})
+    var query = this.searchInput.getValue();
+    betterReads.searchBooks({query: query})
     .then(function(data) {
       var books = JSON.parse(data);
       console.log(books);
@@ -31,7 +34,7 @@ define(function(require, exports, module){
   }
 
   function _addSurface(){
-    var surface = new InputSurface({
+    this.searchInput = new InputSurface({
       size: [undefined, 50],
       placeholder: 'Type Here',
       properties: {
@@ -41,7 +44,7 @@ define(function(require, exports, module){
       }
     });
 
-    this.add(surface);
+    this.add(this.searchInput);
   }
 
   module.exports = SearchView;
