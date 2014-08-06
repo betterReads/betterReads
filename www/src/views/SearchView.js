@@ -75,6 +75,8 @@ define(function(require, exports, module){
         listOfItems.push(bookView);
         image.pipe(this.resultsView);
         image.pipe(this);
+        tab.pipe(this.resultsView);
+        tab.pipe(this);
       }
 
       this.resultsView.sequenceFrom(listOfItems);
