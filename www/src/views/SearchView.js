@@ -3,7 +3,9 @@ define(function(require, exports, module){
 
   var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
+  var Transform = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
+  var ImageSurface = require('famous/surfaces/ImageSurface');
   var InputSurface = require('famous/surfaces/InputSurface');
   var ScrollView = require('famous/views/ScrollView');
 
@@ -13,11 +15,8 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addSearchField.call(this);
+    _addSearchResults.call(this);
     _bindEvents.call(this);
-
-    // this.searchInput.setValue('hemingway');
-
-    // this.search();
   }
 
   SearchView.prototype = Object.create(View.prototype);
@@ -34,7 +33,52 @@ define(function(require, exports, module){
     .then(function(data) {
       var books = JSON.parse(data);
       console.log(books);
-    });
+
+      var listOfItems = [];
+      //colors for alternating
+      var colors = ['white', '#E5EBEB'];
+      for (var i = 0; i < books.length; i++) {
+        var title = books[i].best_book[0].title[0];
+        var author = books[i].best_book[0].author[0].name[0];
+        var rating = books[i].average_rating[0];
+        var imageURL = books[i].best_book[0].image_url[0];
+
+        var bookView = new View();
+        var bookMod = new StateModifier({
+          size: [undefined, 150]
+        });
+
+        var image = new ImageSurface({
+          size: [100, 150]
+        });
+        console.log(image);
+        image.setContent(imageURL);
+
+        var tab = new Surface({
+          content: title + '<br>' + name + '<br>Rating: ' + rating + '/5',
+          size: [window.innerWidth - 150, undefined],
+          properties: {
+          textAlign: 'right',
+          backgroundColor: 'white'
+          }
+        });
+
+        var tabModifier = new StateModifier({
+          align: [1, 0],
+          origin: [1, 0]
+        });
+
+        var bookWrapper = bookView.add(bookMod);
+        bookWrapper.add(image);
+        bookWrapper.add(tabModifier).add(tab);
+
+        listOfItems.push(bookView);
+        image.pipe(this.resultsView);
+        image.pipe(this);
+      }
+
+      this.resultsView.sequenceFrom(listOfItems);
+    }.bind(this));
   }
 
   function _addSearchField(){
@@ -73,6 +117,16 @@ define(function(require, exports, module){
 
     this.add(this.searchButtonModifier).add(this.searchButton);
     this.add(this.searchInput);
+  }
+
+  function _addSearchResults(){
+    this.resultsView = new ScrollView();
+    
+    this.resultsModifier = new StateModifier({
+      transform: Transform.translate(0, this.options.inputSize, -1)
+    });
+
+    this.add(this.resultsModifier).add(this.resultsView);
   }
 
   function _bindEvents(){
