@@ -13,12 +13,22 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addSurface.call(this);
+
+    this.search();
   }
 
   SearchView.prototype = Object.create(View.prototype);
   SearchView.prototype.constructor = SearchView;
 
   SearchView.DEFAULT_OPTIONS = {};
+
+  SearchView.prototype.search = function(){
+    betterReads.searchBooks({query: 'vonnegut'})
+    .then(function(data) {
+      var books = JSON.parse(data);
+      console.log(books);
+    });
+  }
 
   function _addSurface(){
     var surface = new InputSurface({

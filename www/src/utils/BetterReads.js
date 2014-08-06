@@ -17,9 +17,16 @@ define(function(require, exports, module){
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/userShelves',
       method: 'get',
-      data: params,
-      success: callback
-    });    
+      data: params
+    });
+  };
+
+  BetterReads.searchBooks = function(params){
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/searchBooks',
+      method: 'get',
+      data: params
+    });
   };
 
   module.exports = BetterReads;
