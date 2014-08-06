@@ -5,12 +5,11 @@ define(function(require, exports, module){
 
   var BetterReads = {};
 
-  BetterReads.getBooks = function(params, callback) {
+  BetterReads.getBooks = function(params){
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/booksOnShelf',
       method: 'get',
-      data: params,
-      success: callback
+      data: params
     });
   };
 

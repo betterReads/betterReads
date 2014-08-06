@@ -4,9 +4,10 @@ define(function(require, exports, module){
   var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
   var StateModifier = require('famous/modifiers/StateModifier');
+  var InputSurface = require('famous/surfaces/InputSurface');
   var ScrollView = require('famous/views/ScrollView');
 
-  var reqwest      = require('../../../bower_components/reqwest/reqwest');
+  var betterReads = require('../utils/BetterReads');
 
   function SearchView(){
     View.apply(this, arguments);
@@ -20,12 +21,13 @@ define(function(require, exports, module){
   SearchView.DEFAULT_OPTIONS = {};
 
   function _addSurface(){
-    var surface = new Surface({
-      content: "Search View",
-      size: [undefined, undefined],
+    var surface = new InputSurface({
+      size: [undefined, 50],
+      placeholder: 'Type Here',
       properties: {
         textAlign: 'center',
-        backgroundColor: '#999'
+        backgroundColor: '#999',
+        border: 'none'
       }
     });
 
