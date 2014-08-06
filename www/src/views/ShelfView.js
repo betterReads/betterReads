@@ -7,7 +7,7 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
-  var reqwest      = require('../../../bower_components/reqwest/reqwest');
+  var betterReads = require('../utils/BetterReads');
 
   function ShelfView(){
     View.apply(this, arguments);
@@ -20,18 +20,9 @@ define(function(require, exports, module){
 
   ShelfView.DEFAULT_OPTIONS = {};
 
-  var getBooks = function(params, callback) {
-    reqwest({
-      url: 'https://betterreadsapi.azurewebsites.net/booksOnShelf',
-      method: 'get',
-      data: params,
-      success: callback
-    });
-  };
-
   function _addBooks(){
 
-    getBooks({id: '4067289', shelf: 'to-read', page: 1, per_page: 50}, function(data) {
+    betterReads.getBooks({id: '4067289', shelf: 'to-read', page: 1, per_page: 50}, function(data) {
       // var book = JSON.parse(data)[18];
       var books = JSON.parse(data);
       console.log(books);
