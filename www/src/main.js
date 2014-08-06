@@ -24,6 +24,7 @@ define(function(require, exports, module) {
   var CollectionsView = require('views/CollectionsView');
   var FriendsView = require('views/FriendsView');
   var SearchView = require('views/SearchView');
+  var LogInView = require('views/LogInView');
 
 
   require('famous/inputs/FastClick');
@@ -121,6 +122,7 @@ define(function(require, exports, module) {
   var shelvesView = new ShelfView();
   var friendsView = new FriendsView();
   var searchView = new SearchView();
+  var logInView = new LogInView();
 
   app
   .addPage({
@@ -143,6 +145,11 @@ define(function(require, exports, module) {
     renderable         : searchView,
     footerIconName     : 'fa-search',
     footerIconPosition : 3
+  }).addPage({
+    title              : 'Log In',
+    renderable         : logInView,
+    footerIconName     : 'fa-exchange',
+    footerIconPosition : 4
   }).showPage('Library');
 
   document.addEventListener("deviceready", onDeviceReady, false);
