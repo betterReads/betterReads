@@ -9,6 +9,8 @@ define(function(require, exports, module){
   var InputSurface = require('famous/surfaces/InputSurface');
   var ScrollView = require('famous/views/ScrollView');
 
+  var SearchBarView = require('views/SearchBarView');
+
   var betterReads = require('../utils/BetterReads');
 
   function SearchView(){
@@ -29,8 +31,8 @@ define(function(require, exports, module){
   };
 
   SearchView.prototype.search = function(){
-    console.log('searching for "'+ this.searchInput.getValue() + '"...');
-    var query = this.searchInput.getValue();
+    console.log('searching for "'+ this.searchBar.getValue() + '"...');
+    var query = this.searchBar.getValue();
     betterReads.searchBooks({query: query})
     .then(function(data) {
       var books = JSON.parse(data);
@@ -85,41 +87,11 @@ define(function(require, exports, module){
   }
 
   function _addSearchField(){
-    this.searchInput = new InputSurface({
-      size: [window.innerWidth - this.options.inputSize, this.options.inputSize],
-      placeholder: '    Type Here',
-      properties: {
-        textAlign: 'left',
-        backgroundColor: '#999',
-        border: 'none',
-        padding: 50,
-        outline: 'none'
-      }
-    });
+    this.searchBar = new SearchBarView();
 
-    this.searchInput.getValue = function(){
-      return this._element.value;
-    };
+    this.subscribe(this.searchBar);
 
-    this.searchButton = new Surface({
-      size: [this.options.inputSize, this.options.inputSize],
-      content: '<i class="fa fa-search"></i>',
-      properties: {
-        textAlign: 'center',
-        lineHeight: 2.5,
-        backgroundColor: '#393',
-        color: 'black',
-        cursor: 'pointer',
-      }
-    });
-
-    this.searchButtonModifier = new StateModifier({
-      align: [1, 0],
-      origin: [1, 0]
-    });
-
-    this.add(this.searchInput);
-    this.add(this.searchButtonModifier).add(this.searchButton);
+    this.add(this.searchBar);
   }
 
   function _addSearchResults(){
@@ -134,7 +106,7 @@ define(function(require, exports, module){
   }
 
   function _bindEvents(){
-    this.searchButton.on('click', this.search.bind(this));
+    this.searchBar.on('searchClick', this.search.bind(this));
   }
 
   module.exports = SearchView;
