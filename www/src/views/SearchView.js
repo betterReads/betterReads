@@ -14,6 +14,8 @@ define(function(require, exports, module){
   function SearchView(){
     View.apply(this, arguments);
 
+    this.resultsList = [];
+
     _addSearchField.call(this);
     _addSearchResults.call(this);
     _bindEvents.call(this);
@@ -34,7 +36,7 @@ define(function(require, exports, module){
       var books = JSON.parse(data);
       console.log(books);
 
-      var listOfItems = [];
+      this.resultsList = [];
       //colors for alternating
       var colors = ['white', '#E5EBEB'];
       for (var i = 0; i < books.length; i++) {
@@ -51,7 +53,6 @@ define(function(require, exports, module){
         var image = new ImageSurface({
           size: [100, 150]
         });
-        console.log(image);
         image.setContent(imageURL);
 
         var tab = new Surface({
@@ -72,14 +73,14 @@ define(function(require, exports, module){
         bookWrapper.add(image);
         bookWrapper.add(tabModifier).add(tab);
 
-        listOfItems.push(bookView);
+        this.resultsList.push(bookView);
         image.pipe(this.resultsView);
         image.pipe(this);
         tab.pipe(this.resultsView);
         tab.pipe(this);
       }
 
-      this.resultsView.sequenceFrom(listOfItems);
+      this.resultsView.sequenceFrom(this.resultsList);
     }.bind(this));
   }
 
@@ -125,9 +126,10 @@ define(function(require, exports, module){
     this.resultsView = new ScrollView();
     
     this.resultsModifier = new StateModifier({
-      transform: Transform.translate(0, this.options.inputSize, -1)
+      transform: Transform.translate(0, this.options.inputSize, -10)
     });
 
+    this.resultsView.sequenceFrom(this.resultsList);
     this.add(this.resultsModifier).add(this.resultsView);
   }
 
