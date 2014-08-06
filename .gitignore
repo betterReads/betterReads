@@ -2,3 +2,4 @@ buildREADME.sh
 .DS_Store
 bower_components/*
 platforms/*
+*.orig

@@ -13,7 +13,6 @@ define(function(require, exports, module) {
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var Modifier     = require('famous/core/Modifier');
   var View         = require('famous/core/View');
-  var reqwest      = require('../../bower_components/reqwest/reqwest');
   var ScrollView   = require('famous/views/ScrollView');
   var Surface      = require('famous/core/Surface');
   var StateModifier = require('famous/modifiers/StateModifier');
