@@ -118,8 +118,8 @@ define(function(require, exports, module){
       origin: [1, 0]
     });
 
-    this.add(this.searchButtonModifier).add(this.searchButton);
     this.add(this.searchInput);
+    this.add(this.searchButtonModifier).add(this.searchButton);
   }
 
   function _addSearchResults(){
