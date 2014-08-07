@@ -53,7 +53,7 @@ define(function(require, exports, module){
             //load content and switch views
             console.log('Logged in');
           }
-        }, 1000);
+        }, 2000);
       });
     });
   };
