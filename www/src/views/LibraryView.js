@@ -9,10 +9,10 @@ define(function(require, exports, module){
 
   var betterReads = require('../utils/BetterReads');
 
-  function LibraryView(shelf){
+  function LibraryView(shelf, autoload){
     View.apply(this, arguments);
 
-    _addBooks.call(this, shelf);
+    _addBooks.call(this, shelf, autoload);
   }
 
   LibraryView.prototype = Object.create(View.prototype);
@@ -20,7 +20,7 @@ define(function(require, exports, module){
 
   LibraryView.DEFAULT_OPTIONS = {};
 
-  function _addBooks(shelf){
+  function _addBooks(shelf, autoload){
     if (shelf) {
       var params = {id: '4067289', shelf: shelf, page: 1, per_page: 50};
     } else {
@@ -81,6 +81,9 @@ define(function(require, exports, module){
       this._eventInput.on('scrollListItemClicked', function(eventPayload) {
         this._eventOutput.emit('navigate:modal', eventPayload);
       }.bind(this));
+      if (autoload) {
+        this._eventOutput.emit('shelfLoaded', shelf);
+      }
     }.bind(this));
   }
 

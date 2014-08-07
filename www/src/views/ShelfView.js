@@ -51,8 +51,7 @@ define(function(require, exports, module){
         tab.data = books[i].name[0];
         listOfItems.push(tab);
         tab.on('click', function() {
-          tab.emit('shelfClicked', 'test');
-          console.log('clicked', this.data);
+          tab.emit('shelfClick', this.data);
           //create new view to display books from this shelf
           // var shelfView = new LibraryView(this.data);
         });
@@ -64,9 +63,8 @@ define(function(require, exports, module){
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);   
 
-      this._eventInput.on('shelfClicked', function(eventPayload) {
-        // this._eventOutput.emit('navigate:modal', eventPayload);
-        console.log('shelf clicked', arguments);
+      this._eventInput.on('shelfClick', function(shelf) {
+        this._eventOutput.emit('shelfClick', shelf);
       }.bind(this));
     }.bind(this));
   }

@@ -25,6 +25,7 @@ define(function(require, exports, module) {
   var SearchView = require('views/SearchView');
   var LogInView = require('views/LogInView');
 
+  var betterReads = require('./utils/BetterReads');
 
   require('famous/inputs/FastClick');
 
@@ -123,13 +124,20 @@ define(function(require, exports, module) {
   var searchView = new SearchView();
   var logInView = new LogInView();
 
-  // searchView.subscribe(shelvesView);
-  // searchView.on('click', function() {
-  //   console.log('shelf click');
-  // });
-  shelvesView.on('click', function() {
-    console.log('shelf click');
+
+  shelvesView.on('shelfClick', function(shelf) {
+    console.log('shelf click!!!', shelf);
+    var currShelf = new LibraryView(shelf, true);
+    app.addPage({
+      title: shelf,
+      renderable: currShelf,
+    });
+    currShelf.on('shelfLoaded', function(shelf) {
+      console.log('loaded', shelf);
+      app.showPage(shelf);
+    });
   });
+
 
 
   app
@@ -141,7 +149,6 @@ define(function(require, exports, module) {
   }).addPage({
     title              : 'Shelves',
     renderable         : shelvesView,
-    // renderable         : scrollDemo,
     footerIconPath     : 'resources/library.png',
     footerIconPosition : 1
   }).addPage({
