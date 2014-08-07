@@ -118,6 +118,7 @@ define(function(require, exports, module) {
   var aboutPage  = new DetailView(aboutContent);
 
   var libraryView = new LibraryView();
+  // var libraryView = new LibraryView('BR-ALLSHELVES');
   var shelvesView = new ShelfView();
   var friendsView = new FriendsView();
   var searchView = new SearchView();

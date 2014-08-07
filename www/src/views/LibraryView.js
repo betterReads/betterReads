@@ -9,20 +9,25 @@ define(function(require, exports, module){
 
   var betterReads = require('../utils/BetterReads');
 
-  function ShelfView(){
+  function LibraryView(shelf){
     View.apply(this, arguments);
 
-    _addBooks.call(this);
+    _addBooks.call(this, shelf);
   }
 
-  ShelfView.prototype = Object.create(View.prototype);
-  ShelfView.prototype.constructor = ShelfView;
+  LibraryView.prototype = Object.create(View.prototype);
+  LibraryView.prototype.constructor = LibraryView;
 
-  ShelfView.DEFAULT_OPTIONS = {};
+  LibraryView.DEFAULT_OPTIONS = {};
 
-  function _addBooks(){
+  function _addBooks(shelf){
+    if (shelf) {
+      var params = {id: '4067289', shelf: shelf, page: 1, per_page: 50};
+    } else {
+      var params = {id: '4067289', page: 1, per_page: 50};
+    }
 
-    betterReads.getBooks({id: '4067289', shelf: 'to-read', page: 1, per_page: 50})
+    betterReads.getBooks(params)
     .then(function(data) {
       // var book = JSON.parse(data)[18];
       var books = JSON.parse(data);
@@ -79,5 +84,5 @@ define(function(require, exports, module){
     }.bind(this));
   }
 
-  module.exports = ShelfView;
+  module.exports = LibraryView;
 });
