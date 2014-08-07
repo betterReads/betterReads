@@ -45,7 +45,13 @@ define(function(require, exports, module){
           }
         });
 
+        // set up event listener to populate library view based on shelf clicked
+        tab.data = books[i].name[0];
         listOfItems.push(tab);
+        tab.on('click', function() {
+          console.log('clicked', this.data);
+        });
+
         tab.pipe(scrollView);
         tab.pipe(this);
       }
