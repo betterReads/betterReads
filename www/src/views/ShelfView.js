@@ -6,6 +6,7 @@ define(function(require, exports, module){
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
+  var LibraryView = require('views/LibraryView');
 
   var betterReads = require('../utils/BetterReads');
 
@@ -45,11 +46,15 @@ define(function(require, exports, module){
           }
         });
 
+
         // set up event listener to populate library view based on shelf clicked
         tab.data = books[i].name[0];
         listOfItems.push(tab);
         tab.on('click', function() {
+          tab.emit('shelfClicked', 'test');
           console.log('clicked', this.data);
+          //create new view to display books from this shelf
+          // var shelfView = new LibraryView(this.data);
         });
 
         tab.pipe(scrollView);
@@ -57,10 +62,11 @@ define(function(require, exports, module){
       }
 
       scrollView.sequenceFrom(listOfItems);
-      this.add(scrollView);
+      this.add(scrollView);   
 
-      this._eventInput.on('scrollListItemClicked', function(eventPayload) {
-        this._eventOutput.emit('navigate:modal', eventPayload);
+      this._eventInput.on('shelfClicked', function(eventPayload) {
+        // this._eventOutput.emit('navigate:modal', eventPayload);
+        console.log('shelf clicked', arguments);
       }.bind(this));
     }.bind(this));
   }

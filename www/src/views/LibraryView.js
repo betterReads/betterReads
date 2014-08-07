@@ -24,7 +24,7 @@ define(function(require, exports, module){
     if (shelf) {
       var params = {id: '4067289', shelf: shelf, page: 1, per_page: 50};
     } else {
-      var params = {id: '4067289', page: 1, per_page: 50};
+      var params = {id: '4067289', page: 1, per_page: 50, sort: 'position'};
     }
 
     betterReads.getBooks(params)

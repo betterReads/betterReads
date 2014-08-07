@@ -117,12 +117,20 @@ define(function(require, exports, module) {
   var scrollDemo = new ScrollDemo();
   var aboutPage  = new DetailView(aboutContent);
 
-  var libraryView = new LibraryView();
-  // var libraryView = new LibraryView('BR-ALLSHELVES');
+  var libraryView = new LibraryView('to-read');
   var shelvesView = new ShelfView();
   var friendsView = new FriendsView();
   var searchView = new SearchView();
   var logInView = new LogInView();
+
+  // searchView.subscribe(shelvesView);
+  // searchView.on('click', function() {
+  //   console.log('shelf click');
+  // });
+  shelvesView.on('click', function() {
+    console.log('shelf click');
+  });
+
 
   app
   .addPage({
@@ -133,6 +141,7 @@ define(function(require, exports, module) {
   }).addPage({
     title              : 'Shelves',
     renderable         : shelvesView,
+    // renderable         : scrollDemo,
     footerIconPath     : 'resources/library.png',
     footerIconPosition : 1
   }).addPage({
