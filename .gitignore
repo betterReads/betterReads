@@ -1,5 +1,6 @@
 buildREADME.sh
 .DS_Store
 bower_components/*
+www/src/bower_components/*
 platforms/*
 *.orig

@@ -60,7 +60,7 @@ define(function(require, exports, module){
         for (var i = 0; i < results.length; i++) {
           var update = results[i];
           var tab = new Surface({
-            content: update.actor[0].name[0] + ' ' + update.action_text[0] + '<br>' + update.updated_at[0],
+            content: '<font size="2em">' + update.actor[0].name[0] + ' ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</font>',
             size: [undefined, 75],
             properties: {
               backgroundColor: colors[i%2],
