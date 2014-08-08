@@ -171,7 +171,7 @@ define(function(require, exports, module) {
     footerIconPosition : 4
   }).addPage({
     title              : 'Book',
-    renderable         : famousView
+    renderable         : bookView
   }).showPage('Library');
 
   document.addEventListener("deviceready", onDeviceReady, false);

@@ -8,12 +8,29 @@ define(function(require, exports, module){
 
   function ShelfView(){
     View.apply(this, arguments);
+
+    _addContents.call(this);
   }
 
   ShelfView.prototype = Object.create(View.prototype);
   ShelfView.prototype.constructor = ShelfView;
 
-  ShelfView.DEFAULT_OPTIONS = {};
+  ShelfView.DEFAULT_OPTIONS = {
+    title: 'Some Book'
+  };
+
+  function _addContents(){
+    this.titleSurface = new Surface({
+      size: [undefined, undefined],
+      content: this.options.title,
+      properties: {
+        backgroundColor: 'white',
+        color: 'crimson'
+      }
+    });
+
+    this.add(this.titleSurface);
+  }
 
   module.exports = ShelfView;
 });
