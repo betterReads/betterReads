@@ -27,7 +27,10 @@ define(function(require, exports, module){
     .then(function(data){
       var book = JSON.parse(data);
       console.log(book);
-    });
+
+      var title = book.title[0];
+      this.titleSurface.setContent(title);
+    }.bind(this));
   };
 
   function _addContents(){
