@@ -1,10 +1,10 @@
 [submodule "www/src/lib"]
 	path = www/src/lib
 	url = git@github.com:Famous/lib.git
-[submodule "www/src/famous"]
-	path = www/src/famous
-	url = git@github.com:FamousInternal/famous.git
-  branch = master
 [submodule "www/src/components"]
 	path = www/src/components
 	url = git@github.com:FamousInternal/mobile-template-components.git
+[submodule "www/src/famous"]
+	path = www/src/famous
+	url = https://github.com/wgester/famous
+        branch = wip/wgester/scrollview
