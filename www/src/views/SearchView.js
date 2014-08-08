@@ -109,7 +109,7 @@ define(function(require, exports, module){
       this.resultsView.sequenceFrom(this.resultsList);
 
       this._eventInput.on('readABook', function(eventPayload) {
-        console.log(eventPayload.title);
+        // console.log(eventPayload.title);
         this._eventOutput.emit('showBook', eventPayload);
         this._eventOutput.emit('navigate', {
           title: 'Book',

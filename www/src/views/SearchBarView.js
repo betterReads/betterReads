@@ -34,7 +34,6 @@ define(function(require, exports, module){
 
   function _addSearchField(){
     this.searchInput = new InputSurface({
-      size: [window.innerWidth - this.options.inputSize, this.options.inputSize],
       placeholder: '    Type Here',
       properties: {
         textAlign: 'left',
@@ -46,6 +45,7 @@ define(function(require, exports, module){
     });
 
     this.searchInputModifier = new StateModifier({
+      size: [window.innerWidth - this.options.inputSize, this.options.inputSize],
       align: [0, 0],
       origin: [0, 0]
     })
@@ -55,7 +55,6 @@ define(function(require, exports, module){
 
   function _addSearchButton(){
     this.searchButton = new Surface({
-      size: [this.options.inputSize, this.options.inputSize],
       content: '<i class="fa fa-search"></i>',
       properties: {
         textAlign: 'center',
@@ -67,6 +66,7 @@ define(function(require, exports, module){
     });
 
     this.searchButtonModifier = new StateModifier({
+      size: [this.options.inputSize, this.options.inputSize],
       align: [1, 0],
       origin: [1, 0]
     });

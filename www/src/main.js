@@ -1,3 +1,5 @@
+// require.config({paths: {'vis': 'http://adnanwahab.com/Render-Tree-Visualization/vis'}});
+
 /* globals define */
 define(function(require, exports, module) {
   'use strict';
@@ -184,5 +186,9 @@ define(function(require, exports, module) {
 
   var mainContext = Engine.createContext();
   mainContext.add(app);
+
+  // UNCOMMENT THESE AND THE REQUIRE.CONFIG AT THE TOP OF THIS DOCUMENT TO SHOW RENDER TREE VISUALIZER
+  // var vis = require('vis');
+  // vis(mainContext);
 });
 
