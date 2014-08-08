@@ -124,15 +124,18 @@ define(function(require, exports, module) {
   var friendsView = new FriendsView();
   var searchView = new SearchView();
   var logInView = new LogInView();
-  var waitingView = new WaitingView();
 
   //set up shelf view rendering
   shelvesView.on('shelfClick', function(shelf) {
+    var waitingView = new WaitingView();
     var currShelf = new LibraryView(shelf, true);
     app.addPage({
       title: shelf,
       renderable: currShelf,
-    });
+    }).addPage({
+      title: 'Loading',
+      renderable: waitingView,
+    }).showPage('Loading');
     currShelf.on('shelfLoaded', function(shelf) {
       app.showPage(shelf);
     });
@@ -164,9 +167,6 @@ define(function(require, exports, module) {
     renderable         : logInView,
     footerIconName     : 'fa-exchange',
     footerIconPosition : 4
-  }).addPage({
-    title              : 'Loading',
-    renderable         : waitingView,
   }).showPage('Library');
 
   document.addEventListener("deviceready", onDeviceReady, false);
