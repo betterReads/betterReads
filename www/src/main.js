@@ -126,6 +126,7 @@ define(function(require, exports, module) {
   var bookView = new BookView();
 
   searchView.pipe(app.content);
+  searchView.pipe(bookView);
 
   //set up shelf view rendering
   shelvesView.on('shelfClick', function(shelf) {

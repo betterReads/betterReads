@@ -10,6 +10,7 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addContents.call(this);
+    _bindEvents.call(this);
   }
 
   ShelfView.prototype = Object.create(View.prototype);
@@ -30,6 +31,14 @@ define(function(require, exports, module){
     });
 
     this.add(this.titleSurface);
+  }
+
+  function _bindEvents(){
+    this._eventInput.on('showBook', function(eventPayload){
+      console.log('time to update the book info');
+      console.log(eventPayload);
+      this.titleSurface.setContent(eventPayload.title);
+    }.bind(this));
   }
 
   module.exports = ShelfView;
