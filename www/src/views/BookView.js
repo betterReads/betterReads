@@ -6,6 +6,8 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
+  var betterReads = require('../utils/BetterReads');
+
   function ShelfView(){
     View.apply(this, arguments);
 
@@ -18,6 +20,13 @@ define(function(require, exports, module){
 
   ShelfView.DEFAULT_OPTIONS = {
     title: 'Some Book'
+  };
+
+  ShelfView.prototype.getBook = function(id){
+    betterReads.getBookDetail({book_id: id})
+    .then(function(data){
+      console.log(data);
+    });
   };
 
   function _addContents(){
@@ -35,9 +44,9 @@ define(function(require, exports, module){
 
   function _bindEvents(){
     this._eventInput.on('showBook', function(eventPayload){
-      console.log('time to update the book info');
-      console.log(eventPayload);
-      this.titleSurface.setContent(eventPayload.title);
+      // console.log(eventPayload);
+      this.getBook(eventPayload.id);
+      // this.titleSurface.setContent(eventPayload.title);
     }.bind(this));
   }
 

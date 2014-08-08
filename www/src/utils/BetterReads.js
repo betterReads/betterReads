@@ -30,6 +30,14 @@ define(function(require, exports, module){
     });
   };
 
+  BetterReads.getBookDetail = function(params){
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/bookDetail',
+      method: 'get',
+      data: params
+    });
+  }
+
   BetterReads.authenticate = function() {
     return reqwest({
       url: 'http:localhost:8045/preAuthenticate',

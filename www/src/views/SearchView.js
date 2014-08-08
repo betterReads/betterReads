@@ -43,6 +43,7 @@ define(function(require, exports, module){
       var colors = ['white', '#E5EBEB'];
 
       for (var i = 0; i < books.length; i++) {
+        var id = books[i].id[0]._
         var title = books[i].best_book[0].title[0];
         var author = books[i].best_book[0].author[0].name[0];
         var rating = books[i].average_rating[0];
@@ -87,6 +88,7 @@ define(function(require, exports, module){
 
         var index = i;
         var eventPayload = {
+          id: id,
           index: index,
           title: title,
           author: author,
@@ -96,7 +98,7 @@ define(function(require, exports, module){
 
         clickSurface.on('click', function(payload){
           this.emit('readABook', {
-            title: payload.title
+            id: payload.id
           });
         }.bind(clickSurface, eventPayload));
 
