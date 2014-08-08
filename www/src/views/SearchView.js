@@ -110,7 +110,10 @@ define(function(require, exports, module){
 
       this._eventInput.on('readABook', function(eventPayload) {
         console.log(eventPayload.title);
-        // TODO: bring up book detail view here
+        this._eventOutput.emit('navigate', {
+          title: 'Book',
+          showBackButton: true
+        });
       }.bind(this)); 
     }.bind(this));
   }
