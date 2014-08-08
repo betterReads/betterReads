@@ -17,8 +17,20 @@ define(function(require, exports, module){
 
   WaitingView.DEFAULT_OPTIONS = {};
 
+  WaitingView.prototype.show = function(){
+    this.spinner.setProperties({
+      display: 'block'
+    });
+  };
+
+  WaitingView.prototype.hide = function(){
+    this.spinner.setProperties({
+      display: 'none'
+    });
+  };
+
   function _addSurface(){
-    var surface = new Surface({
+    this.spinner = new Surface({
       content: '<i style="margin: 0; font-size: 60px;" class="fa fa-spinner"></i>',
       size: [100, null],
       properties: {
@@ -26,25 +38,22 @@ define(function(require, exports, module){
       }
     });
 
-    var modifier = new Modifier({
+    this.spinnerModifier = new Modifier({
       align: [0.5, 0.3],
       origin: [0.5, 0.5]
     });
 
-    this.add(modifier).add(surface);
+    this.add(this.spinnerModifier).add(this.spinner);
 
-    
     // assigns the transform property of the modifier
     // as the argument of .transformFrom()
-    modifier.transformFrom(rotate);
+    this.spinnerModifier.transformFrom(rotate);
 
     var angle = 0;
     function rotate() {
       angle += 0.07;
       return Transform.rotateZ(angle);
     }
-
-
   }
 
   module.exports = WaitingView;
