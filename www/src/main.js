@@ -24,6 +24,7 @@ define(function(require, exports, module) {
   var FriendsView = require('views/FriendsView');
   var SearchView = require('views/SearchView');
   var LogInView = require('views/LogInView');
+  var WaitingView = require('views/WaitingView');
 
   var betterReads = require('./utils/BetterReads');
 
@@ -123,22 +124,19 @@ define(function(require, exports, module) {
   var friendsView = new FriendsView();
   var searchView = new SearchView();
   var logInView = new LogInView();
+  var waitingView = new WaitingView();
 
-
+  //set up shelf view rendering
   shelvesView.on('shelfClick', function(shelf) {
-    console.log('shelf click!!!', shelf);
     var currShelf = new LibraryView(shelf, true);
     app.addPage({
       title: shelf,
       renderable: currShelf,
     });
     currShelf.on('shelfLoaded', function(shelf) {
-      console.log('loaded', shelf);
       app.showPage(shelf);
     });
   });
-
-
 
   app
   .addPage({
@@ -166,6 +164,9 @@ define(function(require, exports, module) {
     renderable         : logInView,
     footerIconName     : 'fa-exchange',
     footerIconPosition : 4
+  }).addPage({
+    title              : 'Loading',
+    renderable         : waitingView,
   }).showPage('Library');
 
   document.addEventListener("deviceready", onDeviceReady, false);
