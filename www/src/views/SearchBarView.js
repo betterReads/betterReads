@@ -45,7 +45,12 @@ define(function(require, exports, module){
       }
     });
 
-    this.add(this.searchInput);
+    this.searchInputModifier = new StateModifier({
+      align: [0, 0],
+      origin: [0, 0]
+    })
+
+    this.add(this.searchInputModifier).add(this.searchInput);
   }
 
   function _addSearchButton(){
