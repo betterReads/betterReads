@@ -25,7 +25,8 @@ define(function(require, exports, module){
   ShelfView.prototype.getBook = function(id){
     betterReads.getBookDetail({book_id: id})
     .then(function(data){
-      console.log(data);
+      var book = JSON.parse(data);
+      console.log(book);
     });
   };
 
@@ -44,9 +45,7 @@ define(function(require, exports, module){
 
   function _bindEvents(){
     this._eventInput.on('showBook', function(eventPayload){
-      // console.log(eventPayload);
       this.getBook(eventPayload.id);
-      // this.titleSurface.setContent(eventPayload.title);
     }.bind(this));
   }
 
