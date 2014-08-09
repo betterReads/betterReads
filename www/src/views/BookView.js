@@ -24,7 +24,14 @@ define(function(require, exports, module){
   ShelfView.prototype.constructor = ShelfView;
 
   ShelfView.DEFAULT_OPTIONS = {
-    title: 'Some Book'
+    title: 'Some Book',
+    detailSize: [undefined, true],
+    detailStyle: {
+      backgroundColor: 'white',
+      color: 'crimson',
+      padding: '10px'
+    },
+    detailCenter: {textAlign: 'center'}
   };
 
   ShelfView.prototype.getBook = function(id){
@@ -38,9 +45,13 @@ define(function(require, exports, module){
 
       var title = book.title[0];
       var author = book.authors[0].author[0].name[0];
+      var description = book.description[0];
+      var rating = book.average_rating[0];
 
       this.titleSurface.setContent(title);
       this.authorSurface.setContent(author);
+      this.descriptionSurface.setContent(description);
+      this.ratingSurface.setContent(rating);
       
       this.detailsModifier.setOpacity(1);
       this.loadingView.hide();
@@ -60,31 +71,42 @@ define(function(require, exports, module){
     var detailsList = [];
 
     this.titleSurface = new Surface({
-      size: [undefined, 100],
-      properties: {
-        backgroundColor: 'white',
-        color: 'crimson'
-      }
+      size: this.options.detailSize,
+      properties: this.options.detailCenter
     });
     detailsList.push(this.titleSurface);
 
     this.authorSurface = new Surface({
-      siz: [undefined, 100],
-      properties: {
-        backgroundColor: 'white',
-        color: 'crimson'
-      }
+      size: this.options.detailSize,
+      properties: this.options.detailCenter
     });
     detailsList.push(this.authorSurface);
 
+    this.descriptionSurface = new Surface({
+      size: this.options.detailSize
+    });
+    detailsList.push(this.descriptionSurface);
+
+    this.ratingSurface = new Surface({
+      size: this.options.detailSize,
+      properties: this.options.detailCenter
+    });
+    detailsList.push(this.ratingSurface);
+
     this.detailsModifier = new StateModifier({
-      transform: Transform.translate(0, 0, 10),
       opacity: 0
     });
 
     this.details = new ScrollView();
     this.details.sequenceFrom(detailsList);
     this.add(this.detailsModifier).add(this.details);
+
+    for(var i = 0; i < detailsList.length; i++){
+      detailsList[i].setProperties(this.options.detailStyle);
+
+      detailsList[i].pipe(this.details);
+      detailsList[i].pipe(this);
+    }
   }
 
   function _bindEvents(){
