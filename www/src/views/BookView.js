@@ -5,6 +5,7 @@ define(function(require, exports, module){
   var Surface = require('famous/core/Surface');
   var Transform = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
+  var ImageSurface = require('famous/surfaces/ImageSurface');
   var ScrollView = require('famous/views/ScrollView');
 
   var WaitingView = require('views/WaitingView');
@@ -36,7 +37,10 @@ define(function(require, exports, module){
       console.log(book);
 
       var title = book.title[0];
+      var author = book.authors[0].author[0].name[0];
+
       this.titleSurface.setContent(title);
+      this.authorSurface.setContent(author);
       
       this.detailsModifier.setOpacity(1);
       this.loadingView.hide();
@@ -52,24 +56,35 @@ define(function(require, exports, module){
     this.add(this.loadingView);
   }
 
-  function _addContents(){    
+  function _addContents(){
+    var detailsList = [];
+
     this.titleSurface = new Surface({
-      size: [undefined, undefined],
-      content: this.options.title,
+      size: [undefined, 100],
       properties: {
         backgroundColor: 'white',
         color: 'crimson'
       }
     });
+    detailsList.push(this.titleSurface);
+
+    this.authorSurface = new Surface({
+      siz: [undefined, 100],
+      properties: {
+        backgroundColor: 'white',
+        color: 'crimson'
+      }
+    });
+    detailsList.push(this.authorSurface);
 
     this.detailsModifier = new StateModifier({
       transform: Transform.translate(0, 0, 10),
       opacity: 0
     });
 
-    this.details = (new View()).add(this.detailsModifier);
-    this.details.add(this.titleSurface);
-    this.add(this.details);
+    this.details = new ScrollView();
+    this.details.sequenceFrom(detailsList);
+    this.add(this.detailsModifier).add(this.details);
   }
 
   function _bindEvents(){
