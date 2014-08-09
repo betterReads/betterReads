@@ -82,28 +82,24 @@ define(function(require, exports, module){
     });
     detailsList.push(this.authorSurface);
 
-    this.descriptionSurface = new Surface({
-      size: this.options.detailSize
-    });
-    detailsList.push(this.descriptionSurface);
-
     this.ratingSurface = new Surface({
       size: this.options.detailSize,
       properties: this.options.detailCenter
     });
     detailsList.push(this.ratingSurface);
 
-    this.detailsModifier = new StateModifier({
-      opacity: 0
+    this.descriptionSurface = new Surface({
+      size: this.options.detailSize
     });
+    detailsList.push(this.descriptionSurface);
 
+    this.detailsModifier = new StateModifier({opacity: 0});
     this.details = new ScrollView();
     this.details.sequenceFrom(detailsList);
     this.add(this.detailsModifier).add(this.details);
 
     for(var i = 0; i < detailsList.length; i++){
       detailsList[i].setProperties(this.options.detailStyle);
-
       detailsList[i].pipe(this.details);
       detailsList[i].pipe(this);
     }
