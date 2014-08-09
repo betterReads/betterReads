@@ -28,7 +28,7 @@ define(function(require, exports, module){
 
   ShelfView.prototype.getBook = function(id){
     this.loadingView.show();
-    this.contentsModifier.setOpacity(0);
+    this.detailsModifier.setOpacity(0);
 
     betterReads.getBookDetail({book_id: id})
     .then(function(data){
@@ -38,7 +38,7 @@ define(function(require, exports, module){
       var title = book.title[0];
       this.titleSurface.setContent(title);
       
-      this.contentsModifier.setOpacity(1);
+      this.detailsModifier.setOpacity(1);
       this.loadingView.hide();
     }.bind(this));
 
@@ -52,7 +52,7 @@ define(function(require, exports, module){
     this.add(this.loadingView);
   }
 
-  function _addContents(){
+  function _addContents(){    
     this.titleSurface = new Surface({
       size: [undefined, undefined],
       content: this.options.title,
@@ -62,12 +62,14 @@ define(function(require, exports, module){
       }
     });
 
-    this.contentsModifier = new StateModifier({
+    this.detailsModifier = new StateModifier({
       transform: Transform.translate(0, 0, 10),
       opacity: 0
     });
 
-    this.add(this.contentsModifier).add(this.titleSurface);
+    this.details = (new View()).add(this.detailsModifier);
+    this.details.add(this.titleSurface);
+    this.add(this.details);
   }
 
   function _bindEvents(){
