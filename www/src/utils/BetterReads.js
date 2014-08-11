@@ -3,7 +3,7 @@ define(function(require, exports, module){
 
   var reqwest = require('../bower_components/reqwest/reqwest');
   var credentials = require('../credentials.js');
-
+  var auth;
   var BetterReads = {};
 
   BetterReads.getBooks = function(params){
@@ -46,7 +46,7 @@ define(function(require, exports, module){
     }).then(function(results) {
       console.log(results);
       //open window to authenticate
-      window.open(results.url);
+      window.open(results.url, '_system');
       //request oauth access tokens
       setTimeout(function(){
         reqwest({
@@ -58,21 +58,26 @@ define(function(require, exports, module){
           if (results.statusCode) {
             alert('Error logging in');
           } else {
-            window.auth = results;
+            // window.auth = results;
+            // localStorage.brAuth = results;
+            // window.localStorage.setItem( 'brAuth', JSON.stringify(results));
+            console.log('results:', results);
+            auth = results;
             //load content and switch views
             console.log('Logged in');
             callback();
           }
-        }, 7000);
-      });
+        });
+      }, 5000);
     });
   };
 
   BetterReads.getUpdates = function() {
+    console.log('auth:', auth);
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/friendUpdates',
       method: 'get',
-      data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
+      data: {accessToken: auth.accessToken, accessSecret: auth.accessSecret}
     });
   };
 
