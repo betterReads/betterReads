@@ -44,18 +44,18 @@ define(function(require, exports, module){
       inputs: ['touch', 'scroll'],
       layout: { 
         type: 'coverflow',
-        perspective: 1000,
+        perspective: 400,
         options:  {
           curve: { 
             curve: 'outExpo',
             duration: 1000,
           },
           x1percent: 0.35,
-          y1percent: 2.5,
+          y1percent: -2.5,
           radiusPercent: 3,
           x1dimension: 'x',
           y1dimension: 'z',
-          stepOffset: (-0.5*Math.PI),
+          stepOffset: (0.5*Math.PI),
           offset: [0, 100, 0]
         }
       },
