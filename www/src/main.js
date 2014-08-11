@@ -34,6 +34,8 @@ define(function(require, exports, module) {
 
   require('famous/inputs/FastClick');
 
+  var app, libraryView, shelvesView, friendsView, searchView, bookView, bestSellerView;
+
   var loadApp = new TabTemplate({
     /*  
     -----------------------------------------------------------------
@@ -120,7 +122,7 @@ define(function(require, exports, module) {
   });
 
   var initializeApp = function() {
-    var app = new TabTemplate({
+    app = new TabTemplate({
       /*  
       -----------------------------------------------------------------
         The layout options for the App's HeaderFooterLayout which 
@@ -205,16 +207,12 @@ define(function(require, exports, module) {
       }
     });
 
-    var famousView = new FamousView();
-    var scrollDemo = new ScrollDemo();
-    var aboutPage  = new DetailView(aboutContent);
-
-    var libraryView = new LibraryView('to-read');
-    var shelvesView = new ShelfView();
-    var friendsView = new FriendsView();
-    var searchView = new SearchView();
-    var bookView = new BookView();
-    var bestSellerView = new BestSellerView();
+    libraryView = new LibraryView('to-read');
+    shelvesView = new ShelfView();
+    friendsView = new FriendsView();
+    searchView = new SearchView();
+    bookView = new BookView();
+    bestSellerView = new BestSellerView();
 
     searchView.pipe(app.content);
     searchView.pipe(bookView);
@@ -234,7 +232,8 @@ define(function(require, exports, module) {
         app.showPage(shelf);
       });
     });
-
+  };
+  var startApp = function() {
     app
     .addPage({
       title              : 'Library',
@@ -256,6 +255,11 @@ define(function(require, exports, module) {
       renderable         : searchView,
       footerIconName     : 'fa-search',
       footerIconPosition : 3
+    }).addPage({
+      title              : 'Explore',
+      renderable         : bestSellerView,
+      footerIconName     : 'fa-globe',
+      footerIconPosition : 4
     }).addPage({
       title              : 'Book',
       renderable         : bookView
@@ -284,8 +288,9 @@ define(function(require, exports, module) {
     console.log('heard log in');
     //set up other views, etc
     logInView.transformBR();
+    initializeApp();
     setTimeout(function() {
-      initializeApp();
+      startApp();
     }, 5000);
   });
 

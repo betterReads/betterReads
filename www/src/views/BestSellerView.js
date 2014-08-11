@@ -34,11 +34,12 @@ define(function(require, exports, module){
         });
 
         var tab = new Surface({
-          content: '#' + books[i].Rank + '<br>' + books[i].Title + '<br>' + books[i].Author,
+          content: '<b>#' + books[i].Rank + '</b><br>' + books[i].Title + '<br>' + books[i].Author,
           size: [undefined, undefined],
           properties: {
-          textAlign: 'right',
-          backgroundColor: 'white'
+            textAlign: 'right',
+            backgroundColor: 'white',
+            paddingRight: '10px'
           }
         });
 
