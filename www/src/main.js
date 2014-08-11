@@ -140,14 +140,19 @@ define(function(require, exports, module) {
     var currShelf = new LibraryView(shelf, true);
     app.addPage({
       title: shelf,
-      renderable: currShelf,
+      renderable: currShelf
     }).addPage({
       title: 'Loading',
-      renderable: waitingView,
+      renderable: waitingView
     }).showPage('Loading');
     currShelf.on('shelfLoaded', function(shelf) {
       app.showPage(shelf);
     });
+  });
+
+  logInView.on('loggedIn', function() {
+    console.log('heard log in');
+    //set up other views, etc
   });
 
   app

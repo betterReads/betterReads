@@ -39,7 +39,7 @@ define(function(require, exports, module){
     });
   }
 
-  BetterReads.authenticate = function() {
+  BetterReads.authenticate = function(callback) {
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/preAuthenticate',
       method: 'get'
@@ -61,8 +61,9 @@ define(function(require, exports, module){
             window.auth = results;
             //load content and switch views
             console.log('Logged in');
+            callback();
           }
-        }, 5000);
+        }, 7000);
       });
     });
   };

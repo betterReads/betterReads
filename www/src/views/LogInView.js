@@ -43,9 +43,13 @@ define(function(require, exports, module){
       origin: [0.5, 0.5]
     });
 
+    var that = this;
     button.on('click', function() {
       console.log('clicked');
-      betterReads.authenticate();
+      betterReads.authenticate(function() {
+        console.log('call back');
+        that._eventOutput.emit('loggedIn');
+      });
     });
 
     this.add(modifier).add(button);
