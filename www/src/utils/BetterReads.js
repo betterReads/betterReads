@@ -2,6 +2,7 @@ define(function(require, exports, module){
   'use strict';
 
   var reqwest = require('../bower_components/reqwest/reqwest');
+  var credentials = require('../credentials.js');
 
   var BetterReads = {};
 
@@ -73,6 +74,18 @@ define(function(require, exports, module){
       data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
     });
   };
+
+  BetterReads.getTopUT = function() {
+    return reqwest({
+      url: 'http:localhost:8045/weeklyBestSellers',
+      method: 'get',
+      data: {images: true,
+        awsId: credentials.awsId,
+        awsSecret: credentials.awsSecret,
+        assocId: credentials.assocId,
+        USATodayKey: credentials.USATodayKey}
+    });
+  }
 
   module.exports = BetterReads;
 });

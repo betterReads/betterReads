@@ -29,6 +29,8 @@ define(function(require, exports, module) {
   var BookView = require('views/BookView');
   var WaitingView = require('views/WaitingView');
 
+  var betterReads = require('./utils/BetterReads');
+
   require('famous/inputs/FastClick');
 
   var app = new TabTemplate({
@@ -144,6 +146,10 @@ define(function(require, exports, module) {
     currShelf.on('shelfLoaded', function(shelf) {
       app.showPage(shelf);
     });
+  });
+
+  betterReads.getTopUT().then(function(data) {
+    console.log(data);
   });
 
   app
