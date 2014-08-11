@@ -7,6 +7,8 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
+  var BookshelfCarousel = require('views/BookshelfCarousel');
+
   var betterReads = require('../utils/BetterReads');
 
   function LibraryView(shelf, autoload){
@@ -41,49 +43,60 @@ define(function(require, exports, module){
       //     origin: [0.5, 0.5]
       // });
       // this.add(imageModifier).add(image);
-      var scrollView = new ScrollView(this.options);
-      var listOfItems = [];
 
-      for (var i = 0; i < books.length; i++) {
-        // var listItem = new ScrollItem(i);
+      // var scrollView = new ScrollView(this.options);
+      // var listOfItems = [];
 
-        var bookView = new View();
-        var bookMod = new StateModifier({
-          size: [undefined, 150]
-        });
+      // for (var i = 0; i < books.length; i++) {
+      //   // var listItem = new ScrollItem(i);
 
-        var tab = new Surface({
-          content: books[i].title[0] + '<br>' + books[i].authors[0].author[0].name[0] + '<br>Rating: ' + books[i].average_rating + '/5',
-          size: [undefined, undefined],
-          properties: {
-          textAlign: 'right',
-          backgroundColor: 'white'
-          }
-        });
+      //   var bookView = new View();
+      //   var bookMod = new StateModifier({
+      //     size: [undefined, 150]
+      //   });
 
-        var image = new ImageSurface({
-          size: [100, 150]
-        });
-        image.setContent(books[i].image_url[0]);
+      //   var tab = new Surface({
+      //     content: books[i].title[0] + '<br>' + books[i].authors[0].author[0].name[0] + '<br>Rating: ' + books[i].average_rating + '/5',
+      //     size: [undefined, undefined],
+      //     properties: {
+      //     textAlign: 'right',
+      //     backgroundColor: 'white'
+      //     }
+      //   });
 
-        var bookWrapper = bookView.add(bookMod);
-        bookWrapper.add(image);
-        bookWrapper.add(tab);
+      //   var image = new ImageSurface({
+      //     size: [100, 150]
+      //   });
+      //   image.setContent(books[i].image_url[0]);
 
-        listOfItems.push(bookView);
-        image.pipe(scrollView);
-        image.pipe(this);
+      //   var bookWrapper = bookView.add(bookMod);
+      //   bookWrapper.add(image);
+      //   bookWrapper.add(tab);
+
+      //   listOfItems.push(bookView);
+      //   image.pipe(scrollView);
+      //   image.pipe(this);
+      // }
+
+      // scrollView.sequenceFrom(listOfItems);
+      // this.add(scrollView);
+
+      // this._eventInput.on('scrollListItemClicked', function(eventPayload) {
+      //   this._eventOutput.emit('navigate:modal', eventPayload);
+      // }.bind(this));
+      // if (autoload) {
+      //   this._eventOutput.emit('shelfLoaded', shelf);
+      // }
+
+      var bookURL;
+      var bookURLs = [];
+      for(var i = 0; i < books.length; i++){
+        bookURL = books[i].image_url[0];
+        bookURLs.push(bookURL);
       }
 
-      scrollView.sequenceFrom(listOfItems);
-      this.add(scrollView);
-
-      this._eventInput.on('scrollListItemClicked', function(eventPayload) {
-        this._eventOutput.emit('navigate:modal', eventPayload);
-      }.bind(this));
-      if (autoload) {
-        this._eventOutput.emit('shelfLoaded', shelf);
-      }
+      this.bookshelf = new BookshelfCarousel({covers: bookURLs});
+      this.add(this.bookshelf);
     }.bind(this));
   }
 
