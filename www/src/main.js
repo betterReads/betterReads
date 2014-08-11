@@ -28,6 +28,7 @@ define(function(require, exports, module) {
   var LogInView = require('views/LogInView');
   var BookView = require('views/BookView');
   var WaitingView = require('views/WaitingView');
+  var BestSellerView = require('views/BestSellerView');
 
   var betterReads = require('./utils/BetterReads');
 
@@ -128,6 +129,7 @@ define(function(require, exports, module) {
   var searchView = new SearchView();
   var logInView = new LogInView();
   var bookView = new BookView();
+  var bestSellerView = new BestSellerView();
 
   searchView.pipe(app.content);
   searchView.pipe(bookView);
@@ -146,10 +148,6 @@ define(function(require, exports, module) {
     currShelf.on('shelfLoaded', function(shelf) {
       app.showPage(shelf);
     });
-  });
-
-  betterReads.getTopUT().then(function(data) {
-    console.log(data);
   });
 
   app
