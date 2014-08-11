@@ -54,6 +54,7 @@ define(function(require, exports, module){
 
   function _addSurface(){
     var surface = new Surface({
+      classes: ['preLoad'],
       content: "<font size='50px'>Log In With Goodreads</font>",
       size: [undefined, undefined],
       properties: {
@@ -67,11 +68,13 @@ define(function(require, exports, module){
   function _addButton(){
     this.brLogo = new ImageSurface({
       // size: [100, 100]
+      classes: ['preLoad']
     });
     this.brLogo.setContent('./resources/betterreads-icon-usd.png');
 
     this.button = new ImageSurface({
       // size: [100, 100]
+      classes: ['preLoad']
     });
     this.button.setContent('./resources/goodreads-icon.png');
 

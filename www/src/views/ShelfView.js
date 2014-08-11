@@ -38,11 +38,11 @@ define(function(require, exports, module){
       for (var i = 0; i < books.length; i++) {
         var tab = new Surface({
           content: '<b>' + books[i].name[0] + '</b> <font color="#403E39"> ' + books[i].book_count[0]._ + ' books </font>',
-          size: [undefined, 50],
+          size: [undefined, true],
           properties: {
             textAlign: 'center',
             backgroundColor: colors[i%2],
-            lineHeight: '50px'
+            padding: '10px'
           }
         });
 

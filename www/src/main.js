@@ -2,7 +2,7 @@
 
 /* globals define */
 define(function(require, exports, module) {
-  'use strict';
+  // 'use strict';
   
   var Engine       = require('famous/core/Engine');
   var Utility      = require('famous/utilities/Utility');
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
 
   require('famous/inputs/FastClick');
 
-  var app = new TabTemplate({
+  var loadApp = new TabTemplate({
     /*  
     -----------------------------------------------------------------
       The layout options for the App's HeaderFooterLayout which 
@@ -270,6 +270,12 @@ define(function(require, exports, module) {
     function onDeviceReady() {
       // TO RUN ON DEVICE, INITIALIZE CONTEXT AND APP IN HERE
     }
+
+    //remove login elements
+    var oldElements = document.getElementsByClassName('preLoad');
+    while (oldElements.length) {
+      oldElements[0].remove();
+    }
   };
 
 
@@ -283,9 +289,9 @@ define(function(require, exports, module) {
     }, 5000);
   });
 
-  app.addPage({
-    title              : 'Log In',
-    renderable         : logInView,
+  loadApp.addPage({
+    title: 'Log In',
+    renderable: logInView,
   }).showPage('Log In');
 
   document.addEventListener("deviceready", onDeviceReady, false);
@@ -295,8 +301,8 @@ define(function(require, exports, module) {
     // TO RUN ON DEVICE, INITIALIZE CONTEXT AND APP IN HERE
   }
 
-  var mainContext = Engine.createContext();
-  mainContext.add(app);
+  var loadContext = Engine.createContext();
+  loadContext.add(loadApp);
 
   // UNCOMMENT THESE AND THE REQUIRE.CONFIG AT THE TOP OF THIS DOCUMENT TO SHOW RENDER TREE VISUALIZER
   // var vis = require('vis');
