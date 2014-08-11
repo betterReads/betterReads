@@ -277,8 +277,10 @@ define(function(require, exports, module) {
   logInView.on('loggedIn', function() {
     console.log('heard log in');
     //set up other views, etc
-    initializeApp();
-
+    logInView.transformBR();
+    setTimeout(function() {
+      initializeApp();
+    }, 5000);
   });
 
   app.addPage({
