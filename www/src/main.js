@@ -292,7 +292,7 @@ define(function(require, exports, module) {
     initializeApp();
     setTimeout(function() {
       startApp();
-    }, 5000);
+    }, 4000);
   });
 
   loadApp.addPage({
