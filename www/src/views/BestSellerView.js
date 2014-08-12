@@ -59,7 +59,7 @@ define(function(require, exports, module){
         image.on('click', function() {
           if (!this.clicked) {
             this.text = new Surface({
-              content: 'this is the content',
+              content: this.content.Title + '<br>' + this.content.Author + '<br><br>Summary: ' + this.content.BriefDescription + '<br><br>Rank: #' + this.content.Rank,
               properties: {
                 textAlign: 'center',
                 backgroundColor: 'white'
