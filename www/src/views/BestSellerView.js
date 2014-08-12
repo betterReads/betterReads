@@ -28,9 +28,11 @@ define(function(require, exports, module){
     betterReads.getTopUT()
     .then(function(books) {
       console.log(books);
-      var scrollView = new ScrollView(this.options);
+      var scrollView = new ScrollView({
+        detailSize: [undefined, true]
+      });
       var listOfItems = [];
-
+      var parent = this;
       for (var i = 0; i < books.length; i++) {
         var bookView = new View();
         var bookMod = new StateModifier({
@@ -66,7 +68,10 @@ define(function(require, exports, module){
               that.bookData = JSON.parse(data);
 
               console.log(that.bookData);
-
+              that.view = new View({
+                detailSize: [undefined, true]
+              });
+              that.scroll = new ScrollView(parent.options);
               that.text = new Surface({
                 content: that.content.Title + '<br>' + that.content.Author + '<br><br>' + that.bookData.average_rating[0] + '/5<br><br>' + that.bookData.description[0] + '<br><br>Rank: #' + that.content.Rank,
                 properties: {
@@ -79,12 +84,16 @@ define(function(require, exports, module){
                 opacity: 0
               });
               that.imageMod.transformFrom(Transform.translate(0, 0, 1));
-              that.imageMod.setSize([320, 480], {duration: 1500})
+              that.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut})
 
-              that.textWrapper.add(that.textMod).add(that.text);
+              that.text.pipe(that.scroll);
+              that.view.add(that.textMod).add(that.text);
+              that.scroll.sequenceFrom([that.view]);
+              // that.textWrapper.add(that.textMod).add(that.text);
+              that.textWrapper.add(that.scroll);
               setTimeout(function() {
                 that.textMod.setOpacity(0.8, {duration: 300});
-              }, 1200);
+              }, 1300);
 
               that.text.parent = that;
               that.text.on('click', function() {
@@ -94,7 +103,7 @@ define(function(require, exports, module){
                 };
 
                 this.parent.clicked = false;
-                this.parent.imageMod.setSize([100, 150], {duration: 1500})
+                this.parent.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.easeOutBounce})
 
                 var _this = this;
                 setTimeout(function() {
