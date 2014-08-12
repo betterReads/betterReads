@@ -243,13 +243,13 @@ define(function(require, exports, module) {
     }).addPage({
       title              : 'Shelves',
       renderable         : shelvesView,
-      footerIconName     : 'fa-archive',
+      footerIconName     : 'fa-align-justify',
       // footerIconPath     : 'resources/library.png',
       footerIconPosition : 1
     }).addPage({
       title              : 'Friends',
       renderable         : friendsView,
-      footerIconName     : 'fa-group  ',
+      footerIconName     : 'fa-group',
       footerIconPosition : 2
     }).addPage({
       title              : 'Search',

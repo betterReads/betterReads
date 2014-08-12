@@ -37,10 +37,12 @@ define(function(require, exports, module){
       placeholder: '    Type Here',
       properties: {
         textAlign: 'left',
-        backgroundColor: '#999',
+        backgroundColor: '#EFF9FF',
         border: 'none',
         padding: 50,
-        outline: 'none'
+        outline: 'none',
+        fontFamily: 'Roboto',
+        fontSize: '16px'
       }
     });
 

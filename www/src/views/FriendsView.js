@@ -43,7 +43,7 @@ define(function(require, exports, module){
       var scrollView = new ScrollView();
       var listOfItems = [];
       //colors for alternating
-      var colors = ['white', '#E5EBEB'];
+      var colors = ['white', '#EFF9FF'];
       for (var i = 0; i < results.length; i++) {
         var update = results[i];
         var tab = new Surface({
