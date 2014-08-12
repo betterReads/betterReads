@@ -20,17 +20,21 @@ define(function(require, exports, module){
   BookshelfCarousel.prototype.constructor = BookshelfCarousel;
 
   BookshelfCarousel.DEFAULT_OPTIONS = {
-    covers: []
+    covers: [],
+    coverSize: [100, 150]
   };
 
   function _addCarousel(){
-    this.bookshelf = new Coverflow();
+    var center = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
+    this.bookshelf = new Coverflow({
+      screenCenter: center
+    });
 
     var cover;
     var coverSurfaces = [];
     for(var i = 0; i < this.options.covers.length; i++){
       cover = new ImageSurface({
-        size: [100, 150],
+        size: this.options.coverSize,
         content: this.options.covers[i]
       });
       coverSurfaces.push(cover);
@@ -38,10 +42,16 @@ define(function(require, exports, module){
       cover.pipe(this.bookshelf);
       cover.pipe(this);
     }
-
     this.bookshelf.sequenceFrom(coverSurfaces);
 
-    this.add(this.bookshelf);
+    this.bookshelfModifier = new StateModifier({
+      size: [window.innerWidth, 150],
+      origin: [0.5, 0.5],
+      align: [0.5, 0.5],
+      transform: Transform.translate(0, 0, 0)
+    });
+
+    this.add(this.bookshelfModifier).add(this.bookshelf);
   }
 
   module.exports = BookshelfCarousel;

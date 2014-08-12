@@ -16,7 +16,7 @@ define(function(require, exports, module) {
     var EventHandler = require('famous/core/EventHandler');
     var OptionsManager = require('famous/core/OptionsManager');
     var ViewSequence = require('famous/core/ViewSequence');
-    var Scroller = require('famous/views/Scroller');
+    var CoverflowScroller = require('views/CoverflowScroller');
     var Utility = require('famous/utilities/Utility');
 
     var GenericSync = require('famous/inputs/GenericSync');
@@ -80,7 +80,7 @@ define(function(require, exports, module) {
         this._optionsManager = new OptionsManager(this.options);
 
         // create sub-components
-        this._scroller = new Scroller(this.options);
+        this._scroller = new CoverflowScroller(this.options);
 
         this.sync = new GenericSync(
             ['scroll', 'touch'],
@@ -158,7 +158,8 @@ define(function(require, exports, module) {
         pageSwitchSpeed: 0.5,
         speedLimit: 5,
         groupScroll: false,
-        syncScale: 1
+        syncScale: 1,
+        screenCenter: 0
     };
 
     function _handleStart(event) {
