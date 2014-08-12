@@ -25,9 +25,11 @@ define(function(require, exports, module){
   };
 
   function _addCarousel(){
-    var center = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
+    var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
+    var coverCenter = this.options.coverSize[0]/2
     this.bookshelf = new Coverflow({
-      screenCenter: center
+      screenCenter: screenCenter,
+      coverCenter: coverCenter
     });
 
     var cover;

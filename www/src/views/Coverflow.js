@@ -159,7 +159,8 @@ define(function(require, exports, module) {
         speedLimit: 5,
         groupScroll: false,
         syncScale: 1,
-        screenCenter: 0
+        screenCenter: 0,
+        coverCenter: 0
     };
 
     function _handleStart(event) {
@@ -251,6 +252,8 @@ define(function(require, exports, module) {
         this._particle.on('update', function(particle) {
             if (this._springState === SpringStates.NONE) _normalizeState.call(this);
             this._displacement = particle.position.x - this._totalShift;
+            var index = this.getCurrentIndex();
+            console.log('settle on', index);
         }.bind(this));
 
         this._particle.on('end', function() {
@@ -349,7 +352,7 @@ define(function(require, exports, module) {
 
     function _normalizeState() {
         var offset = 0;
-        var position = Math.round(this.getPosition());
+        var position = Math.round(this.getPosition()) + this.options.coverCenter;
         var nodeSize = _nodeSizeForDirection.call(this, this._node);
         var nextNode = this._node.getNext();
 
