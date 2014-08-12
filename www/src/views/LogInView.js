@@ -59,7 +59,8 @@ define(function(require, exports, module){
       size: [undefined, undefined],
       properties: {
         textAlign: 'center',
-        backgroundColor: '#E5EBEB'
+        backgroundColor: '#EFF9FF',
+        color: '#0096B3'
       }
     });
 
@@ -70,7 +71,7 @@ define(function(require, exports, module){
       // size: [100, 100]
       classes: ['preLoad']
     });
-    this.brLogo.setContent('./resources/betterreads-icon-usd.png');
+    this.brLogo.setContent('./resources/betterreads-icon-color-usd.png');
 
     this.button = new ImageSurface({
       // size: [100, 100]

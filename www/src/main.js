@@ -243,7 +243,8 @@ define(function(require, exports, module) {
     }).addPage({
       title              : 'Shelves',
       renderable         : shelvesView,
-      footerIconPath     : 'resources/library.png',
+      footerIconName     : 'fa-archive',
+      // footerIconPath     : 'resources/library.png',
       footerIconPosition : 1
     }).addPage({
       title              : 'Friends',

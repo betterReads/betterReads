@@ -34,7 +34,7 @@ define(function(require, exports, module){
       var scrollView = new ScrollView(this.options);
       var listOfItems = [];
       //colors for alternating
-      var colors = ['white', '#E5EBEB'];
+      var colors = ['white', '#EFF9FF'];
       for (var i = 0; i < books.length; i++) {
         var tab = new Surface({
           content: '<b>' + books[i].name[0] + '</b> <font color="#403E39"> ' + books[i].book_count[0]._ + ' books </font>',

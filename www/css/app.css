@@ -40,10 +40,13 @@ body {
 
 .button-content {
 	text-align: center;
+  color: #0096B3;
 }
 
 .button-highlight {
-	background-color: #fa5c4f;
+  color: #ffffff;
+  background-color: #0096B3;
+	/*background-color: #fa5c4f;*/
 }
 
 .button-horizontal p {
