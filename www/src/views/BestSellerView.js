@@ -48,6 +48,7 @@ define(function(require, exports, module){
 
         var image = new ImageSurface({});
         image.clicked = false;
+        image.content = books[i];
         image.setContent(books[i].URL);
 
         image.imageMod = new Modifier({
@@ -56,17 +57,40 @@ define(function(require, exports, module){
 
         //fill screen with image
         image.on('click', function() {
-          if (!image.clicked) {
-            image.clicked = true;
+          if (!this.clicked) {
+            this.text = new Surface({
+              content: 'this is the content',
+              properties: {
+                textAlign: 'center',
+                backgroundColor: 'white'
+              }
+            });
+            this.textMod = new Modifier({
+              opacity: 0,
+              zIndex: 2
+            });
+            this.clicked = true;
             this.imageMod.transformFrom(Transform.translate(0, 0, 1));
             this.imageMod.setSize([320, 480], {duration: 1500})
-            // .setOrigin([.5, .5], {duration: 1500})
-            // .setAlign([.5, .5], {duration: 1500});
+
+            this.textWrapper.add(this.textMod).add(this.text);
+            this.textMod.setOpacity(0.8, {duration: 1500});
+
+            this.text.parent = this;
+            this.text.on('click', function() {
+              this.parent.textMod.setTransform(Transform.translate(0, 0, -1));
+              this.parent.clicked = false;
+              this.parent.imageMod.setSize([100, 150], {duration: 1500})
+
+              var that = this;
+              setTimeout(function() {
+                that.parent.imageMod.transformFrom(Transform.translate(0, 0, 0));
+              }, 1500);
+            });
           } else {
-            image.clicked = false;
+            this.clicked = false;
             this.imageMod.setSize([100, 150], {duration: 1500})
-            // .setOrigin([0, 0], {duration: 1500})
-            // .setAlign([0, 0], {duration: 1500});
+
             var that = this;
             setTimeout(function() {
               that.imageMod.transformFrom(Transform.translate(0, 0, 0));
@@ -77,7 +101,8 @@ define(function(require, exports, module){
         });
 
         var bookWrapper = bookView.add(bookMod);
-        bookWrapper.add(image.imageMod).add(image);
+        image.textWrapper = bookWrapper.add(image.imageMod);
+        image.textWrapper.add(image);
         bookWrapper.add(tab);
 
         listOfItems.push(bookView);
