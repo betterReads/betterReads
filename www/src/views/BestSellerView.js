@@ -10,6 +10,7 @@ define(function(require, exports, module){
   var Easing = require('famous/transitions/Easing');
   var Modifier = require('famous/core/Modifier');
 
+  var BookView = require('views/BookView');
   var betterReads = require('../utils/BetterReads');
 
   function BestSellerView(shelf, autoload){
@@ -57,35 +58,50 @@ define(function(require, exports, module){
 
         //fill screen with image
         image.on('click', function() {
+          var that = this;
           if (!this.clicked) {
-            this.text = new Surface({
-              content: this.content.Title + '<br>' + this.content.Author + '<br><br>Summary: ' + this.content.BriefDescription + '<br><br>Rank: #' + this.content.Rank,
-              properties: {
-                textAlign: 'center',
-                backgroundColor: 'white'
-              }
-            });
-            this.textMod = new Modifier({
-              opacity: 0,
-              zIndex: 2
-            });
-            this.clicked = true;
-            this.imageMod.transformFrom(Transform.translate(0, 0, 1));
-            this.imageMod.setSize([320, 480], {duration: 1500})
+            that.clicked = true;
+            //get book detail
+            betterReads.getBookDetail({isbn: that.content.ISBN}).then(function(data) {
+              that.bookData = JSON.parse(data);
 
-            this.textWrapper.add(this.textMod).add(this.text);
-            this.textMod.setOpacity(0.8, {duration: 1500});
+              console.log(that.bookData);
 
-            this.text.parent = this;
-            this.text.on('click', function() {
-              this.parent.textMod.setTransform(Transform.translate(0, 0, -1));
-              this.parent.clicked = false;
-              this.parent.imageMod.setSize([100, 150], {duration: 1500})
+              that.text = new Surface({
+                content: that.content.Title + '<br>' + that.content.Author + '<br><br>' + that.bookData.average_rating[0] + '/5<br><br>' + that.bookData.description[0] + '<br><br>Rank: #' + that.content.Rank,
+                properties: {
+                  size: [undefined, true],
+                  textAlign: 'center',
+                  backgroundColor: 'white'
+                }
+              });
+              that.textMod = new Modifier({
+                opacity: 0
+              });
+              that.imageMod.transformFrom(Transform.translate(0, 0, 1));
+              that.imageMod.setSize([320, 480], {duration: 1500})
 
-              var that = this;
+              that.textWrapper.add(that.textMod).add(that.text);
               setTimeout(function() {
-                that.parent.imageMod.transformFrom(Transform.translate(0, 0, 0));
-              }, 1500);
+                that.textMod.setOpacity(0.8, {duration: 300});
+              }, 1200);
+
+              that.text.parent = that;
+              that.text.on('click', function() {
+                //remove surface
+                this.render = function() {
+                  return null;
+                };
+
+                this.parent.clicked = false;
+                this.parent.imageMod.setSize([100, 150], {duration: 1500})
+
+                var _this = this;
+                setTimeout(function() {
+                  _this.parent.imageMod.transformFrom(Transform.translate(0, 0, 0));
+                }, 1500);
+              });
+
             });
           } else {
             this.clicked = false;
