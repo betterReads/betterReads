@@ -26,7 +26,7 @@ define(function(require, exports, module){
 
   function _addCarousel(){
     var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
-    var coverCenter = this.options.coverSize[0]/2
+    var coverCenter = this.options.coverSize[0]/2;
     this.bookshelf = new Coverflow({
       screenCenter: screenCenter,
       coverCenter: coverCenter
