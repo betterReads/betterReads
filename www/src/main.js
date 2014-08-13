@@ -269,8 +269,7 @@ define(function(require, exports, module) {
       var loaded = false;
       var waitingView = new ShelfTransitionView(shelf);
 
-      var currShelf = new LibraryView(shelf.data, true);
-      console.log(shelf._matrix)
+      var currShelf = new LibraryView(shelf.cell.data, true);
       app.addPage({
         title: 'Shelf',
         renderable: currShelf

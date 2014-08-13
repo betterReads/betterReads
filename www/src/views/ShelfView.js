@@ -51,7 +51,7 @@ define(function(require, exports, module){
         tab.data = {name: books[i].name[0], color: colors[i%2], count: books[i].book_count[0]._};
         listOfItems.push(tab);
         tab.on('click', function() {
-          tab.emit('shelfClick', this);
+          tab.emit('shelfClick', {scroll: scrollView, cell: this});
           //create new view to display books from this shelf
           // var shelfView = new LibraryView(this.data);
         });

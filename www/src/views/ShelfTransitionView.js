@@ -12,10 +12,10 @@ define(function(require, exports, module){
 
   var betterReads = require('../utils/BetterReads');
 
-  function ShelfTransitionView(shelf){
+  function ShelfTransitionView(data){
     View.apply(this, arguments);
 
-    _addShelf.call(this, shelf);
+    _addShelf.call(this, data.cell, data.scroll);
   }
 
   ShelfTransitionView.prototype = Object.create(View.prototype);
@@ -23,8 +23,7 @@ define(function(require, exports, module){
 
   ShelfTransitionView.DEFAULT_OPTIONS = {};
 
-  function _addShelf(shelf){
-
+  function _addShelf(shelf, scroll){
     var background = new Surface({
       size: [undefined, undefined],
       properties: {
@@ -33,7 +32,7 @@ define(function(require, exports, module){
       }
     });
     var shelfModifier = new StateModifier({
-      transform: Transform.translate(0, shelf._matrix[13], 0)
+      transform: Transform.translate(0, shelf._matrix[13] - scroll._edgeSpringPosition, 0)
     });
     var shelf = new Surface({
       content: '<b>' + shelf.data.name + '</b> <font color="#403E39"> ' + shelf.data.count + ' books </font>',
