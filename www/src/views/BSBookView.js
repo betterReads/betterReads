@@ -13,9 +13,9 @@ define(function(require, exports, module){
 
   var betterReads = require('../utils/BetterReads');
 
-  function BSBookView(isbn, picUrl, autoload) {
+  function BSBookView(data, autoload) {
     View.apply(this, arguments);
-    _addDetail.call(this, isbn, picUrl, autoload);
+    _addDetail.call(this, data.ISBN, data.URL, data.Amazon, autoload);
   }
 
   BSBookView.prototype = Object.create(View.prototype);
@@ -23,7 +23,7 @@ define(function(require, exports, module){
 
   BSBookView.DEFAULT_OPTIONS = {};
 
-  function _addDetail(isbn, picUrl, autoload){
+  function _addDetail(isbn, picUrl, link, autoload){
     betterReads.getBookDetail({isbn: isbn}).then(function(data) {
       var bookData = JSON.parse(data);
 
@@ -49,7 +49,7 @@ define(function(require, exports, module){
       });
       var scroll = new ScrollView();
       var text = new Surface({
-        content: bookData.title[0] + '<br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+        content: '<a href="' + link + '">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
         properties: {
           size: [undefined, undefined],
           textAlign: 'center',

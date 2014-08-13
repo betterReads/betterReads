@@ -221,8 +221,9 @@ define(function(require, exports, module) {
     //set up best seller view rendering
     bestSellerView.on('bestSellerClick', function(data) {
       console.log('heard best seller click');
+      console.log(data);
       var loaded = false;
-      var bsBookView = new BSBookView(data.ISBN, data.URL, true);
+      var bsBookView = new BSBookView(data, true);
       app.addPage({
         title: 'Best Seller',
         renderable: bsBookView
