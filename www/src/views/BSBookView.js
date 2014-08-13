@@ -65,11 +65,16 @@ define(function(require, exports, module){
 
       text.pipe(scroll);
       this.add(scroll);
+      var that = this;
+      text.on('click', function() {
+        that._eventOutput.emit('loadBestSellers');
+      });
       if (autoload) {
         this._eventOutput.emit('bookLoaded');
       }
 
     }.bind(this));
+
   }
 
   module.exports = BSBookView;

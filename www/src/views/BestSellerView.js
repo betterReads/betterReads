@@ -74,9 +74,9 @@ define(function(require, exports, module){
               that.imageMod.transformFrom(Transform.translate(0, 0, 0));
             }, 1500);
           }
-
-          
         });
+
+
 
         var bookWrapper = bookView.add(bookMod);
         image.textWrapper = bookWrapper.add(image.imageMod);
@@ -91,6 +91,11 @@ define(function(require, exports, module){
       this._eventInput.on('bestSellerClick', function(data) {
         this._eventOutput.emit('bestSellerClick', data);
       }.bind(this));
+
+      //listen to resize
+      this._eventOutput.on('resize', function() {
+        console.log('resize image output');
+      });
 
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);

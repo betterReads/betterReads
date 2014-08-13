@@ -219,7 +219,9 @@ define(function(require, exports, module) {
     searchView.pipe(bookView);
 
     //set up best seller view rendering
+    var selectedBook;
     bestSellerView.on('bestSellerClick', function(data) {
+      selectedBook = this;
       console.log('heard best seller click');
       console.log(data);
       var loaded = false;
@@ -242,6 +244,11 @@ define(function(require, exports, module) {
         } else {
           loaded = true;
         }
+      });
+      bsBookView.on('loadBestSellers', function() {
+        console.log('load best sellers');
+        app.showPage('Explore');
+        selectedBook._eventOutput.emit('resize');
       });
     });
 
