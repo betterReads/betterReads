@@ -221,13 +221,27 @@ define(function(require, exports, module) {
     //set up best seller view rendering
     bestSellerView.on('bestSellerClick', function(data) {
       console.log('heard best seller click');
-      var bsBookView = new BSBookView(data.ISBN, data.URL);
+      var loaded = false;
+      var bsBookView = new BSBookView(data.ISBN, data.URL, true);
+      app.addPage({
+        title: 'Best Seller',
+        renderable: bsBookView
+      });
+      //wait until page is loaded and time has passed
       setTimeout(function() {
-        app.addPage({
-          title: 'Best Seller',
-          renderable: bsBookView
-        }).showPage('Best Seller');
-      }, 3000);
+        if (loaded) {
+          app.showPage('Best Seller');
+        } else {
+          loaded = true;
+        }
+      }, 1500);
+      bsBookView.on('bookLoaded', function() {
+        if (loaded) {
+          app.showPage('Best Seller');
+        } else {
+          loaded = true;
+        }
+      });
     });
 
     //set up shelf view rendering

@@ -13,7 +13,7 @@ define(function(require, exports, module){
 
   var betterReads = require('../utils/BetterReads');
 
-  function BSBookView(isbn, picUrl, autoload){
+  function BSBookView(isbn, picUrl, autoload) {
     View.apply(this, arguments);
     _addDetail.call(this, isbn, picUrl, autoload);
   }
@@ -65,6 +65,9 @@ define(function(require, exports, module){
 
       text.pipe(scroll);
       this.add(scroll);
+      if (autoload) {
+        this._eventOutput.emit('bookLoaded');
+      }
 
     }.bind(this));
   }
