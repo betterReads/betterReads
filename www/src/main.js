@@ -7,10 +7,6 @@ define(function(require, exports, module) {
   var Engine       = require('famous/core/Engine');
   var Utility      = require('famous/utilities/Utility');
   var TabTemplate  = require('views/TabTemplate');
-  var FamousView   = require('components/FamousView');
-  var ScrollDemo   = require('components/ScrollDemo');
-  var DetailView   = require('components/DetailView');
-  var aboutContent = require('components/templates/about');
 
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var Modifier     = require('famous/core/Modifier');
@@ -19,6 +15,8 @@ define(function(require, exports, module) {
   var Surface      = require('famous/core/Surface');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollItem   = require('components/ScrollListItem');
+  var Transform = require('famous/core/Transform');
+
 
   var ShelfView = require('views/ShelfView');
   var LibraryView = require('views/LibraryView');
@@ -220,8 +218,9 @@ define(function(require, exports, module) {
 
     //set up best seller view rendering
     var selectedBook;
-    bestSellerView.on('bestSellerClick', function(data) {
-      selectedBook = this;
+    bestSellerView.on('bestSellerClick', function(book) {
+      selectedBook = book;
+      data = book.content;
       console.log('heard best seller click');
       console.log(data);
       var loaded = false;
@@ -248,7 +247,14 @@ define(function(require, exports, module) {
       bsBookView.on('loadBestSellers', function() {
         console.log('load best sellers');
         app.showPage('Explore');
-        selectedBook._eventOutput.emit('resize');
+        // selectedBook._eventOutput.emit('resize');
+        selectedBook.clicked = false;
+        selectedBook.imageMod.setSize([100, 150], {duration: 1500})
+
+        var that = selectedBook;
+        setTimeout(function() {
+          that.imageMod.transformFrom(Transform.translate(0, 0, 0));
+        }, 1500);
       });
     });
 

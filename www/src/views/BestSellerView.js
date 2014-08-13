@@ -61,7 +61,7 @@ define(function(require, exports, module){
         //fill screen with image
         image.on('click', function() {
           if (!this.clicked) {
-            this.emit('bestSellerClick', this.content);
+            this.emit('bestSellerClick', this);
             this.clicked = true;
             this.imageMod.transformFrom(Transform.translate(0, 0, 1));
             this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut});
@@ -88,14 +88,15 @@ define(function(require, exports, module){
         image.pipe(this);
 
       }
-      this._eventInput.on('bestSellerClick', function(data) {
-        this._eventOutput.emit('bestSellerClick', data);
+      this._eventInput.on('bestSellerClick', function(book) {
+        console.log('book', book);
+        this._eventOutput.emit('bestSellerClick', book);
       }.bind(this));
 
       //listen to resize
-      this._eventOutput.on('resize', function() {
-        console.log('resize image output');
-      });
+      // this._eventOutput.on('resize', function() {
+      //   console.log('resize image output');
+      // });
 
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);
