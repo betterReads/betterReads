@@ -60,6 +60,7 @@ define(function(require, exports, module){
 
         //fill screen with image
         image.on('click', function() {
+          this.emit('bestSellerClick', this.content);
           var that = this;
           if (!this.clicked) {
             that.clicked = true;
@@ -75,7 +76,7 @@ define(function(require, exports, module){
               that.text = new Surface({
                 content: that.content.Title + '<br>' + that.content.Author + '<br><br>' + that.bookData.average_rating[0] + '/5<br><br>' + that.bookData.description[0] + '<br><br>Rank: #' + that.content.Rank,
                 properties: {
-                  size: [undefined, true],
+                  size: [undefined, undefined],
                   textAlign: 'center',
                   backgroundColor: 'white'
                 }
@@ -86,11 +87,11 @@ define(function(require, exports, module){
               that.imageMod.transformFrom(Transform.translate(0, 0, 1));
               that.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut})
 
-              that.text.pipe(that.scroll);
               that.view.add(that.textMod).add(that.text);
               that.scroll.sequenceFrom([that.view]);
               // that.textWrapper.add(that.textMod).add(that.text);
               that.textWrapper.add(that.scroll);
+              that.text.pipe(that.scroll);
               setTimeout(function() {
                 that.textMod.setOpacity(0.8, {duration: 300});
               }, 1300);
@@ -98,7 +99,7 @@ define(function(require, exports, module){
               that.text.parent = that;
               that.text.on('click', function() {
                 //remove surface
-                this.render = function() {
+                this.parent.view.render = function() {
                   return null;
                 };
 
@@ -133,7 +134,11 @@ define(function(require, exports, module){
         listOfItems.push(bookView);
         image.pipe(scrollView);
         image.pipe(this);
+
       }
+      this._eventInput.on('bestSellerClick', function(data) {
+        this._eventOutput.emit('bestSellerClick', data);
+      }.bind(this));
 
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);

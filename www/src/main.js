@@ -29,12 +29,13 @@ define(function(require, exports, module) {
   var BookView = require('views/BookView');
   var WaitingView = require('views/WaitingView');
   var BestSellerView = require('views/BestSellerView');
+  var BSBookView = require('views/BSBookView');
 
   var betterReads = require('./utils/BetterReads');
 
   require('famous/inputs/FastClick');
 
-  var app, libraryView, shelvesView, friendsView, searchView, bookView, bestSellerView;
+  var app, libraryView, shelvesView, friendsView, searchView, bookView, bestSellerView, bsBookView;
 
   var loadApp = new TabTemplate({
     /*  
@@ -213,9 +214,16 @@ define(function(require, exports, module) {
     searchView = new SearchView();
     bookView = new BookView();
     bestSellerView = new BestSellerView();
+    bsBookView = new BSBookView('075640407X', 'http://ecx.images-amazon.com/images/I/51VlKD1aucL.jpg');
 
     searchView.pipe(app.content);
     searchView.pipe(bookView);
+
+    //set up best seller view rendering
+    bestSellerView.on('bestSellerClick', function(data) {
+      console.log('heard best seller click');
+      console.log('args', arguments);
+    });
 
     //set up shelf view rendering
     shelvesView.on('shelfClick', function(shelf) {
@@ -258,7 +266,8 @@ define(function(require, exports, module) {
       footerIconPosition : 3
     }).addPage({
       title              : 'Explore',
-      renderable         : bestSellerView,
+      renderable         : bsBookView,
+      // renderable         : bestSellerView,
       footerIconName     : 'fa-globe',
       footerIconPosition : 4
     }).addPage({
