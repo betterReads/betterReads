@@ -39,7 +39,7 @@ define(function(require, exports, module){
       rotateZ: 0.0,
       translateX: 0.0,
       translateY: 0.0,
-      translateZ: -100.0,
+      translateZ: 0.0,
       depth: 0.0,
       scale: 0.0,
       easing: Easing.outCubic

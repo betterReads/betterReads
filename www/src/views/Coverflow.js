@@ -138,6 +138,7 @@ define(function(require, exports, module) {
         this._scroller.group.add(this._scrollModifier);
         this._scrollAnimation = function(){
             this.setPosition(this._scrollTransitionable.get());
+            this._displacement = this.getAbsolutePosition();
         }.bind(this)
 
         // eventing

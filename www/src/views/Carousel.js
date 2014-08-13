@@ -5,11 +5,12 @@ define(function(require, exports, module) {
     var Transform = require('famous/core/Transform');
     var Utility = require('famous/utilities/Utility');
     var OptionsManager = require('famous/core/OptionsManager');
-    var Scrollview = require('famous/views/Scrollview');
     var GenericSync = require('famous/inputs/GenericSync');
     var ScrollContainer = require('famous/views/ScrollContainer');
     var Easing = require('famous/transitions/Easing');
     var Transitionable = require('famous/transitions/Transitionable');
+    
+    var Coverflow = require('views/Coverflow');
 
     function Carousel(options) {
         this.options = Object.create(Carousel.DEFAULT_OPTIONS);
@@ -18,7 +19,7 @@ define(function(require, exports, module) {
 
         this.id = Entity.register(this);
 
-        this.scrollview = new Scrollview({
+        this.scrollview = new Coverflow({
             margin: this.options.margin,
             direction: this.options.direction
         });
