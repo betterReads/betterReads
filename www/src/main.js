@@ -28,6 +28,7 @@ define(function(require, exports, module) {
   var WaitingView = require('views/WaitingView');
   var BestSellerView = require('views/BestSellerView');
   var BSBookView = require('views/BSBookView');
+  var ShelfTransitionView = require('views/ShelfTransitionView');
 
   var betterReads = require('./utils/BetterReads');
 
@@ -213,6 +214,8 @@ define(function(require, exports, module) {
     bookView = new BookView();
     bestSellerView = new BestSellerView();
 
+    // shelfTransitionView = new ShelfTransitionView();
+
     searchView.pipe(app.content);
     searchView.pipe(bookView);
 
@@ -260,7 +263,10 @@ define(function(require, exports, module) {
 
     //set up shelf view rendering
     shelvesView.on('shelfClick', function(shelf) {
-      var waitingView = new WaitingView();
+      // var waitingView = new WaitingView();
+      var loaded = false;
+      var waitingView = new ShelfTransitionView(shelf);
+
       var currShelf = new LibraryView(shelf.data, true);
       console.log(shelf._matrix)
       app.addPage({
@@ -270,8 +276,21 @@ define(function(require, exports, module) {
         title: 'Loading',
         renderable: waitingView
       }).showPage('Loading');
+
+      //wait to load shelf until after page has loaded and animation has completed
+      setTimeout(function(){
+        if (loaded) {
+          app.showPage('Shelf');
+        } else {
+          loaded = true;
+        }
+      }, 1500);
       currShelf.on('shelfLoaded', function() {
-        app.showPage('Shelf');
+        if (loaded) {
+          app.showPage('Shelf');
+        } else {
+          loaded = true;
+        }
       });
     });
   };
@@ -300,7 +319,7 @@ define(function(require, exports, module) {
       footerIconPosition : 3
     }).addPage({
       title              : 'Explore',
-      // renderable         : bsBookView,
+      // renderable         : shelfTransitionView,
       renderable         : bestSellerView,
       footerIconName     : 'fa-globe',
       footerIconPosition : 4

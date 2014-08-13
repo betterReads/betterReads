@@ -44,8 +44,10 @@ define(function(require, exports, module){
       var scrollView = new ScrollView(this.options);
       var listOfItems = [];
 
+      var background = 'white';
       //add shelf title
       if (shelf) {
+        background = shelf.color;
         var shelfView = new View();
         var shelfSurface = new Surface({
           content: '<b>' + shelf.name + '</b> <font color="#403E39"> ' + shelf.count + ' books </font>',
@@ -53,7 +55,7 @@ define(function(require, exports, module){
           properties: {
             textAlign: 'center',
             padding: '10px',
-            backgroundColor: shelf.color
+            backgroundColor: background
           }
         });
         shelfView.add(shelfSurface);
@@ -74,7 +76,7 @@ define(function(require, exports, module){
           size: [undefined, undefined],
           properties: {
           textAlign: 'right',
-          backgroundColor: 'white'
+          backgroundColor: background
           }
         });
 
