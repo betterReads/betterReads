@@ -16,7 +16,7 @@ define(function(require, exports, module) {
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollItem   = require('components/ScrollListItem');
   var Transform = require('famous/core/Transform');
-
+  var Easing = require('famous/transitions/Easing');
 
   var ShelfView = require('views/ShelfView');
   var LibraryView = require('views/LibraryView');
@@ -254,7 +254,7 @@ define(function(require, exports, module) {
         app.showPage('Explore');
         // selectedBook._eventOutput.emit('resize');
         selectedBook.clicked = false;
-        selectedBook.imageMod.setSize([100, 150], {duration: 1500})
+        selectedBook.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.inOutCubic})
 
         var that = selectedBook;
         setTimeout(function() {

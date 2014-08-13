@@ -81,7 +81,7 @@ define(function(require, exports, module){
             this.emit('bestSellerClick', this);
             this.clicked = true;
             this.imageMod.transformFrom(Transform.translate(0, 0, 1));
-            this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut});
+            this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
           } else {
             this.clicked = false;
             this.imageMod.setSize([100, 150], {duration: 1500})

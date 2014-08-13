@@ -71,12 +71,22 @@ define(function(require, exports, module){
           size: [undefined, 150]
         });
 
+        //truncate title & author
+        var title = books[i].title[0];
+        if (title.length > 70) {
+          title = title.slice(0, 67) + '...';
+        }
+        var author = books[i].authors[0].author[0].name[0];
+        if (author.length > 25) {
+          author = author.slice(0, 22) + '...';
+        }
         var tab = new Surface({
-          content: books[i].title[0] + '<br>' + books[i].authors[0].author[0].name[0] + '<br>Rating: ' + books[i].average_rating + '/5',
+          content: title + '<br>by ' + author + '<br>Rating: ' + books[i].average_rating + '/5',
           size: [undefined, undefined],
           properties: {
-          textAlign: 'right',
-          backgroundColor: background
+            textAlign: 'left',
+            backgroundColor: background,
+            padding: '10px 10px 10px 110px'
           }
         });
 
