@@ -391,7 +391,7 @@ define(function(require, exports, module) {
 
         if (offset) _shiftOrigin.call(this, offset);
 
-        if (Math.abs(this.getVelocity()) < 0.075) {
+        if (Math.abs(this.getVelocity()) < 0.025) {
             this.setVelocity(0);
         }
     }
