@@ -35,7 +35,7 @@ define(function(require, exports, module){
       image.setContent(picUrl);
 
       var opacityMod = new Modifier({
-        opacity: 0.25
+        opacity: 0.2
       });
       this.add(opacityMod).add(image);
 

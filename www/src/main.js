@@ -206,7 +206,7 @@ define(function(require, exports, module) {
       }
     });
 
-    libraryView = new LibraryView('to-read');
+    libraryView = new LibraryView();
     shelvesView = new ShelfView();
     friendsView = new FriendsView();
     searchView = new SearchView();
@@ -263,14 +263,14 @@ define(function(require, exports, module) {
       var waitingView = new WaitingView();
       var currShelf = new LibraryView(shelf, true);
       app.addPage({
-        title: shelf,
+        title: 'Shelf',
         renderable: currShelf
       }).addPage({
         title: 'Loading',
         renderable: waitingView
       }).showPage('Loading');
       currShelf.on('shelfLoaded', function(shelf) {
-        app.showPage(shelf);
+        app.showPage('Shelf');
       });
     });
   };

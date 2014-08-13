@@ -44,8 +44,24 @@ define(function(require, exports, module){
       var scrollView = new ScrollView(this.options);
       var listOfItems = [];
 
+      //add shelf title
+      if (shelf) {
+        var shelfView = new View();
+        var shelfSurface = new Surface({
+          content: '<b>' + shelf + '</b>',
+          size: [undefined, true],
+          properties: {
+            textAlign: 'center',
+            padding: '10px'
+          }
+        });
+        shelfView.add(shelfSurface);
+        shelfSurface.pipe(scrollView);
+        shelfSurface.pipe(this);
+        listOfItems.push(shelfView);
+      }
+
       for (var i = 0; i < books.length; i++) {
-        // var listItem = new ScrollItem(i);
 
         var bookView = new View();
         var bookMod = new StateModifier({
