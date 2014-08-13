@@ -46,28 +46,28 @@ define(function(require, exports, module) {
     };
 
     /**
-     * Carousel will lay out a collection of renderables sequentially in the specified direction, and will
+     * Coverflow will lay out a collection of renderables sequentially in the specified direction, and will
      * allow you to scroll through them with mousewheel or touch events.
-     * @class Carousel
+     * @class Coverflow
      * @constructor
      * @param {Options} [options] An object of configurable options.
      * @param {Number} [options.direction=Utility.Direction.Y] Using the direction helper found in the famous Utility
-     * module, this option will lay out the Carousel instance's renderables either horizontally
+     * module, this option will lay out the Coverflow instance's renderables either horizontally
      * (x) or vertically (y). Utility's direction is essentially either zero (X) or one (Y), so feel free
      * to just use integers as well.
-     * @param {Boolean} [options.rails=true] When true, Carousel's genericSync will only process input in it's primary access.
-     * @param {Number} [clipSize=undefined] The size of the area (in pixels) that Carousel will display content in.
-     * @param {Number} [margin=undefined] The size of the area (in pixels) that Carousel will process renderables' associated calculations in.
+     * @param {Boolean} [options.rails=true] When true, Coverflow's genericSync will only process input in it's primary access.
+     * @param {Number} [clipSize=undefined] The size of the area (in pixels) that Coverflow will display content in.
+     * @param {Number} [margin=undefined] The size of the area (in pixels) that Coverflow will process renderables' associated calculations in.
      * @param {Number} [friction=0.001] Input resistance proportional to the velocity of the input.
-     * Controls the feel of the Carousel instance at low velocities.
+     * Controls the feel of the Coverflow instance at low velocities.
      * @param {Number} [drag=0.0001] Input resistance proportional to the square of the velocity of the input.
-     * Affects Carousel instance more prominently at high velocities.
+     * Affects Coverflow instance more prominently at high velocities.
      * @param {Number} [edgeGrip=0.5] A coefficient for resistance against after-touch momentum.
      * @param {Number} [egePeriod=300] Sets the period on the spring that handles the physics associated
-     * with hitting the end of a Carousel.
+     * with hitting the end of a Coverflow.
      * @param {Number} [edgeDamp=1] Sets the damping on the spring that handles the physics associated
-     * with hitting the end of a Carousel.
-     * @param {Boolean} [paginated=false] A paginated Carousel will scroll through items discretely
+     * with hitting the end of a Coverflow.
+     * @param {Boolean} [paginated=false] A paginated Coverflow will scroll through items discretely
      * rather than continously.
      * @param {Number} [pagePeriod=500] Sets the period on the spring that handles the physics associated
      * with pagination.
@@ -78,9 +78,9 @@ define(function(require, exports, module) {
      * @param {Number} [pageSwitchSpeed=1] The threshold for momentum-based velocity pagination.
      * @param {Number} [speedLimit=10] The highest scrolling speed you can reach.
      */
-    function Carousel(options) {
+    function Coverflow(options) {
         // patch options with defaults
-        this.options = Object.create(Carousel.DEFAULT_OPTIONS);
+        this.options = Object.create(Coverflow.DEFAULT_OPTIONS);
         this._optionsManager = new OptionsManager(this.options);
 
         // create sub-components
@@ -156,7 +156,7 @@ define(function(require, exports, module) {
         if (options) this.setOptions(options);
     }
 
-    Carousel.DEFAULT_OPTIONS = {
+    Coverflow.DEFAULT_OPTIONS = {
         direction: Utility.Direction.X,
         rails: true,
         friction: 0.005,
@@ -416,17 +416,17 @@ define(function(require, exports, module) {
      * @method getCurrentIndex
      * @return {Number} The current index of the ViewSequence
      */
-    Carousel.prototype.getCurrentIndex = function getCurrentIndex() {
+    Coverflow.prototype.getCurrentIndex = function getCurrentIndex() {
         return this._node.index;
     };
 
     /**
-     * goToPreviousPage paginates your Carousel instance backwards by one item.
+     * goToPreviousPage paginates your Coverflow instance backwards by one item.
      *
      * @method goToPreviousPage
      * @return {ViewSequence} The previous node.
      */
-    Carousel.prototype.goToPreviousPage = function goToPreviousPage() {
+    Coverflow.prototype.goToPreviousPage = function goToPreviousPage() {
         if (!this._node || this._onEdge === EdgeStates.TOP) return null;
 
         // if moving back to the current node
@@ -448,12 +448,12 @@ define(function(require, exports, module) {
     };
 
     /**
-     * goToNextPage paginates your Carousel instance forwards by one item.
+     * goToNextPage paginates your Coverflow instance forwards by one item.
      *
      * @method goToNextPage
      * @return {ViewSequence} The next node.
      */
-    Carousel.prototype.goToNextPage = function goToNextPage() {
+    Coverflow.prototype.goToNextPage = function goToNextPage() {
         if (!this._node || this._onEdge === EdgeStates.BOTTOM) return null;
         var nextNode = this._node.getNext();
         if (nextNode) {
@@ -466,7 +466,7 @@ define(function(require, exports, module) {
         return nextNode;
     };
 
-    Carousel.prototype.snapCurrentPage = function snapCurrentPage() {
+    Coverflow.prototype.snapCurrentPage = function snapCurrentPage() {
         this._scrollTransitionable.set(this.getPosition());
         this._scrollModifier.transformFrom(this._scrollAnimation);
         this._scrollTransitionable.set(0, {
@@ -479,11 +479,11 @@ define(function(require, exports, module) {
     }
 
     /**
-     * Paginates the Carousel to an absolute page index.
+     * Paginates the Coverflow to an absolute page index.
      *
      * @method goToPage
      */
-    Carousel.prototype.goToPage = function goToPage(index) {
+    Coverflow.prototype.goToPage = function goToPage(index) {
         var currentIndex = this.getCurrentIndex();
         var i;
 
@@ -502,96 +502,96 @@ define(function(require, exports, module) {
         }
     };
 
-    Carousel.prototype.outputFrom = function outputFrom() {
+    Coverflow.prototype.outputFrom = function outputFrom() {
         return this._scroller.outputFrom.apply(this._scroller, arguments);
     };
 
     /**
-     * Returns the position associated with the Carousel instance's current node
+     * Returns the position associated with the Coverflow instance's current node
      *  (generally the node currently at the top).
      *
      * @deprecated
      * @method getPosition
      * @param {number} [node] If specified, returns the position of the node at that index in the
-     * Carousel instance's currently managed collection.
-     * @return {number} The position of either the specified node, or the Carousel's current Node,
+     * Coverflow instance's currently managed collection.
+     * @return {number} The position of either the specified node, or the Coverflow's current Node,
      * in pixels translated.
      */
-    Carousel.prototype.getPosition = function getPosition() {
+    Coverflow.prototype.getPosition = function getPosition() {
         return this._particle.getPosition1D();
     };
 
     /**
-     * Returns the absolute position associated with the Carousel instance
+     * Returns the absolute position associated with the Coverflow instance
      *
      * @method getAbsolutePosition
-     * @return {number} The position of the Carousel's current Node,
+     * @return {number} The position of the Coverflow's current Node,
      * in pixels translated.
      */
-    Carousel.prototype.getAbsolutePosition = function getAbsolutePosition() {
+    Coverflow.prototype.getAbsolutePosition = function getAbsolutePosition() {
         return this._node._.cumulativeSizes[this.getCurrentIndex()][this.options.direction] + this.getPosition();
     };
 
     /**
-     * Returns the offset associated with the Carousel instance's current node
+     * Returns the offset associated with the Coverflow instance's current node
      *  (generally the node currently at the top).
      *
      * @method getOffset
      * @param {number} [node] If specified, returns the position of the node at that index in the
-     * Carousel instance's currently managed collection.
-     * @return {number} The position of either the specified node, or the Carousel's current Node,
+     * Coverflow instance's currently managed collection.
+     * @return {number} The position of either the specified node, or the Coverflow's current Node,
      * in pixels translated.
      */
-    Carousel.prototype.getOffset = Carousel.prototype.getPosition;
+    Coverflow.prototype.getOffset = Coverflow.prototype.getPosition;
 
     /**
-     * Sets the position of the physics particle that controls Carousel instance's "position"
+     * Sets the position of the physics particle that controls Coverflow instance's "position"
      *
      * @deprecated
      * @method setPosition
-     * @param {number} x The amount of pixels you want your Carousel to progress by.
+     * @param {number} x The amount of pixels you want your Coverflow to progress by.
      */
-    Carousel.prototype.setPosition = function setPosition(x) {
+    Coverflow.prototype.setPosition = function setPosition(x) {
         this._particle.setPosition1D(x);
     };
 
     /**
-     * Sets the offset of the physics particle that controls Carousel instance's "position"
+     * Sets the offset of the physics particle that controls Coverflow instance's "position"
      *
      * @method setPosition
-     * @param {number} x The amount of pixels you want your Carousel to progress by.
+     * @param {number} x The amount of pixels you want your Coverflow to progress by.
      */
-    Carousel.prototype.setOffset = Carousel.prototype.setPosition;
+    Coverflow.prototype.setOffset = Coverflow.prototype.setPosition;
 
     /**
-     * Returns the Carousel instance's velocity.
+     * Returns the Coverflow instance's velocity.
      *
      * @method getVelocity
      * @return {Number} The velocity.
      */
 
-    Carousel.prototype.getVelocity = function getVelocity() {
+    Coverflow.prototype.getVelocity = function getVelocity() {
         return this._touchCount ? this._touchVelocity : this._particle.getVelocity1D();
     };
 
     /**
-     * Sets the Carousel instance's velocity. Until affected by input or another call of setVelocity
-     *  the Carousel instance will scroll at the passed-in velocity.
+     * Sets the Coverflow instance's velocity. Until affected by input or another call of setVelocity
+     *  the Coverflow instance will scroll at the passed-in velocity.
      *
      * @method setVelocity
      * @param {number} v The magnitude of the velocity.
      */
-    Carousel.prototype.setVelocity = function setVelocity(v) {
+    Coverflow.prototype.setVelocity = function setVelocity(v) {
         this._particle.setVelocity1D(v);
     };
 
     /**
-     * Patches the Carousel instance's options with the passed-in ones.
+     * Patches the Coverflow instance's options with the passed-in ones.
      *
      * @method setOptions
-     * @param {Options} options An object of configurable options for the Carousel instance.
+     * @param {Options} options An object of configurable options for the Coverflow instance.
      */
-    Carousel.prototype.setOptions = function setOptions(options) {
+    Coverflow.prototype.setOptions = function setOptions(options) {
         // preprocess custom options
         if (options.direction !== undefined) {
             if (options.direction === 'x') options.direction = Utility.Direction.X;
@@ -631,27 +631,27 @@ define(function(require, exports, module) {
     };
 
     /**
-     * Sets the collection of renderables under the Carousel instance's control, by
+     * Sets the collection of renderables under the Coverflow instance's control, by
      *  setting its current node to the passed in ViewSequence. If you
-     *  pass in an array, the Carousel instance will set its node as a ViewSequence instantiated with
+     *  pass in an array, the Coverflow instance will set its node as a ViewSequence instantiated with
      *  the passed-in array.
      *
      * @method sequenceFrom
      * @param {Array|ViewSequence} node Either an array of renderables or a Famous viewSequence.
      */
-    Carousel.prototype.sequenceFrom = function sequenceFrom(node) {
+    Coverflow.prototype.sequenceFrom = function sequenceFrom(node) {
         if (node instanceof Array) node = new ViewSequence({array: node, trackSize: true});
         this._node = node;
         return this._scroller.sequenceFrom(node);
     };
 
     /**
-     * Returns the width and the height of the Carousel instance.
+     * Returns the width and the height of the Coverflow instance.
      *
      * @method getSize
-     * @return {Array} A two value array of the Carousel instance's current width and height (in that order).
+     * @return {Array} A two value array of the Coverflow instance's current width and height (in that order).
      */
-    Carousel.prototype.getSize = function getSize() {
+    Coverflow.prototype.getSize = function getSize() {
         return this._scroller.getSize.apply(this._scroller, arguments);
     };
 
@@ -662,7 +662,7 @@ define(function(require, exports, module) {
      * @method render
      * @return {number} Render spec for this component
      */
-    Carousel.prototype.render = function render() {
+    Coverflow.prototype.render = function render() {
         if (this.options.paginated && this._needsPaginationCheck)
             _handlePagination.call(this);
 
@@ -679,5 +679,5 @@ define(function(require, exports, module) {
         return this._scroller.render();
     };
 
-    module.exports = Carousel;
+    module.exports = Coverflow;
 });
