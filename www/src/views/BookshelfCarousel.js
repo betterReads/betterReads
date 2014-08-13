@@ -5,6 +5,7 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var Transform = require('famous/core/Transform');
   var Modifier = require('famous/core/Modifier');
+  var ContainerSurface = require('famous/surfaces/ContainerSurface');
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var SequentialLayout = require('famous/views/SequentialLayout');
 
@@ -25,6 +26,9 @@ define(function(require, exports, module){
   };
 
   function _addCarousel(){
+    this.bookshelfContainer = new ContainerSurface();
+    this.bookshelfContainer.context.setPerspective(500);
+
     var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
     var coverCenter = this.options.coverSize[0]/2;
     this.bookshelf = new Coverflow({
@@ -33,18 +37,27 @@ define(function(require, exports, module){
     });
 
     var cover;
-    var coverSurfaces = [];
+    var coverViews = [];
     for(var i = 0; i < this.options.covers.length; i++){
+      var coverView = new View();
+
+      var coverModifier = new StateModifier({
+        transform: Transform.rotateY(0.15*Math.PI)
+      });
+
       cover = new ImageSurface({
         size: this.options.coverSize,
         content: this.options.covers[i]
       });
-      coverSurfaces.push(cover);
+
+      coverView.add(coverModifier).add(cover);
+
+      coverViews.push(coverView);
 
       cover.pipe(this.bookshelf);
       cover.pipe(this);
     }
-    this.bookshelf.sequenceFrom(coverSurfaces);
+    this.bookshelf.sequenceFrom(coverViews);
 
     this.bookshelfModifier = new StateModifier({
       size: [window.innerWidth, 150],
@@ -53,7 +66,8 @@ define(function(require, exports, module){
       transform: Transform.translate(0, 0, 0)
     });
 
-    this.add(this.bookshelfModifier).add(this.bookshelf);
+    this.add(this.bookshelfContainer);
+    this.bookshelfContainer.add(this.bookshelfModifier).add(this.bookshelf);
   }
 
   module.exports = BookshelfCarousel;

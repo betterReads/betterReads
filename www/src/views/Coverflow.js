@@ -467,7 +467,6 @@ define(function(require, exports, module) {
     };
 
     Carousel.prototype.snapCurrentPage = function snapCurrentPage() {
-        // this.setPosition(0);
         this._scrollTransitionable.set(this.getPosition());
         this._scrollModifier.transformFrom(this._scrollAnimation);
         this._scrollTransitionable.set(0, {
@@ -475,6 +474,7 @@ define(function(require, exports, module) {
             easing: 'easeIn'
         }, function(){
             this._scrollModifier.transformFrom(undefined);
+            console.log('focus on', this.getCurrentIndex());
         }.bind(this));
     }
 
