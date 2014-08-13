@@ -49,7 +49,7 @@ define(function(require, exports, module){
       });
       var scroll = new ScrollView();
       var text = new Surface({
-        content: '<a href="' + link + '">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+        content: '<a href="' + link + '" target="_blank">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
         properties: {
           size: [undefined, undefined],
           textAlign: 'center',
