@@ -252,8 +252,9 @@ define(function(require, exports, module) {
       bsBookView.on('loadBestSellers', function() {
         console.log('load best sellers');
         app.showPage('Explore');
-        // selectedBook._eventOutput.emit('resize');
         selectedBook.clicked = false;
+
+        selectedBook.imageMod.setTransform(Transform.translate(0, 0, 1), {duration: 1500, curve: Easing.inOutCubic});
         selectedBook.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.inOutCubic})
 
         var that = selectedBook;

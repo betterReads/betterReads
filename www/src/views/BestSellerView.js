@@ -29,7 +29,8 @@ define(function(require, exports, module){
     .then(function(books) {
       console.log(books);
       var scrollView = new ScrollView({
-        detailSize: [undefined, true]
+        detailSize: [undefined, true],
+        margin: 5000
       });
       var listOfItems = [];
 
@@ -76,22 +77,28 @@ define(function(require, exports, module){
         });
 
         //fill screen with image
-        image.on('click', function() {
-          if (!this.clicked) {
-            this.emit('bestSellerClick', this);
-            this.clicked = true;
-            this.imageMod.transformFrom(Transform.translate(0, 0, 1));
-            this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
-          } else {
-            this.clicked = false;
-            this.imageMod.setSize([100, 150], {duration: 1500})
+        (function(i) {
+          image.on('click', function() {
+            if (!this.clicked) {
+              // console.log(Transform.getTranslate());
+              console.log('scroll', scrollView);
+              this.emit('bestSellerClick', this);
+              this.clicked = true;
+              this.imageMod.transformFrom(Transform.translate(0, 0, 1));
+              this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._edgeSpringPosition), 0), {duration: 1500, curve: Easing.inOutCubic});
 
-            var that = this;
-            setTimeout(function() {
-              that.imageMod.transformFrom(Transform.translate(0, 0, 0));
-            }, 1500);
-          }
-        });
+              this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
+            } else {
+              this.clicked = false;
+              this.imageMod.setSize([100, 150], {duration: 1500})
+
+              var that = this;
+              setTimeout(function() {
+                that.imageMod.transformFrom(Transform.translate(0, 0, 0));
+              }, 1500);
+            }
+          });
+        })(i);
 
         var bookWrapper = bookView.add(bookMod);
         image.textWrapper = bookWrapper.add(image.imageMod);
