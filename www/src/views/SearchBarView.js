@@ -61,8 +61,8 @@ define(function(require, exports, module){
       properties: {
         textAlign: 'center',
         lineHeight: 2.5,
-        backgroundColor: 'white',
-        color: '#0096B3',
+        backgroundColor: '#0096B3',
+        color: 'white',
         cursor: 'pointer',
       }
     });

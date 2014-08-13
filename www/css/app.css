@@ -73,8 +73,14 @@ body {
 	border-top: 1px solid #CCCCCC;
 }
 
+.header-title {
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+}
+
 .header-background {
-    background-color: #FFFFFF;
+  background-color: #FFFFFF;
 	border-bottom: 1px solid #CCCCCC;
 }
 

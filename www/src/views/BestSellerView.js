@@ -32,6 +32,23 @@ define(function(require, exports, module){
         detailSize: [undefined, true]
       });
       var listOfItems = [];
+
+      var titleView = new View();
+      var titleSurface = new Surface({
+        content: '<b>USA Today Best Sellers</b>',
+        size: [undefined, true],
+        properties: {
+          textAlign: 'center',
+          padding: '3px',
+          color: 'white',
+          backgroundColor: '#0096B3'
+        }
+      });
+      titleView.add(titleSurface);
+      listOfItems.push(titleView);
+      titleSurface.pipe(this);
+      titleSurface.pipe(scrollView);
+
       var parent = this;
       for (var i = 0; i < books.length; i++) {
         var bookView = new View();
@@ -45,7 +62,7 @@ define(function(require, exports, module){
           properties: {
             textAlign: 'right',
             backgroundColor: 'white',
-            paddingRight: '10px'
+            padding: '10px 10px 10px 110px'
           }
         });
 
@@ -75,8 +92,6 @@ define(function(require, exports, module){
             }, 1500);
           }
         });
-
-
 
         var bookWrapper = bookView.add(bookMod);
         image.textWrapper = bookWrapper.add(image.imageMod);

@@ -47,7 +47,8 @@ define(function(require, exports, module) {
     */
     layoutOptions: {
       direction: Utility.Direction.Y,
-      headerSize: 56,
+      headerSize: 40,
+      // headerSize: 56,
       footerSize: 60
     },
 
@@ -133,7 +134,8 @@ define(function(require, exports, module) {
       */
       layoutOptions: {
         direction: Utility.Direction.Y,
-        headerSize: 56,
+        headerSize: 40,
+        // headerSize: 56,
         footerSize: 60
       },
 
