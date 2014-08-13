@@ -19,6 +19,10 @@ define(function(require, exports, module) {
     var CoverflowScroller = require('views/CoverflowScroller');
     var Utility = require('famous/utilities/Utility');
 
+    var Modifier = require('famous/core/Modifier');
+    var Transform = require('famous/core/Transform');
+    var Transitionable = require('famous/transitions/Transitionable');
+
     var GenericSync = require('famous/inputs/GenericSync');
     var ScrollSync = require('famous/inputs/ScrollSync');
     var TouchSync = require('famous/inputs/TouchSync');
@@ -125,6 +129,16 @@ define(function(require, exports, module) {
 
         // subcomponent logic
         this._scroller.positionFrom(this.getPosition.bind(this));
+
+        // setting up transitionables for custom animations
+        this._scrollTransitionable = new Transitionable(0);
+        this._scrollModifier = new Modifier({
+            transform: undefined
+        });
+        this._scroller.group.add(this._scrollModifier);
+        this._scrollAnimation = function(){
+            this.setPosition(this._scrollTransitionable.get());
+        }.bind(this)
 
         // eventing
         this._eventInput = new EventHandler();
@@ -376,6 +390,10 @@ define(function(require, exports, module) {
         }
 
         if (offset) _shiftOrigin.call(this, offset);
+
+        if (this.getVelocity() < 0.05) {
+            this.setVelocity(0);
+        }
     }
 
     function _shiftOrigin(amount) {
@@ -449,7 +467,15 @@ define(function(require, exports, module) {
     };
 
     Carousel.prototype.snapCurrentPage = function snapCurrentPage() {
-        this.setPosition(0);
+        // this.setPosition(0);
+        this._scrollTransitionable.set(this.getPosition());
+        this._scrollModifier.transformFrom(this._scrollAnimation);
+        this._scrollTransitionable.set(0, {
+            duration: 100,
+            easing: 'easeIn'
+        }, function(){
+            this._scrollModifier.transformFrom(undefined);
+        }.bind(this));
     }
 
     /**
