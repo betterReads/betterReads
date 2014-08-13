@@ -48,10 +48,10 @@ define(function(require, exports, module){
 
 
         // set up event listener to populate library view based on shelf clicked
-        tab.data = books[i].name[0];
+        tab.data = {name: books[i].name[0], color: colors[i%2], count: books[i].book_count[0]._};
         listOfItems.push(tab);
         tab.on('click', function() {
-          tab.emit('shelfClick', this.data);
+          tab.emit('shelfClick', this);
           //create new view to display books from this shelf
           // var shelfView = new LibraryView(this.data);
         });

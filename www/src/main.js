@@ -261,7 +261,8 @@ define(function(require, exports, module) {
     //set up shelf view rendering
     shelvesView.on('shelfClick', function(shelf) {
       var waitingView = new WaitingView();
-      var currShelf = new LibraryView(shelf, true);
+      var currShelf = new LibraryView(shelf.data, true);
+      console.log(shelf._matrix)
       app.addPage({
         title: 'Shelf',
         renderable: currShelf
@@ -269,7 +270,7 @@ define(function(require, exports, module) {
         title: 'Loading',
         renderable: waitingView
       }).showPage('Loading');
-      currShelf.on('shelfLoaded', function(shelf) {
+      currShelf.on('shelfLoaded', function() {
         app.showPage('Shelf');
       });
     });

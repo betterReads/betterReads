@@ -22,7 +22,7 @@ define(function(require, exports, module){
 
   function _addBooks(shelf, autoload){
     if (shelf) {
-      var params = {id: '4067289', shelf: shelf, page: 1, per_page: 50};
+      var params = {id: '4067289', shelf: shelf.name, page: 1, per_page: 50};
     } else {
       var params = {id: '4067289', page: 1, per_page: 50, sort: 'position'};
     }
@@ -48,11 +48,12 @@ define(function(require, exports, module){
       if (shelf) {
         var shelfView = new View();
         var shelfSurface = new Surface({
-          content: '<b>' + shelf + '</b>',
+          content: '<b>' + shelf.name + '</b> <font color="#403E39"> ' + shelf.count + ' books </font>',
           size: [undefined, true],
           properties: {
             textAlign: 'center',
-            padding: '10px'
+            padding: '10px',
+            backgroundColor: shelf.color
           }
         });
         shelfView.add(shelfSurface);
