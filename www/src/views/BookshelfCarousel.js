@@ -32,20 +32,23 @@ define(function(require, exports, module){
     this.bookshelfContainer = new ContainerSurface();
     this.bookshelfContainer.context.setPerspective(500);
 
+    var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
+    var coverCenter = this.options.coverSize[0]/2;
+
     this.bookshelf = new Carousel({
+      screenCenter: screenCenter,
+      coverCenter: coverCenter,
       margin: 5000,
       rotateX: 0.0,
       rotateY: 0.0,
       rotateZ: 0.0,
       translateX: 0.0,
       translateY: 0.0,
-      translateZ: 0.0,
+      translateZ: -100.0,
       depth: 0.0,
       scale: 0.0,
       easing: Easing.outCubic
     });
-
-    // this.bookshelf.options.translateZ = 5000;
 
     for(var i = 0; i < this.options.covers.length; i++){
       var cover = new ImageSurface({
@@ -65,8 +68,6 @@ define(function(require, exports, module){
     this.add(this.bookshelfContainer);
     this.bookshelfContainer.add(this.bookshelf);
 
-    // var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
-    // var coverCenter = this.options.coverSize[0]/2;
     // this.bookshelf = new Coverflow({
     //   screenCenter: screenCenter,
     //   coverCenter: coverCenter

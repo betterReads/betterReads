@@ -20,6 +20,8 @@ define(function(require, exports, module) {
         this.id = Entity.register(this);
 
         this.scrollview = new Coverflow({
+            screenCenter: this.options.screenCenter,
+            coverCenter: this.options.coverCenter,
             margin: this.options.margin,
             direction: this.options.direction
         });
@@ -43,6 +45,8 @@ define(function(require, exports, module) {
     Carousel.DIRECTION_Y = 1;
 
     Carousel.DEFAULT_OPTIONS = {
+        screenCenter: 0,
+        coverCenter: 0,
         direction: Carousel.DIRECTION_X,
         items: []
     };
