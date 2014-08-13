@@ -15,8 +15,7 @@ define(function(require, exports, module){
 
   function BSBookView(isbn, picUrl, autoload){
     View.apply(this, arguments);
-    _addPicture.call(this, picUrl);
-    _addDetail.call(this, isbn, autoload);
+    _addDetail.call(this, isbn, picUrl, autoload);
   }
 
   BSBookView.prototype = Object.create(View.prototype);
@@ -24,56 +23,44 @@ define(function(require, exports, module){
 
   BSBookView.DEFAULT_OPTIONS = {};
 
-  function _addPicture(picUrl) {
-    var image = new ImageSurface({
-      size: [320, 480],
-      origin: [0, 0],
-      align: [0, 0]
-    });
-    image.setContent(picUrl);
-
-    this.add(image);
-
-    var opacityMod = new Modifier({
-      opacity: 0.7
-    });
-    var white = new Surface({
-      size: [320, 480],
-      origin: [0, 0],
-      align: [0, 0],
-      properties: {
-        backgroundColor: 'white',
-      }
-    });
-    this.add(opacityMod).add(white);
-
-  }
-
-  function _addDetail(isbn, autoload){
+  function _addDetail(isbn, picUrl, autoload){
     betterReads.getBookDetail({isbn: isbn}).then(function(data) {
       var bookData = JSON.parse(data);
 
+      var image = new ImageSurface({
+        size: [320, 480],
+        origin: [0, 0],
+        align: [0, 0]
+      });
+      image.setContent(picUrl);
+
+      var opacityMod = new Modifier({
+        opacity: 0.25
+      });
+      this.add(opacityMod).add(image);
+
       console.log(bookData);
       var view = new View({
-        size: [undefined, true]
+        size: [undefined, true],
+        detailSize: [undefined, true]
       });
-      console.log(view);
       var scroll = new ScrollView({
-        clipSize: 350
+        margin: 200
       });
+      var scroll = new ScrollView();
       var text = new Surface({
         content: bookData.title[0] + '<br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
         properties: {
+          size: [undefined, undefined],
           textAlign: 'center',
-          // backgroundColor: 'white',
           padding: '20px'
         }
       });
       var textMod = new Modifier({
-        opacity: 1.0
+        opacity: 1.0,
+        transform: Transform.translate(0, 0, 1)
       });
       view.add(textMod).add(text);
-      console.log('size', view.getSize());
       scroll.sequenceFrom([view]);
 
       text.pipe(scroll);

@@ -60,59 +60,11 @@ define(function(require, exports, module){
 
         //fill screen with image
         image.on('click', function() {
-          this.emit('bestSellerClick', this.content);
-          var that = this;
           if (!this.clicked) {
-            that.clicked = true;
-            //get book detail
-            betterReads.getBookDetail({isbn: that.content.ISBN}).then(function(data) {
-              that.bookData = JSON.parse(data);
-
-              console.log(that.bookData);
-              that.view = new View({
-                detailSize: [undefined, true]
-              });
-              that.scroll = new ScrollView(parent.options);
-              that.text = new Surface({
-                content: that.content.Title + '<br>' + that.content.Author + '<br><br>' + that.bookData.average_rating[0] + '/5<br><br>' + that.bookData.description[0] + '<br><br>Rank: #' + that.content.Rank,
-                properties: {
-                  size: [undefined, undefined],
-                  textAlign: 'center',
-                  backgroundColor: 'white'
-                }
-              });
-              that.textMod = new Modifier({
-                opacity: 0
-              });
-              that.imageMod.transformFrom(Transform.translate(0, 0, 1));
-              that.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut})
-
-              that.view.add(that.textMod).add(that.text);
-              that.scroll.sequenceFrom([that.view]);
-              // that.textWrapper.add(that.textMod).add(that.text);
-              that.textWrapper.add(that.scroll);
-              that.text.pipe(that.scroll);
-              setTimeout(function() {
-                that.textMod.setOpacity(0.8, {duration: 300});
-              }, 1300);
-
-              that.text.parent = that;
-              that.text.on('click', function() {
-                //remove surface
-                this.parent.view.render = function() {
-                  return null;
-                };
-
-                this.parent.clicked = false;
-                this.parent.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.easeOutBounce})
-
-                var _this = this;
-                setTimeout(function() {
-                  _this.parent.imageMod.transformFrom(Transform.translate(0, 0, 0));
-                }, 1500);
-              });
-
-            });
+            this.emit('bestSellerClick', this.content);
+            this.clicked = true;
+            this.imageMod.transformFrom(Transform.translate(0, 0, 1));
+            this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.easeInOut});
           } else {
             this.clicked = false;
             this.imageMod.setSize([100, 150], {duration: 1500})

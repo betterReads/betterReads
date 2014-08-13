@@ -214,7 +214,6 @@ define(function(require, exports, module) {
     searchView = new SearchView();
     bookView = new BookView();
     bestSellerView = new BestSellerView();
-    bsBookView = new BSBookView('075640407X', 'http://ecx.images-amazon.com/images/I/51VlKD1aucL.jpg');
 
     searchView.pipe(app.content);
     searchView.pipe(bookView);
@@ -222,7 +221,13 @@ define(function(require, exports, module) {
     //set up best seller view rendering
     bestSellerView.on('bestSellerClick', function(data) {
       console.log('heard best seller click');
-      console.log('args', arguments);
+      var bsBookView = new BSBookView(data.ISBN, data.URL);
+      setTimeout(function() {
+        app.addPage({
+          title: 'Best Seller',
+          renderable: bsBookView
+        }).showPage('Best Seller');
+      }, 3000);
     });
 
     //set up shelf view rendering
@@ -266,8 +271,8 @@ define(function(require, exports, module) {
       footerIconPosition : 3
     }).addPage({
       title              : 'Explore',
-      renderable         : bsBookView,
-      // renderable         : bestSellerView,
+      // renderable         : bsBookView,
+      renderable         : bestSellerView,
       footerIconName     : 'fa-globe',
       footerIconPosition : 4
     }).addPage({
