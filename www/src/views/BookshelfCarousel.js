@@ -9,6 +9,7 @@ define(function(require, exports, module){
   var ContainerSurface = require('famous/surfaces/ContainerSurface');
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var Easing = require('famous/transitions/Easing');
+  var Transitionable = require('famous/transitions/Transitionable');
   var SequentialLayout = require('famous/views/SequentialLayout');
 
   var Coverflow = require('views/Coverflow');
@@ -20,14 +21,10 @@ define(function(require, exports, module){
     this.focusBook = 0;
     this.focusTransition = {duration: 100, curve: Easing.outCubic};
     this.focusAnimation = function(book){
-      console.log(book);
-      book.cover.setTransform(Transform.rotateY(0.25 * Math.PI), this.focusTransition);
-      book.spine.setTransform(Transform.rotateY(-0.25 * Math.PI), this.focusTransition);
-      // book.label.setTransform(Transform.setOpacity(1), this.focusTransition);
+      book.focus.set(1, this.focusTransition);
     };
     this.unfocusAnimation = function(book){
-      book.cover.setTransform(Transform.rotateY(0), this.focusTransition);
-      book.spine.setTransform(Transform.rotateY(-0.5 * Math.PI), this.focusTransition);
+      book.focus.set(0, this.focusTransition);
     };
 
     _addCarousel.call(this);
@@ -67,13 +64,18 @@ define(function(require, exports, module){
     this.books = [];
     for(var i = 0; i < this.options.covers.length; i++){
       var nodeView = new View();
+      var focusTransition = new Transitionable(0);
 
       var cover = new ImageSurface({
         size: this.options.coverSize,
         content: this.options.covers[i]
       });
-      var coverAnimator = new Modifier();
-
+      var coverAnimator = new Modifier({
+        transform: function (trans){
+          var angle = ((trans.get()) * (0.25) * (Math.PI));
+          return Transform.rotateY(angle);
+        }.bind(null, focusTransition)
+      });
 
       var spine = new Surface({
         size: [20, 150],
@@ -83,7 +85,10 @@ define(function(require, exports, module){
         }
       });
       var spineAnimator = new Modifier({
-        transform: Transform.rotateY(-0.5 * Math.PI)
+        transform: function(trans){
+          var angle = ((1 - trans.get()) * (-0.25) * (Math.PI)) - (0.25 * Math.PI);
+          return Transform.rotateY(angle);
+        }.bind(null, focusTransition)
       });
 
       nodeView.add(new Modifier({origin: [0, 0.5], align: [0, 0]})).add(coverAnimator).add(cover);
@@ -106,8 +111,7 @@ define(function(require, exports, module){
         .add(nodeView);
       cover.pipe(this.bookshelf);
       this.books.push({
-        cover: coverAnimator,
-        spine: spineAnimator
+        focus: focusTransition
       });
       this.bookshelf.items.push(renderNode);
     }
