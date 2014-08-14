@@ -91,8 +91,23 @@ define(function(require, exports, module){
         }.bind(null, focusTransition)
       });
 
+      var title = new Surface({
+        size: [undefined, true],
+        content: 'THIS IS A TITLE',
+        properties: {
+          textAlign: 'center'
+        }
+      });
+      var titleAnimator = new Modifier({
+        // opacity: function(trans){
+          // return trans.get();
+        // }.bind(null, focusTransition)
+        opacity: 1
+      });
+
       nodeView.add(new Modifier({origin: [0, 0.5], align: [0, 0]})).add(coverAnimator).add(cover);
       nodeView.add(new Modifier({origin: [1, 0.5], align: [0, 0]})).add(spineAnimator).add(spine);
+      nodeView.add(new Modifier({origin: [0.5, 0.5], align: [0.5, 1]})).add(titleAnimator).add(title);
       
       var sizeModifier = new Modifier({
         size: this.options.coverSize
