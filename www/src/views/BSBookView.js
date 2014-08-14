@@ -29,15 +29,32 @@ define(function(require, exports, module){
       if (data==='book not found') {
         console.log('book not found');
 
-        var  text = new Surface({
-          content: 'book not found',
+        var image = new ImageSurface({
+          size: [320, 480],
+          origin: [0, 0],
+          align: [0, 0]
+        });
+        image.setContent(picUrl);
+
+        var opacityMod = new Modifier({
+          opacity: 0.2
+        });
+        this.add(opacityMod).add(image);
+
+        var text = new Surface({
+          content: 'Book detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
             padding: '20px'
           }
         });
-        this.add(text);
+
+        var textMod = new Modifier({
+          opacity: 1.0,
+          transform: Transform.translate(0, 0, 1)
+        });
+        this.add(textMod).add(text);        
 
       } else {        
         var bookData = JSON.parse(data);
