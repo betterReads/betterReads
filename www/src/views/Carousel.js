@@ -88,7 +88,7 @@ define(function(require, exports, module) {
         var to = Math.min(nodeIndex + maxItemsInScreen + 50, this.items.length );
 
         var offset = this.scrollview._displacement;- (itemWidth * nodeIndex);
-        offset = offset + halfScrollerWidth - (itemWidth /2);
+        // offset = offset + halfScrollerWidth - (itemWidth /2);
         var absOffset = Math.abs(offset);
 
         var max = 0;
