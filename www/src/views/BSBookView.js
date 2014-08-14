@@ -25,46 +25,62 @@ define(function(require, exports, module){
 
   function _addDetail(isbn, picUrl, link, autoload){
     betterReads.getBookDetail({isbn: isbn}).then(function(data) {
-      var bookData = JSON.parse(data);
+      //handle bad requests
+      if (data==='book not found') {
+        console.log('book not found');
 
-      var image = new ImageSurface({
-        size: [320, 480],
-        origin: [0, 0],
-        align: [0, 0]
-      });
-      image.setContent(picUrl);
+        var  text = new Surface({
+          content: 'book not found',
+          properties: {
+            size: [undefined, undefined],
+            textAlign: 'center',
+            padding: '20px'
+          }
+        });
+        this.add(text);
 
-      var opacityMod = new Modifier({
-        opacity: 0.2
-      });
-      this.add(opacityMod).add(image);
+      } else {        
+        var bookData = JSON.parse(data);
 
-      console.log(bookData);
-      var view = new View({
-        size: [undefined, true],
-        detailSize: [undefined, true]
-      });
-      var scroll = new ScrollView({
-        margin: 200
-      });
-      var scroll = new ScrollView();
-      var text = new Surface({
-        content: '<a href="' + link + '" target="_blank">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
-        properties: {
-          size: [undefined, undefined],
-          textAlign: 'center',
-          padding: '20px'
-        }
-      });
-      var textMod = new Modifier({
-        opacity: 1.0,
-        transform: Transform.translate(0, 0, 1)
-      });
-      view.add(textMod).add(text);
-      scroll.sequenceFrom([view]);
+        var image = new ImageSurface({
+          size: [320, 480],
+          origin: [0, 0],
+          align: [0, 0]
+        });
+        image.setContent(picUrl);
 
-      text.pipe(scroll);
-      this.add(scroll);
+        var opacityMod = new Modifier({
+          opacity: 0.2
+        });
+        this.add(opacityMod).add(image);
+
+        console.log(bookData);
+        var view = new View({
+          size: [undefined, true],
+          detailSize: [undefined, true]
+        });
+        var scroll = new ScrollView({
+          margin: 200
+        });
+        var scroll = new ScrollView();
+        var text = new Surface({
+          content: '<a href="' + link + '" target="_blank">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+          properties: {
+            size: [undefined, undefined],
+            textAlign: 'center',
+            padding: '20px'
+          }
+        });
+        var textMod = new Modifier({
+          opacity: 1.0,
+          transform: Transform.translate(0, 0, 1)
+        });
+        view.add(textMod).add(text);
+        scroll.sequenceFrom([view]);
+
+        text.pipe(scroll);
+        this.add(scroll);
+      }
       var that = this;
       text.on('click', function() {
         that._eventOutput.emit('loadBestSellers');

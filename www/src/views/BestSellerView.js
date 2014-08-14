@@ -90,12 +90,13 @@ define(function(require, exports, module){
               this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
             } else {
               this.clicked = false;
-              this.imageMod.setSize([100, 150], {duration: 1500})
+              this.imageMod.setTransform(Transform.translate(0, 0, 1), {duration: 1500, curve: Easing.inOutCubic});
+              this.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.inOutCubic})
 
               var that = this;
               setTimeout(function() {
                 that.imageMod.transformFrom(Transform.translate(0, 0, 0));
-              }, 1500);
+              }, 1500);            
             }
           });
         })(i);

@@ -340,6 +340,10 @@ define(function(require, exports, module) {
       // TO RUN ON DEVICE, INITIALIZE CONTEXT AND APP IN HERE
     }
 
+    // turn these on to adjust opacity transitions
+    // app.content.content.inOpacityFrom(function () { return 1; });
+    // app.content.content.outOpacityFrom(function () { return 0; });
+
     //remove login elements
     var oldElements = document.getElementsByClassName('preLoad');
     while (oldElements.length) {

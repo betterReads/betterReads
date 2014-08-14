@@ -33,7 +33,8 @@ define(function(require, exports, module){
 
   BetterReads.getBookDetail = function(params){
     return reqwest({
-      url: 'https://betterreadsapi.azurewebsites.net/bookDetail',
+      url: 'http://localhost:8045/bookDetail',
+      // url: 'https://betterreadsapi.azurewebsites.net/bookDetail',
       method: 'get',
       data: params
     });
