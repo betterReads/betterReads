@@ -264,6 +264,11 @@ define(function(require, exports, module) {
             this._eventOutput.emit('offEdge');
         }.bind(this));
 
+        this._particle.on('start', function() {
+            var index = this.getCurrentIndex();
+            this._eventOutput.emit('scrollStart', {bookIndex: index});
+        }.bind(this));
+
         this._particle.on('update', function(particle) {
             if (this._springState === SpringStates.NONE) _normalizeState.call(this);
             this._displacement = particle.position.x - this._totalShift;

@@ -17,11 +17,15 @@ define(function(require, exports, module){
   function BookshelfCarousel(options){
     View.apply(this, arguments);
 
+    this.focusBook = 0;
     this.focusTransition = {duration: 100, curve: Easing.outCubic};
     this.focusAnimation = function(book){
       book.cover.setTransform(Transform.rotateY(0.25 * Math.PI), this.focusTransition);
       // book.spine.setTransform(Transform.rotateY(0), focusTransition);
       // book.label.setTransform(Transform.setOpacity(1), focusTransition);
+    };
+    this.unfocusAnimation = function(book){
+      book.cover.setTransform(Transform.rotateY(0), this.focusTransition);
     };
 
     _addCarousel.call(this);
@@ -127,9 +131,17 @@ define(function(require, exports, module){
 
   function _bindFocusEvents(){
     this._eventInput.on('snap', function(payload){
-      var index = payload.bookIndex;
-      this.focusAnimation(this.books[index]);
+      this.focusBook = payload.bookIndex;
+      this.focusAnimation(this.books[this.focusBook]);
     }.bind(this));
+
+    this._eventInput.on('scrollStart', function(payload){
+      var index = payload.bookIndex;
+      // console.log('unfocus:', this.focusBook);
+      this.unfocusAnimation(this.books[this.focusBook]);
+    }.bind(this));
+
+    this.focusAnimation(this.books[this.focusBook]);
   }
 
   module.exports = BookshelfCarousel;
