@@ -480,7 +480,6 @@ define(function(require, exports, module) {
             easing: 'easeIn'
         }, function(){
             this._scrollModifier.transformFrom(undefined);
-            console.log('focus on', this.getCurrentIndex());
         }.bind(this));
     }
 

@@ -20,6 +20,7 @@ define(function(require, exports, module){
     this.focusBook = 0;
     this.focusTransition = {duration: 100, curve: Easing.outCubic};
     this.focusAnimation = function(book){
+      console.log(book);
       book.cover.setTransform(Transform.rotateY(0.25 * Math.PI), this.focusTransition);
       // book.spine.setTransform(Transform.rotateY(0), focusTransition);
       // book.label.setTransform(Transform.setOpacity(1), focusTransition);
@@ -68,24 +69,32 @@ define(function(require, exports, module){
         size: this.options.coverSize,
         content: this.options.covers[i]
       });
+      var coverAnimator = new Modifier();
+      var sizeModifier = new Modifier({
+        size: this.options.coverSize
+      });
+      var originModifier = new Modifier({
+        origin: [0.5, 0.5],
+        align:[0.5, 0]
+      });
 
-      var coverModifier = new StateModifier();
-
-      var renderNode = new RenderNode();
+      var renderNode = new RenderNode({
+        origin: [0, 0.5]
+      });
       renderNode
-        .add(new Modifier({size: this.options.coverSize}))
-        .add(new Modifier({origin: [0.5, 0.5], align:[0.5, 0.5]}))
-        .add(coverModifier)
+        .add(sizeModifier)
+        .add(originModifier)
+        .add(coverAnimator)
         .add(cover);
       cover.pipe(this.bookshelf);
       this.books.push({
-        cover: coverModifier
+        cover: coverAnimator
       });
       this.bookshelf.items.push(renderNode);
     }
 
     this.add(this.bookshelfContainer);
-    this.bookshelfContainer.add(this.bookshelf);
+    this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
     this.bookshelf.scrollview.pipe(this);
 
     // this.bookshelf = new Coverflow({
@@ -132,12 +141,13 @@ define(function(require, exports, module){
   function _bindFocusEvents(){
     this._eventInput.on('snap', function(payload){
       this.focusBook = payload.bookIndex;
+      console.log('focus:', this.focusBook);
       this.focusAnimation(this.books[this.focusBook]);
     }.bind(this));
 
     this._eventInput.on('scrollStart', function(payload){
       var index = payload.bookIndex;
-      // console.log('unfocus:', this.focusBook);
+      console.log('unfocus:', this.focusBook);
       this.unfocusAnimation(this.books[this.focusBook]);
     }.bind(this));
 
