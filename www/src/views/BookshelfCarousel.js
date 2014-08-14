@@ -22,11 +22,12 @@ define(function(require, exports, module){
     this.focusAnimation = function(book){
       console.log(book);
       book.cover.setTransform(Transform.rotateY(0.25 * Math.PI), this.focusTransition);
-      // book.spine.setTransform(Transform.rotateY(0), focusTransition);
-      // book.label.setTransform(Transform.setOpacity(1), focusTransition);
+      book.spine.setTransform(Transform.rotateY(-0.25 * Math.PI), this.focusTransition);
+      // book.label.setTransform(Transform.setOpacity(1), this.focusTransition);
     };
     this.unfocusAnimation = function(book){
       book.cover.setTransform(Transform.rotateY(0), this.focusTransition);
+      book.spine.setTransform(Transform.rotateY(-0.5 * Math.PI), this.focusTransition);
     };
 
     _addCarousel.call(this);
@@ -65,11 +66,29 @@ define(function(require, exports, module){
 
     this.books = [];
     for(var i = 0; i < this.options.covers.length; i++){
+      var nodeView = new View();
+
       var cover = new ImageSurface({
         size: this.options.coverSize,
         content: this.options.covers[i]
       });
       var coverAnimator = new Modifier();
+
+
+      var spine = new Surface({
+        size: [20, 150],
+        content: 'title',
+        properties: {
+          background: 'crimson'
+        }
+      });
+      var spineAnimator = new Modifier({
+        transform: Transform.rotateY(-0.5 * Math.PI)
+      });
+
+      nodeView.add(new Modifier({origin: [0, 0.5], align: [0, 0]})).add(coverAnimator).add(cover);
+      nodeView.add(new Modifier({origin: [1, 0.5], align: [0, 0]})).add(spineAnimator).add(spine);
+      
       var sizeModifier = new Modifier({
         size: this.options.coverSize
       });
@@ -84,11 +103,11 @@ define(function(require, exports, module){
       renderNode
         .add(sizeModifier)
         .add(originModifier)
-        .add(coverAnimator)
-        .add(cover);
+        .add(nodeView);
       cover.pipe(this.bookshelf);
       this.books.push({
-        cover: coverAnimator
+        cover: coverAnimator,
+        spine: spineAnimator
       });
       this.bookshelf.items.push(renderNode);
     }
