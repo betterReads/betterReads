@@ -17,11 +17,11 @@ define(function(require, exports, module){
   function BookshelfCarousel(options){
     View.apply(this, arguments);
 
-    this.focusTransition = {duration: 1000, curve: Easing.outCubic};
-    this.focusAnimation = function(){
-      // this.coverModifier.setTransform(Transform.rotateY(0), focusTransition);
-      // this.spineModifier.setTransform(Transform.rotateY(0), focusTransition);
-      // this.labelModifier.setTransform(Transform.setOpacity(1), focusTransition);
+    this.focusTransition = {duration: 100, curve: Easing.outCubic};
+    this.focusAnimation = function(book){
+      book.cover.setTransform(Transform.rotateY(0.25 * Math.PI), this.focusTransition);
+      // book.spine.setTransform(Transform.rotateY(0), focusTransition);
+      // book.label.setTransform(Transform.setOpacity(1), focusTransition);
     };
 
     _addCarousel.call(this);
@@ -65,14 +65,17 @@ define(function(require, exports, module){
         content: this.options.covers[i]
       });
 
+      var coverModifier = new StateModifier();
+
       var renderNode = new RenderNode();
       renderNode
         .add(new Modifier({size: this.options.coverSize}))
         .add(new Modifier({origin: [0.5, 0.5], align:[0.5, 0.5]}))
+        .add(coverModifier)
         .add(cover);
       cover.pipe(this.bookshelf);
       this.books.push({
-        test: this.options.covers[i]
+        cover: coverModifier
       });
       this.bookshelf.items.push(renderNode);
     }
@@ -125,7 +128,7 @@ define(function(require, exports, module){
   function _bindFocusEvents(){
     this._eventInput.on('snap', function(payload){
       var index = payload.bookIndex;
-      console.log(this.books[index].test);
+      this.focusAnimation(this.books[index]);
     }.bind(this));
   }
 
