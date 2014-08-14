@@ -17,7 +17,15 @@ define(function(require, exports, module){
   function BookshelfCarousel(options){
     View.apply(this, arguments);
 
+    this.focusTransition = {duration: 1000, curve: Easing.outCubic};
+    this.focusAnimation = function(){
+      // this.coverModifier.setTransform(Transform.rotateY(0), focusTransition);
+      // this.spineModifier.setTransform(Transform.rotateY(0), focusTransition);
+      // this.labelModifier.setTransform(Transform.setOpacity(1), focusTransition);
+    };
+
     _addCarousel.call(this);
+    _bindFocusEvents.call(this);
   }
 
   BookshelfCarousel.prototype = Object.create(View.prototype);
@@ -50,6 +58,7 @@ define(function(require, exports, module){
       easing: Easing.outCubic
     });
 
+    this.books = [];
     for(var i = 0; i < this.options.covers.length; i++){
       var cover = new ImageSurface({
         size: this.options.coverSize,
@@ -62,11 +71,15 @@ define(function(require, exports, module){
         .add(new Modifier({origin: [0.5, 0.5], align:[0.5, 0.5]}))
         .add(cover);
       cover.pipe(this.bookshelf);
+      this.books.push({
+        test: this.options.covers[i]
+      });
       this.bookshelf.items.push(renderNode);
     }
 
     this.add(this.bookshelfContainer);
     this.bookshelfContainer.add(this.bookshelf);
+    this.bookshelf.scrollview.pipe(this);
 
     // this.bookshelf = new Coverflow({
     //   screenCenter: screenCenter,
@@ -107,6 +120,13 @@ define(function(require, exports, module){
     // this.bookshelfContainer.add(this.bookshelfModifier).add(this.bookshelf);
 
     // console.log(this.bookshelf.getSize());  
+  }
+
+  function _bindFocusEvents(){
+    this._eventInput.on('snap', function(payload){
+      var index = payload.bookIndex;
+      console.log(this.books[index].test);
+    }.bind(this));
   }
 
   module.exports = BookshelfCarousel;

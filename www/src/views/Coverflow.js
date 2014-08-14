@@ -273,7 +273,7 @@ define(function(require, exports, module) {
             if (!this.options.paginated || (this.options.paginated && this._springState !== SpringStates.NONE))
                 var index = this.getCurrentIndex();
                 this.goToPage(index);
-                this._eventOutput.emit('settle');
+                this._eventOutput.emit('snap', {bookIndex: index});
         }.bind(this));
     }
 
