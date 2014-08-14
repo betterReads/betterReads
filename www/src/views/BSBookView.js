@@ -15,7 +15,7 @@ define(function(require, exports, module){
 
   function BSBookView(data, autoload) {
     View.apply(this, arguments);
-    _addDetail.call(this, data.ISBN, data.URL, data.Amazon, autoload);
+    _addDetail.call(this, data.ISBN, data.URL, data.Amazon, data, autoload);
   }
 
   BSBookView.prototype = Object.create(View.prototype);
@@ -23,10 +23,11 @@ define(function(require, exports, module){
 
   BSBookView.DEFAULT_OPTIONS = {};
 
-  function _addDetail(isbn, picUrl, link, autoload){
-    betterReads.getBookDetail({isbn: isbn}).then(function(data) {
+  function _addDetail(isbn, picUrl, link, details, autoload){
+    betterReads.getBookDetail({isbn: isbn}).then(function(response) {
       //handle bad requests
-      if (data==='book not found') {
+      console.log(response);
+      if (response==='book not found' || response==='Bad Request') {
         console.log('book not found');
 
         var image = new ImageSurface({
@@ -42,7 +43,8 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         var text = new Surface({
-          content: 'Book detail not found',
+          content: '<a href="' + link + '" target="_blank">' + details.Title + '</a><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
+          // content: 'Additional Goodreads detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
@@ -57,7 +59,7 @@ define(function(require, exports, module){
         this.add(textMod).add(text);        
 
       } else {        
-        var bookData = JSON.parse(data);
+        var bookData = JSON.parse(response);
 
         var image = new ImageSurface({
           size: [320, 480],
