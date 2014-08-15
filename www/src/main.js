@@ -129,6 +129,8 @@ define(function(require, exports, module) {
 
   searchView.pipe(app.content);
   searchView.pipe(bookView);
+  libraryView.pipe(app.content);
+  libraryView.pipe(bookView);
 
   //set up shelf view rendering
   shelvesView.on('shelfClick', function(shelf) {

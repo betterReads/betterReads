@@ -146,7 +146,12 @@ define(function(require, exports, module){
       this.bookshelf.items.push(renderNode);
 
       cover.on('click', function(index){
-        console.log('clicked book', this.options.books[index].id);
+        var bookId = this.options.books[index].id;
+        this._eventOutput.emit('showBook', {id: bookId});
+        this._eventOutput.emit('navigate', {
+          title: 'Book',
+          showBackButton: true
+        });
       }.bind(this, i));
     }
 

@@ -98,6 +98,13 @@ define(function(require, exports, module){
 
       this.bookshelf = new BookshelfCarousel({books: bookData});
       this.add(this.bookshelf);
+      this.bookshelf.pipe(this);
+      this._eventInput.on('showBook', function(payload){
+        this._eventOutput.emit('showBook', payload);
+      }.bind(this));
+      this._eventInput.on('navigate', function(payload){
+        this._eventOutput.emit('navigate', payload);
+      }.bind(this));
 
       if (autoload) {
         this._eventOutput.emit('shelfLoaded', shelf);
