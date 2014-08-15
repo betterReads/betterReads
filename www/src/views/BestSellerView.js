@@ -26,8 +26,10 @@ define(function(require, exports, module){
 
   function _addBooks(){
     betterReads.getTopUT()
-    .then(function(books) {
-      console.log(books);
+    .then(function(bookList) {
+      console.log(bookList);
+      var date = moment(bookList.date.slice(10)).format('LL');
+      var books = bookList.books;
       var scrollView = new ScrollView({
         detailSize: [undefined, true],
         margin: 5000
@@ -36,7 +38,7 @@ define(function(require, exports, module){
 
       var titleView = new View();
       var titleSurface = new Surface({
-        content: '<b>USA Today Best Sellers</b>',
+        content: '<b>USA Today Best Sellers for week of<br>' + date + '</b>',
         size: [undefined, true],
         properties: {
           textAlign: 'center',
