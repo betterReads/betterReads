@@ -88,17 +88,22 @@ define(function(require, exports, module){
       //   this._eventOutput.emit('shelfLoaded', shelf);
       // }
 
-      var bookURL;
-      var bookURLs = [];
+      var bookData = [];
       for(var i = 0; i < books.length; i++){
-        bookURL = books[i].image_url[0];
-        bookURLs.push(bookURL);
+        var url = books[i].image_url[0];
+        var id = books[i].id[0]._;
+        var book = {
+          url: url,
+          id: id
+        }
+        bookData.push(book);
       }
 
-      this.bookshelf = new BookshelfCarousel({covers: bookURLs});
+      this.bookshelf = new BookshelfCarousel({books: bookData});
       this.add(this.bookshelf);
     }.bind(this));
   }
+
 
   module.exports = LibraryView;
 });

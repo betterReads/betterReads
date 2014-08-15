@@ -27,7 +27,7 @@ define(function(require, exports, module){
   BookshelfCarousel.prototype.constructor = BookshelfCarousel;
 
   BookshelfCarousel.DEFAULT_OPTIONS = {
-    covers: [],
+    books: [],
     coverSize: [100, 150],
     snapSpeed: 500,
     focusAngle: 0.25,
@@ -56,14 +56,14 @@ define(function(require, exports, module){
       easing: Easing.outCubic
     });
 
-    this.books = [];
-    for(var i = 0; i < this.options.covers.length; i++){
+    this.focusAnimations = [];
+    for(var i = 0; i < this.options.books.length; i++){
       var nodeView = new View();
       var focusTransition = new Transitionable(0);
 
       var cover = new ImageSurface({
         size: this.options.coverSize,
-        content: this.options.covers[i]
+        content: this.options.books[i].url
       });
       var coverLayout = new Modifier({
         origin: [0, 0.5],
@@ -139,36 +139,21 @@ define(function(require, exports, module){
         .add(nodeLayout)
         .add(nodeAnimator)
         .add(nodeView);
-      this.books.push({
+      
+      this.focusAnimations.push({
         focus: focusTransition
       });
       this.bookshelf.items.push(renderNode);
 
       cover.on('click', function(index){
-        console.log('clicked book', index);
-      }.bind(null, i));
+        console.log('clicked book', this.options.books[index].id);
+      }.bind(this, i));
     }
 
     this.add(this.bookshelfContainer);
     this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
     this.bookshelfContainer.pipe(this.bookshelf.scrollview);
     this.bookshelf.scrollview.pipe(this);
-  }
-
-  function _bindFocusEvents(){
-    this._eventInput.on('snap', function(payload){
-      this.focusBook = payload.bookIndex;
-      console.log('focus:', this.focusBook);
-      this.focusAnimation(this.books[this.focusBook]);
-    }.bind(this));
-
-    this._eventInput.on('scrollStart', function(payload){
-      var index = payload.bookIndex;
-      console.log('unfocus:', this.focusBook);
-      this.unfocusAnimation(this.books[this.focusBook]);
-    }.bind(this));
-
-    this.focusAnimation(this.books[this.focusBook]);
   }
 
   function _setFocus(){
@@ -182,6 +167,22 @@ define(function(require, exports, module){
     this.unfocusAnimation = function(book){
       book.focus.set(0, this.focusTransition);
     };
+  }
+
+  function _bindFocusEvents(){
+    this._eventInput.on('snap', function(payload){
+      this.focusBook = payload.bookIndex;
+      console.log('focus:', this.focusBook);
+      this.focusAnimation(this.focusAnimations[this.focusBook]);
+    }.bind(this));
+
+    this._eventInput.on('scrollStart', function(payload){
+      var index = payload.bookIndex;
+      console.log('unfocus:', this.focusBook);
+      this.unfocusAnimation(this.focusAnimations[this.focusBook]);
+    }.bind(this));
+
+    this.focusAnimation(this.focusAnimations[this.focusBook]);
   }
 
   module.exports = BookshelfCarousel;
