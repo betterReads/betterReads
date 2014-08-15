@@ -30,7 +30,7 @@ define(function(require, exports, module){
     covers: [],
     coverSize: [100, 150],
     snapSpeed: 500,
-    focusAngle: 0.35,
+    focusAngle: 0.25,
     focusZoomFactor: 3
   };
 
@@ -89,7 +89,6 @@ define(function(require, exports, module){
       });
       var spineAnimator = new Modifier({
         transform: function(trans){
-          // var angle = ((1 - trans.get()) * (-this.options.focusAngle) * (Math.PI)) - (this.options.focusAngle * Math.PI);
           var angle = ((-0.5 * Math.PI) + (trans.get() * this.options.focusAngle * Math.PI));
           return Transform.rotateY(angle);
         }.bind(this, focusTransition)
@@ -126,7 +125,7 @@ define(function(require, exports, module){
       });
       var nodeAnimator = new Modifier({
         transform: function(trans){
-          var offsetX = trans.get() * this.options.coverSize[0] * 0.3;
+          var offsetX = trans.get() * this.options.coverSize[0] * this.options.focusAngle;
           var offsetZ = offsetX * this.options.focusZoomFactor;
           return Transform.translate(offsetX, 0, offsetZ);
         }.bind(this, focusTransition)
