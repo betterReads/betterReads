@@ -84,9 +84,6 @@ define(function(require, exports, module){
       // this._eventInput.on('scrollListItemClicked', function(eventPayload) {
       //   this._eventOutput.emit('navigate:modal', eventPayload);
       // }.bind(this));
-      // if (autoload) {
-      //   this._eventOutput.emit('shelfLoaded', shelf);
-      // }
 
       var bookData = [];
       for(var i = 0; i < books.length; i++){
@@ -101,6 +98,10 @@ define(function(require, exports, module){
 
       this.bookshelf = new BookshelfCarousel({books: bookData});
       this.add(this.bookshelf);
+
+      if (autoload) {
+        this._eventOutput.emit('shelfLoaded', shelf);
+      }
     }.bind(this));
   }
 

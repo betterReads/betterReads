@@ -26,7 +26,7 @@ define(function(require, exports, module) {
             direction: this.options.direction
         });
 
-        this.items = this.options.items;
+        this.items = [];
         this.itemRotations = [];
         this.itemStates = [];
         this.itemMasses = [];
