@@ -70,6 +70,10 @@ define(function(require, exports, module){
         size: this.options.coverSize,
         content: this.options.covers[i]
       });
+      var coverLayout = new Modifier({
+        origin: [0, 0.5],
+        align: [0, 0]
+      });
       var coverAnimator = new Modifier({
         transform: function (trans){
           var angle = ((trans.get()) * (0.25) * (Math.PI));
@@ -78,11 +82,15 @@ define(function(require, exports, module){
       });
 
       var spine = new Surface({
-        size: [20, 150],
+        size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
         content: 'title',
         properties: {
           background: 'crimson'
         }
+      });
+      var spineLayout = new Modifier({
+        origin: [1, 0.5],
+        align: [0, 0]
       });
       var spineAnimator = new Modifier({
         transform: function(trans){
@@ -98,31 +106,43 @@ define(function(require, exports, module){
           textAlign: 'center'
         }
       });
+      var titleLayout = new Modifier({
+        origin: [0.5, 0.5],
+        align: [0.5, 1]
+      });
       var titleAnimator = new Modifier({
         // opacity: function(trans){
           // return trans.get();
         // }.bind(null, focusTransition)
-        opacity: 1
+        opacity: 1  // TODO: Get transitionable opacity working
       });
 
-      nodeView.add(new Modifier({origin: [0, 0.5], align: [0, 0]})).add(coverAnimator).add(cover);
-      nodeView.add(new Modifier({origin: [1, 0.5], align: [0, 0]})).add(spineAnimator).add(spine);
-      nodeView.add(new Modifier({origin: [0.5, 0.5], align: [0.5, 1]})).add(titleAnimator).add(title);
+      nodeView.add(coverLayout).add(coverAnimator).add(cover);
+      nodeView.add(spineLayout).add(spineAnimator).add(spine);
+      // nodeView.add(titleLayout).add(titleAnimator).add(title);
       
-      var sizeModifier = new Modifier({
+      var nodeSize = new Modifier({
         size: this.options.coverSize
       });
-      var originModifier = new Modifier({
+      var nodeLayout = new Modifier({
         origin: [0.5, 0.5],
         align:[0.5, 0]
       });
+      var nodeAnimator = new Modifier({
+        transform: function(trans){
+          var offsetX = trans.get() * this.options.coverSize[0] * 0.3;
+          var offsetZ = offsetX * 5;
+          return Transform.translate(offsetX, 0, offsetZ);
+        }.bind(this, focusTransition)
+      })
 
       var renderNode = new RenderNode({
         origin: [0, 0.5]
       });
       renderNode
-        .add(sizeModifier)
-        .add(originModifier)
+        .add(nodeSize)
+        .add(nodeLayout)
+        .add(nodeAnimator)
         .add(nodeView);
       cover.pipe(this.bookshelf);
       this.books.push({
@@ -134,46 +154,6 @@ define(function(require, exports, module){
     this.add(this.bookshelfContainer);
     this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
     this.bookshelf.scrollview.pipe(this);
-
-    // this.bookshelf = new Coverflow({
-    //   screenCenter: screenCenter,
-    //   coverCenter: coverCenter
-    // });
-
-    // var cover;
-    // var coverViews = [];
-    // for(var i = 0; i < this.options.covers.length; i++){
-    //   var coverView = new View();
-
-    //   var coverModifier = new StateModifier({
-    //     transform: Transform.rotateY(0.15*Math.PI)
-    //   });
-
-    //   cover = new ImageSurface({
-    //     size: this.options.coverSize,
-    //     content: this.options.covers[i]
-    //   });
-
-    //   coverView.add(coverModifier).add(cover);
-
-    //   coverViews.push(coverView);
-
-    //   cover.pipe(this.bookshelf);
-    //   cover.pipe(this);
-    // }
-    // this.bookshelf.sequenceFrom(coverViews);
-
-    // this.bookshelfModifier = new StateModifier({
-    //   size: [window.innerWidth, 150],
-    //   origin: [0.5, 0.5],
-    //   align: [0.5, 0.5],
-    //   transform: Transform.translate(0, 0, 0)
-    // });
-
-    // this.add(this.bookshelfContainer);
-    // this.bookshelfContainer.add(this.bookshelfModifier).add(this.bookshelf);
-
-    // console.log(this.bookshelf.getSize());  
   }
 
   function _bindFocusEvents(){
