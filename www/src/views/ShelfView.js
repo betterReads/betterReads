@@ -34,24 +34,24 @@ define(function(require, exports, module){
       var scrollView = new ScrollView(this.options);
       var listOfItems = [];
       //colors for alternating
-      var colors = ['white', '#E5EBEB'];
+      var colors = ['white', '#EFF9FF'];
       for (var i = 0; i < books.length; i++) {
         var tab = new Surface({
           content: '<b>' + books[i].name[0] + '</b> <font color="#403E39"> ' + books[i].book_count[0]._ + ' books </font>',
-          size: [undefined, 50],
+          size: [undefined, true],
           properties: {
             textAlign: 'center',
             backgroundColor: colors[i%2],
-            lineHeight: '50px'
+            padding: '10px'
           }
         });
 
 
         // set up event listener to populate library view based on shelf clicked
-        tab.data = books[i].name[0];
+        tab.data = {name: books[i].name[0], color: colors[i%2], count: books[i].book_count[0]._};
         listOfItems.push(tab);
         tab.on('click', function() {
-          tab.emit('shelfClick', this.data);
+          tab.emit('shelfClick', {scroll: scrollView, cell: this});
           //create new view to display books from this shelf
           // var shelfView = new LibraryView(this.data);
         });

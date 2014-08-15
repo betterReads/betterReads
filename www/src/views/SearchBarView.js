@@ -37,10 +37,12 @@ define(function(require, exports, module){
       placeholder: '    Type Here',
       properties: {
         textAlign: 'left',
-        backgroundColor: '#999',
+        backgroundColor: '#EFF9FF',
         border: 'none',
         padding: 50,
-        outline: 'none'
+        outline: 'none',
+        fontFamily: 'Roboto',
+        fontSize: '16px'
       }
     });
 
@@ -59,8 +61,8 @@ define(function(require, exports, module){
       properties: {
         textAlign: 'center',
         lineHeight: 2.5,
-        backgroundColor: '#393',
-        color: 'black',
+        backgroundColor: '#0096B3',
+        color: 'white',
         cursor: 'pointer',
       }
     });

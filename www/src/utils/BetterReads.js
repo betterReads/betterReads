@@ -2,7 +2,8 @@ define(function(require, exports, module){
   'use strict';
 
   var reqwest = require('../bower_components/reqwest/reqwest');
-
+  var credentials = require('../credentials.js');
+  var auth;
   var BetterReads = {};
 
   BetterReads.getBooks = function(params){
@@ -38,18 +39,18 @@ define(function(require, exports, module){
     });
   }
 
-  BetterReads.authenticate = function() {
+  BetterReads.authenticate = function(callback) {
     return reqwest({
-      url: 'http:localhost:8045/preAuthenticate',
+      url: 'https://betterreadsapi.azurewebsites.net/preAuthenticate',
       method: 'get'
     }).then(function(results) {
       console.log(results);
       //open window to authenticate
-      window.open(results.url);
+      window.open(results.url, '_system');
       //request oauth access tokens
       setTimeout(function(){
         reqwest({
-          url: 'http:localhost:8045/authenticate',
+          url: 'https://betterreadsapi.azurewebsites.net/authenticate',
           method: 'get',
           data: {requestToken: results.requestToken, requestSecret: results.requestSecret}
         }).then(function(results) {
@@ -57,22 +58,40 @@ define(function(require, exports, module){
           if (results.statusCode) {
             alert('Error logging in');
           } else {
-            window.auth = results;
+            // window.auth = results;
+            // localStorage.brAuth = results;
+            // window.localStorage.setItem( 'brAuth', JSON.stringify(results));
+            console.log('results:', results);
+            auth = results;
             //load content and switch views
             console.log('Logged in');
+            callback();
           }
-        }, 5000);
-      });
+        });
+      }, 1000);
     });
   };
 
   BetterReads.getUpdates = function() {
+    console.log('auth:', auth);
     return reqwest({
-      url: 'http:localhost:8045/friendUpdates',
+      url: 'https://betterreadsapi.azurewebsites.net/friendUpdates',
       method: 'get',
-      data: {accessToken: window.auth.accessToken, accessSecret: window.auth.accessSecret}
+      data: {accessToken: auth.accessToken, accessSecret: auth.accessSecret}
     });
   };
+
+  BetterReads.getTopUT = function() {
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/weeklyBestSellers',
+      method: 'get',
+      data: {images: true,
+        awsId: credentials.awsId,
+        awsSecret: credentials.awsSecret,
+        assocId: credentials.assocId,
+        USATodayKey: credentials.USATodayKey}
+    });
+  }
 
   module.exports = BetterReads;
 });

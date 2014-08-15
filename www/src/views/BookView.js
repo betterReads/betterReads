@@ -34,28 +34,49 @@ define(function(require, exports, module){
     detailCenter: {textAlign: 'center'}
   };
 
-  ShelfView.prototype.getBook = function(id){
+  ShelfView.prototype.getBook = function(id, type){
     this.loadingView.show();
     this.detailsModifier.setOpacity(0);
 
-    betterReads.getBookDetail({book_id: id})
-    .then(function(data){
-      var book = JSON.parse(data);
-      console.log(book);
+    if (type==='isbn') { 
+      betterReads.getBookDetail({isbn: id})
+      .then(function(data){
+        var book = JSON.parse(data);
+        console.log(book);
 
-      var title = book.title[0];
-      var author = book.authors[0].author[0].name[0];
-      var description = book.description[0];
-      var rating = book.average_rating[0];
+        var title = book.title[0];
+        var author = book.authors[0].author[0].name[0];
+        var description = book.description[0];
+        var rating = book.average_rating[0];
 
-      this.titleSurface.setContent(title);
-      this.authorSurface.setContent(author);
-      this.descriptionSurface.setContent(description);
-      this.ratingSurface.setContent(rating);
-      
-      this.detailsModifier.setOpacity(1);
-      this.loadingView.hide();
-    }.bind(this));
+        this.titleSurface.setContent(title);
+        this.authorSurface.setContent(author);
+        this.descriptionSurface.setContent(description);
+        this.ratingSurface.setContent(rating);
+        
+        this.detailsModifier.setOpacity(1);
+        this.loadingView.hide();
+      }.bind(this));
+    } else {
+      betterReads.getBookDetail({book_id: id})
+      .then(function(data){
+        var book = JSON.parse(data);
+        console.log(book);
+
+        var title = book.title[0];
+        var author = book.authors[0].author[0].name[0];
+        var description = book.description[0];
+        var rating = book.average_rating[0];
+
+        this.titleSurface.setContent(title);
+        this.authorSurface.setContent(author);
+        this.descriptionSurface.setContent(description);
+        this.ratingSurface.setContent(rating);
+        
+        this.detailsModifier.setOpacity(1);
+        this.loadingView.hide();
+      }.bind(this));
+    }
 
   };
 

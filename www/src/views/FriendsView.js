@@ -6,14 +6,15 @@ define(function(require, exports, module){
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
+  var Modifier = require('famous/core/Modifier');
+  var Transform = require('famous/core/Transform');
 
   var betterReads = require('../utils/BetterReads');
 
   function FriendsView(){
     View.apply(this, arguments);
 
-    _addSurface.call(this);
-    _addButton.call(this);
+    _addFeed.call(this);
   }
 
   FriendsView.prototype = Object.create(View.prototype);
@@ -21,77 +22,35 @@ define(function(require, exports, module){
 
   FriendsView.DEFAULT_OPTIONS = {};
 
-  function _addSurface(){
-    var surface = new Surface({
-      content: "Friend Updates",
-      classes: ['preLoad'],
-      size: [undefined, undefined],
-      properties: {
-        textAlign: 'center',
-        lineHeight: '200px',
-        backgroundColor: '#bbb'
-      }
-    });
-
-    this.add(surface);
-  }
-  function _addButton(){
+  function _addFeed(){
     var that = this;
-    var button = new ImageSurface({
-      size: [100, 100],
-      classes: ['preLoad']
+    betterReads.getUpdates().then(function(results) {
+      console.log(results);
+
+      var scrollView = new ScrollView();
+      var listOfItems = [];
+      //colors for alternating
+      var colors = ['white', '#EFF9FF'];
+      for (var i = 0; i < results.length; i++) {
+        var update = results[i];
+
+        var tab = new Surface({
+          content: '<table><td><img src="' + update.image_url[0] + '"></td><td><b>' + update.actor[0].name[0] + '</b> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
+          size: [undefined, true],
+          properties: {
+            backgroundColor: colors[i%2],
+            padding: '5px 5px 25px 5px'
+          }
+        });
+
+        listOfItems.push(tab);
+        tab.pipe(scrollView);
+        tab.pipe(that);
+      }
+
+      scrollView.sequenceFrom(listOfItems);
+      that.add(scrollView);
     });
-    button.setContent('./resources/goodreads-icon.png');
-
-    var modifier = new StateModifier({
-      align: [0.5, 0.5],
-      origin: [0.5, 0.5]
-    });
-
-    button.on('click', function() {
-      console.log('clicked');
-      betterReads.getUpdates().then(function(results) {
-        console.log(results);
-
-        var scrollView = new ScrollView();
-        var listOfItems = [];
-        //colors for alternating
-        var colors = ['white', '#E5EBEB'];
-        for (var i = 0; i < results.length; i++) {
-          var update = results[i];
-          var tab = new Surface({
-            content: '<font size="2em">' + update.actor[0].name[0] + ' ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</font>',
-            size: [undefined, 75],
-            properties: {
-              backgroundColor: colors[i%2],
-            }
-          });
-
-          listOfItems.push(tab);
-          tab.pipe(scrollView);
-          tab.pipe(that);
-        }
-
-        scrollView.sequenceFrom(listOfItems);
-        that.add(scrollView);
-
-        that._eventInput.on('scrollListItemClicked', function(eventPayload) {
-          this._eventOutput.emit('navigate:modal', eventPayload);
-        }.bind(that));
-
-        setTimeout(function() {
-          document.getElementsByClassName('famous-group')[0].style.opacity = 1;
-        }, 0);
-
-        var oldElements = document.getElementsByClassName('preLoad');
-        while (oldElements.length) {
-          oldElements[0].remove();
-        }
-
-      });
-    });
-
-    this.add(modifier).add(button);
   }
 
   module.exports = FriendsView;

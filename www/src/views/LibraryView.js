@@ -24,7 +24,7 @@ define(function(require, exports, module){
 
   function _addBooks(shelf, autoload){
     if (shelf) {
-      var params = {id: '4067289', shelf: shelf, page: 1, per_page: 50};
+      var params = {id: '4067289', shelf: shelf.name, page: 1, per_page: 50};
     } else {
       var params = {id: '4067289', page: 1, per_page: 50, sort: 'position'};
     }
@@ -44,46 +44,14 @@ define(function(require, exports, module){
       // });
       // this.add(imageModifier).add(image);
 
-      // var scrollView = new ScrollView(this.options);
-      // var listOfItems = [];
 
-      // for (var i = 0; i < books.length; i++) {
-      //   // var listItem = new ScrollItem(i);
 
-      //   var bookView = new View();
-      //   var bookMod = new StateModifier({
-      //     size: [undefined, 150]
-      //   });
 
-      //   var tab = new Surface({
-      //     content: books[i].title[0] + '<br>' + books[i].authors[0].author[0].name[0] + '<br>Rating: ' + books[i].average_rating + '/5',
-      //     size: [undefined, undefined],
-      //     properties: {
-      //     textAlign: 'right',
-      //     backgroundColor: 'white'
-      //     }
-      //   });
 
-      //   var image = new ImageSurface({
-      //     size: [100, 150]
-      //   });
-      //   image.setContent(books[i].image_url[0]);
 
-      //   var bookWrapper = bookView.add(bookMod);
-      //   bookWrapper.add(image);
-      //   bookWrapper.add(tab);
 
-      //   listOfItems.push(bookView);
-      //   image.pipe(scrollView);
-      //   image.pipe(this);
-      // }
 
-      // scrollView.sequenceFrom(listOfItems);
-      // this.add(scrollView);
 
-      // this._eventInput.on('scrollListItemClicked', function(eventPayload) {
-      //   this._eventOutput.emit('navigate:modal', eventPayload);
-      // }.bind(this));
 
       var bookData = [];
       for(var i = 0; i < books.length; i++){
