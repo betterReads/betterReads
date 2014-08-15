@@ -31,27 +31,8 @@ define(function(require, exports, module){
 
     betterReads.getBooks(params)
     .then(function(data) {
-      // var book = JSON.parse(data)[18];
       var books = JSON.parse(data);
       console.log(books);
-      //need to change image size so it is whatever aspect ratio of book is; there is slight variance around 100:150
-      // var image = new ImageSurface({
-      //     size: [100, 150]
-      // });
-      // image.setContent(book.image_url[0]);
-      // var imageModifier = new Modifier({
-      //     origin: [0.5, 0.5]
-      // });
-      // this.add(imageModifier).add(image);
-
-
-
-
-
-
-
-
-
 
       var bookData = [];
       for(var i = 0; i < books.length; i++){
