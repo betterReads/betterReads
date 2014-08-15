@@ -21,6 +21,7 @@ define(function(require, exports, module) {
 
     var Modifier = require('famous/core/Modifier');
     var Transform = require('famous/core/Transform');
+    var Easing = require('famous/transitions/Easing');
     var Transitionable = require('famous/transitions/Transitionable');
 
     var GenericSync = require('famous/inputs/GenericSync');
@@ -175,7 +176,9 @@ define(function(require, exports, module) {
         groupScroll: false,
         syncScale: 1,
         screenCenter: 0,
-        coverCenter: 0
+        coverCenter: 0,
+        snapSpeed: 250,
+        snapCurve: Easing.outCubic
     };
 
     function _handleStart(event) {
@@ -476,8 +479,8 @@ define(function(require, exports, module) {
         this._scrollTransitionable.set(this.getPosition());
         this._scrollModifier.transformFrom(this._scrollAnimation);
         this._scrollTransitionable.set(0, {
-            duration: 100,
-            easing: 'easeIn'
+            duration: this.options.snapSpeed,
+            easing: this.options.snapCurve
         }, function(){
             this._scrollModifier.transformFrom(undefined);
         }.bind(this));

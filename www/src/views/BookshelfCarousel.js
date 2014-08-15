@@ -18,16 +18,8 @@ define(function(require, exports, module){
   function BookshelfCarousel(options){
     View.apply(this, arguments);
 
-    this.focusBook = 0;
-    this.focusTransition = {duration: 100, curve: Easing.outCubic};
-    this.focusAnimation = function(book){
-      book.focus.set(1, this.focusTransition);
-    };
-    this.unfocusAnimation = function(book){
-      book.focus.set(0, this.focusTransition);
-    };
-
     _addCarousel.call(this);
+    _setFocus.call(this);
     _bindFocusEvents.call(this);
   }
 
@@ -36,7 +28,10 @@ define(function(require, exports, module){
 
   BookshelfCarousel.DEFAULT_OPTIONS = {
     covers: [],
-    coverSize: [100, 150]
+    coverSize: [100, 150],
+    snapSpeed: 500,
+    focusAngle: 0.35,
+    focusZoomFactor: 3
   };
 
   function _addCarousel(){
@@ -55,7 +50,7 @@ define(function(require, exports, module){
       rotateZ: 0.0,
       translateX: 0.0,
       translateY: 0.0,
-      translateZ: -100.0,
+      translateZ: -250.0,
       depth: 0.0,
       scale: 0.0,
       easing: Easing.outCubic
@@ -76,9 +71,9 @@ define(function(require, exports, module){
       });
       var coverAnimator = new Modifier({
         transform: function (trans){
-          var angle = ((trans.get()) * (0.25) * (Math.PI));
+          var angle = ((trans.get()) * (this.options.focusAngle) * (Math.PI));
           return Transform.rotateY(angle);
-        }.bind(null, focusTransition)
+        }.bind(this, focusTransition)
       });
 
       var spine = new Surface({
@@ -94,9 +89,10 @@ define(function(require, exports, module){
       });
       var spineAnimator = new Modifier({
         transform: function(trans){
-          var angle = ((1 - trans.get()) * (-0.25) * (Math.PI)) - (0.25 * Math.PI);
+          // var angle = ((1 - trans.get()) * (-this.options.focusAngle) * (Math.PI)) - (this.options.focusAngle * Math.PI);
+          var angle = ((-0.5 * Math.PI) + (trans.get() * this.options.focusAngle * Math.PI));
           return Transform.rotateY(angle);
-        }.bind(null, focusTransition)
+        }.bind(this, focusTransition)
       });
 
       var title = new Surface({
@@ -131,7 +127,7 @@ define(function(require, exports, module){
       var nodeAnimator = new Modifier({
         transform: function(trans){
           var offsetX = trans.get() * this.options.coverSize[0] * 0.3;
-          var offsetZ = offsetX * 5;
+          var offsetZ = offsetX * this.options.focusZoomFactor;
           return Transform.translate(offsetX, 0, offsetZ);
         }.bind(this, focusTransition)
       })
@@ -170,6 +166,19 @@ define(function(require, exports, module){
     }.bind(this));
 
     this.focusAnimation(this.books[this.focusBook]);
+  }
+
+  function _setFocus(){
+    this.focusBook = 0;
+    this.snapSpeed = this.bookshelf.scrollview.options.snapSpeed || 100;
+    this.snapCurve = this.bookshelf.scrollview.options.snapCurve || 'easeInOut';
+    this.focusTransition = {duration: this.snapSpeed, curve: this.snapCurve};
+    this.focusAnimation = function(book){
+      book.focus.set(1, this.focusTransition);
+    };
+    this.unfocusAnimation = function(book){
+      book.focus.set(0, this.focusTransition);
+    };
   }
 
   module.exports = BookshelfCarousel;
