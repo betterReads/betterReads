@@ -27,19 +27,22 @@ define(function(require, exports, module){
     betterReads.getUpdates().then(function(results) {
       console.log(results);
 
-      var scrollView = new ScrollView();
+      var scrollView = new ScrollView({
+        margin: 5000
+      });
       var listOfItems = [];
       //colors for alternating
       var colors = ['white', '#EFF9FF'];
       for (var i = 0; i < results.length; i++) {
         var update = results[i];
+        update.action_text[0] = update.action_text[0].replace('only_path="false"', 'target="_system"');
 
         var tab = new Surface({
           content: '<table><td><img src="' + update.image_url[0] + '"></td><td><b>' + update.actor[0].name[0] + '</b> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
           size: [undefined, true],
           properties: {
             backgroundColor: colors[i%2],
-            padding: '5px 5px 25px 5px'
+            padding: '15px 5px 25px 5px'
           }
         });
 

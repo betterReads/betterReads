@@ -47,7 +47,7 @@ define(function(require, exports, module) {
     */
     layoutOptions: {
       direction: Utility.Direction.Y,
-      headerSize: 40,
+      headerSize: 50,
       // headerSize: 56,
       footerSize: 60
     },
@@ -330,6 +330,10 @@ define(function(require, exports, module) {
       renderable         : bookView
     }).showPage('Library');
 
+    //remove old context
+    document.getElementsByTagName('div')[0].remove()
+
+    //add new context
     var mainContext = Engine.createContext();
     mainContext.add(app);
 
@@ -345,10 +349,10 @@ define(function(require, exports, module) {
     // app.content.content.outOpacityFrom(function () { return 0; });
 
     //remove login elements
-    var oldElements = document.getElementsByClassName('preLoad');
-    while (oldElements.length) {
-      oldElements[0].remove();
-    }
+    // var oldElements = document.getElementsByClassName('preLoad');
+    // while (oldElements.length) {
+    //   oldElements[0].remove();
+    // }
   };
 
 
