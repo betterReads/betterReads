@@ -139,15 +139,19 @@ define(function(require, exports, module){
         .add(nodeLayout)
         .add(nodeAnimator)
         .add(nodeView);
-      cover.pipe(this.bookshelf);
       this.books.push({
         focus: focusTransition
       });
       this.bookshelf.items.push(renderNode);
+
+      cover.on('click', function(index){
+        console.log('clicked book', index);
+      }.bind(null, i));
     }
 
     this.add(this.bookshelfContainer);
     this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
+    this.bookshelfContainer.pipe(this.bookshelf.scrollview);
     this.bookshelf.scrollview.pipe(this);
   }
 
