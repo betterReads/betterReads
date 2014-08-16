@@ -29,7 +29,7 @@ define(function(require, exports, module){
   BookshelfCarousel.DEFAULT_OPTIONS = {
     books: [],
     coverSize: [100, 150],
-    snapSpeed: 500,
+    snapSpeed: 300,
     focusAngle: 0.25,
     focusZoomFactor: 3
   };
@@ -53,6 +53,7 @@ define(function(require, exports, module){
       translateZ: -250.0,
       depth: 0.0,
       scale: 0.0,
+      snapSpeed: this.options.snapSpeed,
       easing: Easing.outCubic
     });
 
@@ -78,9 +79,9 @@ define(function(require, exports, module){
 
       var spine = new Surface({
         size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
-        content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 200px; -webkit-filter: blur(15px)"/>',
+        content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
         properties: {
-          // background: 'crimson'
+          background: '#999',
           overflow: 'hidden'
         }
       });

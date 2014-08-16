@@ -22,6 +22,7 @@ define(function(require, exports, module) {
         this.scrollview = new Coverflow({
             screenCenter: this.options.screenCenter,
             coverCenter: this.options.coverCenter,
+            snapSpeed: this.options.snapSpeed,
             margin: this.options.margin,
             direction: this.options.direction
         });
@@ -47,6 +48,7 @@ define(function(require, exports, module) {
     Carousel.DEFAULT_OPTIONS = {
         screenCenter: 0,
         coverCenter: 0,
+        snapSpeed: 250,
         direction: Carousel.DIRECTION_X,
         items: []
     };
