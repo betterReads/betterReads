@@ -155,10 +155,12 @@ define(function(require, exports, module){
         align: [0, 0]
       });
 
+      // console.log(this.options.books[i].title);
+      var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)
       var spineTitleView = new View();
       var spineTitle = new Surface({
         size: [this.options.coverSize[1], this.options.coverSize[0]/5],
-        content: 'THIS IS A TITLE',
+        content: displayTitle,
         properties: {
           color: 'white',
           textAlign: 'center',

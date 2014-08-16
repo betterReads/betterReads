@@ -38,9 +38,11 @@ define(function(require, exports, module){
       for(var i = 0; i < books.length; i++){
         var url = books[i].image_url[0];
         var id = books[i].id[0]._;
+        var title = books[i].title[0];
         var book = {
           url: url,
-          id: id
+          id: id,
+          title: title
         }
         bookData.push(book);
       }
