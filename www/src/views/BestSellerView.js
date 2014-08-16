@@ -59,11 +59,21 @@ define(function(require, exports, module){
           size: [undefined, 150]
         });
 
+        var title = books[i].Title;
+        if (title.length > 70) {
+          title = title.slice(0, 67) + '...';
+        }
+
+        var author = books[i].Author;
+        if (author.length > 25) {
+          author = author.slice(0, 22) + '...';
+        }        
+
         var tab = new Surface({
-          content: '<b>#' + books[i].Rank + '</b><br>' + books[i].Title + '<br>' + books[i].Author,
+          content: '<b>#' + books[i].Rank + '</b><br>' + title + '<br>' + author,
           size: [undefined, undefined],
           properties: {
-            textAlign: 'right',
+            textAlign: 'left',
             backgroundColor: 'white',
             padding: '10px 10px 10px 110px'
           }
@@ -87,7 +97,7 @@ define(function(require, exports, module){
               this.emit('bestSellerClick', this);
               this.clicked = true;
               this.imageMod.transformFrom(Transform.translate(0, 0, 1));
-              this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._edgeSpringPosition), 0), {duration: 1500, curve: Easing.inOutCubic});
+              this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._pageSpringPosition), 0), {duration: 1500, curve: Easing.inOutCubic});
 
               this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
             } else {
@@ -111,17 +121,13 @@ define(function(require, exports, module){
         listOfItems.push(bookView);
         image.pipe(scrollView);
         image.pipe(this);
-
+        tab.pipe(scrollView);
+        tab.pipe(this);
       }
       this._eventInput.on('bestSellerClick', function(book) {
         console.log('book', book);
         this._eventOutput.emit('bestSellerClick', book);
       }.bind(this));
-
-      //listen to resize
-      // this._eventOutput.on('resize', function() {
-      //   console.log('resize image output');
-      // });
 
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);
