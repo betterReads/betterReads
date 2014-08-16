@@ -235,22 +235,23 @@ define(function(require, exports, module) {
         renderable: bsBookView
       });
       //wait until page is loaded and time has passed
-      setTimeout(function() {
+      var loadIfReady = function() {
         if (loaded) {
+          // app.content.content.outOpacityFrom(function () { return 0; });
           app.showPage('Best Seller');
+          // app.content.content.outOpacityFrom(function () { return 1; });
         } else {
           loaded = true;
         }
+      };
+
+      setTimeout(function() {
+        loadIfReady();
       }, 1500);
       bsBookView.on('bookLoaded', function() {
-        if (loaded) {
-          app.showPage('Best Seller');
-        } else {
-          loaded = true;
-        }
+        loadIfReady();
       });
       bsBookView.on('loadBestSellers', function() {
-        console.log('load best sellers');
         app.showPage('Explore');
         selectedBook.clicked = false;
 
