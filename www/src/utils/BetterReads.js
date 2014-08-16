@@ -68,7 +68,7 @@ define(function(require, exports, module){
             callback();
           }
         });
-      }, 1000);
+      }, 2000);
     });
   };
 
@@ -79,6 +79,19 @@ define(function(require, exports, module){
       method: 'get',
       data: {accessToken: auth.accessToken, accessSecret: auth.accessSecret}
     });
+  };
+
+  BetterReads.getUserId = function(callback) {
+    console.log('id auth:', auth);
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/userId',
+      method: 'get',
+      data: {accessToken: auth.accessToken, accessSecret: auth.accessSecret}
+    }).then(function(id) {
+      console.log('user id', id);
+      BetterReads.userId=id;
+      callback();
+    });    
   };
 
   BetterReads.getTopUT = function() {

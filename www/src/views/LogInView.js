@@ -97,7 +97,9 @@ define(function(require, exports, module){
       console.log('clicked');
       betterReads.authenticate(function() {
         console.log('call back');
-        that._eventOutput.emit('loggedIn');
+        // betterReads.getUserId(function() {
+          that._eventOutput.emit('loggedIn');
+        // });
       });
     });
 

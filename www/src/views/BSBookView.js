@@ -43,7 +43,6 @@ define(function(require, exports, module){
 
         var text = new Surface({
           content: '<a href="' + link + '" target="_system">' + details.Title + '</a><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
-          // content: 'Additional Goodreads detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
