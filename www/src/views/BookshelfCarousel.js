@@ -78,9 +78,10 @@ define(function(require, exports, module){
 
       var spine = new Surface({
         size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
-        content: 'title',
+        content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 200px; -webkit-filter: blur(15px)"/>',
         properties: {
-          background: 'crimson'
+          // background: 'crimson'
+          overflow: 'hidden'
         }
       });
       var spineLayout = new Modifier({
