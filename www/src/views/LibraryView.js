@@ -22,9 +22,9 @@ define(function(require, exports, module){
 
   function _addBooks(shelf, autoload){
     if (shelf) {
-      var params = {id: '4067289', shelf: shelf.name, page: 1, per_page: 50};
+      var params = {id: betterReads.userId, shelf: shelf.name, page: 1, per_page: 50};
     } else {
-      var params = {id: '4067289', page: 1, per_page: 50, sort: 'position'};
+      var params = {id: betterReads.userId, page: 1, per_page: 50, sort: 'position'};
     }
 
     betterReads.getBooks(params)

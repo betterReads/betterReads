@@ -23,7 +23,7 @@ define(function(require, exports, module){
 
   function _addShelves(){
 
-    betterReads.getShelves({id: '4067289'})
+    betterReads.getShelves({id: betterReads.userId})
     .then(function(data) {
       console.log('shelves');
       var books = JSON.parse(data);
