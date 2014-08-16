@@ -109,93 +109,93 @@ define(function(require, exports, module){
   }
 
   function _createCover(i, focus){
-      var coverView = new View();
-      var coverSurface = new ImageSurface({
-        size: this.options.coverSize,
-        content: this.options.books[i].url
-      });
-      var coverLayout = new Modifier({
-        origin: [0, 0.5],
-        align: [0, 0]
-      });
-      var coverAnimator = new Modifier({
-        transform: function (focus){
-          var angle = ((focus.get()) * (this.options.focusAngle) * (Math.PI));
-          return Transform.rotateY(angle);
-        }.bind(this, focus)
-      });
-      coverView.add(coverAnimator).add(coverLayout).add(coverSurface);
+    var coverView = new View();
+    var coverSurface = new ImageSurface({
+      size: this.options.coverSize,
+      content: this.options.books[i].url
+    });
+    var coverLayout = new Modifier({
+      origin: [0, 0.5],
+      align: [0, 0]
+    });
+    var coverAnimator = new Modifier({
+      transform: function (focus){
+        var angle = ((focus.get()) * (this.options.focusAngle) * (Math.PI));
+        return Transform.rotateY(angle);
+      }.bind(this, focus)
+    });
+    coverView.add(coverAnimator).add(coverLayout).add(coverSurface);
 
-      coverSurface.on('click', function(index){
-        var bookId = this.options.books[index].id;
-        this._eventOutput.emit('showBook', {id: bookId});
-        this._eventOutput.emit('navigate', {
-          title: 'Book',
-          showBackButton: true
-        });
-      }.bind(this, i));
+    coverSurface.on('click', function(index){
+      var bookId = this.options.books[index].id;
+      this._eventOutput.emit('showBook', {id: bookId});
+      this._eventOutput.emit('navigate', {
+        title: 'Book',
+        showBackButton: true
+      });
+    }.bind(this, i));
 
-      return coverView;
+    return coverView;
   }
 
   function _createSpine(i, focus){
-      var spineWidth = this.options.coverSize[0] / 5;
-      var maxFontSize = spineWidth * 0.75
-      var spineView = new View({
-        size: [spineWidth, this.options.coverSize[1]],
-      });
-      var spineSurface = new Surface({
-        size: [spineWidth, this.options.coverSize[1]],
-        content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
-        properties: {
-          background: '#999',
-          overflow: 'hidden'
-        }
-      });
-      var spineLayout = new Modifier({
-        origin: [1, 0.5],
-        align: [0, 0]
-      });
+    var spineWidth = this.options.coverSize[0] / 5;
+    var maxFontSize = spineWidth * 0.75
+    var spineView = new View({
+      size: [spineWidth, this.options.coverSize[1]],
+    });
+    var spineSurface = new Surface({
+      size: [spineWidth, this.options.coverSize[1]],
+      content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
+      properties: {
+        background: '#999',
+        overflow: 'hidden'
+      }
+    });
+    var spineLayout = new Modifier({
+      origin: [1, 0.5],
+      align: [0, 0]
+    });
 
-      var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)[0];
-      var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
-      var displayTitleLineHeight = spineWidth / displayTitleSize;
-      console.log('font size', displayTitleSize, 'for', displayTitle);
-      var spineTitleView = new View();
-      var spineTitle = new Surface({
-        size: [this.options.coverSize[1], spineWidth],
-        content: displayTitle,
-        properties: {
-          color: 'white',
-          textAlign: 'center',
-          lineHeight: displayTitleLineHeight,
-          textShadow: '0px 0px 1px black',
-          fontSize: displayTitleSize + 'px'
-        }
-      });
-      var spineTitleRotation = new Modifier({
-        transform: Transform.rotateZ(0.5*Math.PI)
-      });
-      var spineTitleLayout = new Modifier({
-        origin: [0.5, 0],
-        align: [0, 0]
-      });
+    var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)[0];
+    var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
+    var displayTitleLineHeight = spineWidth / displayTitleSize;
+    console.log('font size', displayTitleSize, 'for', displayTitle);
+    var spineTitleView = new View();
+    var spineTitle = new Surface({
+      size: [this.options.coverSize[1], spineWidth],
+      content: displayTitle,
+      properties: {
+        color: 'white',
+        textAlign: 'center',
+        lineHeight: displayTitleLineHeight,
+        textShadow: '0px 0px 1px black',
+        fontSize: displayTitleSize + 'px'
+      }
+    });
+    var spineTitleRotation = new Modifier({
+      transform: Transform.rotateZ(0.5*Math.PI)
+    });
+    var spineTitleLayout = new Modifier({
+      origin: [0.5, 0],
+      align: [0, 0]
+    });
 
-      var spineAnimator = new Modifier({
-        transform: function(focus){
-          var angle = ((-0.5 * Math.PI) + (focus.get() * this.options.focusAngle * Math.PI));
-          return Transform.rotateY(angle);
-        }.bind(this, focus)
-      });
+    var spineAnimator = new Modifier({
+      transform: function(focus){
+        var angle = ((-0.5 * Math.PI) + (focus.get() * this.options.focusAngle * Math.PI));
+        return Transform.rotateY(angle);
+      }.bind(this, focus)
+    });
 
-      spineView.add(spineLayout).add(spineSurface);
-      spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitle);
+    spineView.add(spineLayout).add(spineSurface);
+    spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitle);
 
-      var spineNode = new View().add(spineAnimator);
-      spineNode.add(spineView);
-      spineNode.add(spineTitleView);
+    var spineNode = new View().add(spineAnimator);
+    spineNode.add(spineView);
+    spineNode.add(spineTitleView);
 
-      return spineNode;
+    return spineNode;
   }
 
   function _setFocus(){
