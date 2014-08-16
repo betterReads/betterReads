@@ -69,8 +69,46 @@ define(function(require, exports, module){
     this.focusAnimations = [];
     for(var i = 0; i < this.options.books.length; i++){
       var nodeView = new View();
-      var focusTransition = new Transitionable(0);
+      var focusTransitionable = new Transitionable(0);
 
+      var cover = _createCover.call(this, i, focusTransitionable);
+      var spine = _createSpine.call(this, i, focusTransitionable);
+
+      nodeView.add(cover);
+      nodeView.add(spine);
+      
+      var nodeSize = new Modifier({
+        size: this.options.coverSize
+      });
+      var nodeLayout = new Modifier({
+        origin: [0.5, 0.5],
+        align:[0.5, 0]
+      });
+      var nodeAnimator = new Modifier({
+        transform: function(focus){
+          var offsetX = focus.get() * this.options.coverSize[0] * this.options.focusAngle;
+          var offsetZ = offsetX * this.options.focusZoomFactor;
+          return Transform.translate(offsetX, 0, offsetZ);
+        }.bind(this, focusTransitionable)
+      })
+
+      var renderNode = new RenderNode({
+        origin: [0, 0.5]
+      });
+      renderNode
+        .add(nodeSize)
+        .add(nodeLayout)
+        .add(nodeAnimator)
+        .add(nodeView);
+      
+      this.focusAnimations.push({
+        focus: focusTransitionable
+      });
+      this.bookshelf.items.push(renderNode);
+    }
+  }
+
+  function _createCover(i, focus){
       var coverView = new View();
       var coverSurface = new ImageSurface({
         size: this.options.coverSize,
@@ -81,13 +119,26 @@ define(function(require, exports, module){
         align: [0, 0]
       });
       var coverAnimator = new Modifier({
-        transform: function (trans){
-          var angle = ((trans.get()) * (this.options.focusAngle) * (Math.PI));
+        transform: function (focus){
+          var angle = ((focus.get()) * (this.options.focusAngle) * (Math.PI));
           return Transform.rotateY(angle);
-        }.bind(this, focusTransition)
+        }.bind(this, focus)
       });
       coverView.add(coverAnimator).add(coverLayout).add(coverSurface);
 
+      coverSurface.on('click', function(index){
+        var bookId = this.options.books[index].id;
+        this._eventOutput.emit('showBook', {id: bookId});
+        this._eventOutput.emit('navigate', {
+          title: 'Book',
+          showBackButton: true
+        });
+      }.bind(this, i));
+
+      return coverView;
+  }
+
+  function _createSpine(i, focus){
       var spineView = new View({
         size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
       });
@@ -100,7 +151,6 @@ define(function(require, exports, module){
         }
       });
       var spineLayout = new Modifier({
-        // size: [150, 20],
         origin: [1, 0.5],
         align: [0, 0]
       });
@@ -123,58 +173,20 @@ define(function(require, exports, module){
       });
 
       var spineAnimator = new Modifier({
-        transform: function(trans){
-          var angle = ((-0.5 * Math.PI) + (trans.get() * this.options.focusAngle * Math.PI));
+        transform: function(focus){
+          var angle = ((-0.5 * Math.PI) + (focus.get() * this.options.focusAngle * Math.PI));
           return Transform.rotateY(angle);
-        }.bind(this, focusTransition)
+        }.bind(this, focus)
       });
 
       spineView.add(spineLayout).add(spineSurface);
       spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitle);
 
-      nodeView.add(coverView);
-      var nodeViewSpine = nodeView.add(spineAnimator);
-      nodeViewSpine.add(spineTitleView);
-      nodeViewSpine.add(spineView);
-      
-      var nodeSize = new Modifier({
-        size: this.options.coverSize
-      });
-      var nodeLayout = new Modifier({
-        origin: [0.5, 0.5],
-        align:[0.5, 0]
-      });
-      var nodeAnimator = new Modifier({
-        transform: function(trans){
-          var offsetX = trans.get() * this.options.coverSize[0] * this.options.focusAngle;
-          var offsetZ = offsetX * this.options.focusZoomFactor;
-          return Transform.translate(offsetX, 0, offsetZ);
-        }.bind(this, focusTransition)
-      })
+      var spineNode = new View().add(spineAnimator);
+      spineNode.add(spineView);
+      spineNode.add(spineTitleView);
 
-      var renderNode = new RenderNode({
-        origin: [0, 0.5]
-      });
-      renderNode
-        .add(nodeSize)
-        .add(nodeLayout)
-        .add(nodeAnimator)
-        .add(nodeView);
-      
-      this.focusAnimations.push({
-        focus: focusTransition
-      });
-      this.bookshelf.items.push(renderNode);
-
-      coverSurface.on('click', function(index){
-        var bookId = this.options.books[index].id;
-        this._eventOutput.emit('showBook', {id: bookId});
-        this._eventOutput.emit('navigate', {
-          title: 'Book',
-          showBackButton: true
-        });
-      }.bind(this, i));
-    }
+      return spineNode;
   }
 
   function _setFocus(){
