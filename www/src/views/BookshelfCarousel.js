@@ -161,7 +161,8 @@ define(function(require, exports, module){
         content: 'THIS IS A TITLE',
         properties: {
           color: 'white',
-          textAlign: 'center'
+          textAlign: 'center',
+          textShadow: '0px 0px 1px black'
         }
       });
       var spineTitleRotation = new Modifier({
