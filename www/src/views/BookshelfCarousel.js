@@ -19,6 +19,7 @@ define(function(require, exports, module){
     View.apply(this, arguments);
 
     _addCarousel.call(this);
+    _addInfo.call(this);
     _setFocus.call(this);
     _bindFocusEvents.call(this);
   }
@@ -33,6 +34,13 @@ define(function(require, exports, module){
     focusAngle: 0.25,
     focusZoomFactor: 3
   };
+
+  function _addInfo(){
+    console.log(this.getSize());
+    // var infoView = new View({
+    //   size: [undefined, this]
+    // })
+  }
 
   function _addCarousel(){
     this.bookshelfContainer = new ContainerSurface();
@@ -140,7 +148,7 @@ define(function(require, exports, module){
 
   function _createSpine(i, focus){
     var spineWidth = this.options.coverSize[0] / 5;
-    var maxFontSize = spineWidth * 0.75
+    
     var spineView = new View({
       size: [spineWidth, this.options.coverSize[1]],
     });
@@ -157,12 +165,13 @@ define(function(require, exports, module){
       align: [0, 0]
     });
 
+    var maxFontSize = spineWidth * 0.7;
     var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)[0];
     var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
     var displayTitleLineHeight = spineWidth / displayTitleSize;
-    console.log('font size', displayTitleSize, 'for', displayTitle);
+
     var spineTitleView = new View();
-    var spineTitle = new Surface({
+    var spineTitleSurface = new Surface({
       size: [this.options.coverSize[1], spineWidth],
       content: displayTitle,
       properties: {
@@ -189,7 +198,7 @@ define(function(require, exports, module){
     });
 
     spineView.add(spineLayout).add(spineSurface);
-    spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitle);
+    spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitleSurface);
 
     var spineNode = new View().add(spineAnimator);
     spineNode.add(spineView);
