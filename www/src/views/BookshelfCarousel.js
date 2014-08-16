@@ -57,6 +57,15 @@ define(function(require, exports, module){
       easing: Easing.outCubic
     });
 
+    _addBooks.call(this);
+
+    this.add(this.bookshelfContainer);
+    this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
+    this.bookshelfContainer.pipe(this.bookshelf.scrollview);
+    this.bookshelf.scrollview.pipe(this);
+  }
+
+  function _addBooks(){
     this.focusAnimations = [];
     for(var i = 0; i < this.options.books.length; i++){
       var nodeView = new View();
@@ -156,11 +165,6 @@ define(function(require, exports, module){
         });
       }.bind(this, i));
     }
-
-    this.add(this.bookshelfContainer);
-    this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
-    this.bookshelfContainer.pipe(this.bookshelf.scrollview);
-    this.bookshelf.scrollview.pipe(this);
   }
 
   function _setFocus(){
