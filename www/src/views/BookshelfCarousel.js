@@ -139,11 +139,13 @@ define(function(require, exports, module){
   }
 
   function _createSpine(i, focus){
+      var spineWidth = this.options.coverSize[0] / 5;
+      var maxFontSize = spineWidth * 0.75
       var spineView = new View({
-        size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
+        size: [spineWidth, this.options.coverSize[1]],
       });
       var spineSurface = new Surface({
-        size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
+        size: [spineWidth, this.options.coverSize[1]],
         content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
         properties: {
           background: '#999',
@@ -155,16 +157,20 @@ define(function(require, exports, module){
         align: [0, 0]
       });
 
-      // console.log(this.options.books[i].title);
-      var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)
+      var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)[0];
+      var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
+      var displayTitleLineHeight = spineWidth / displayTitleSize;
+      console.log('font size', displayTitleSize, 'for', displayTitle);
       var spineTitleView = new View();
       var spineTitle = new Surface({
-        size: [this.options.coverSize[1], this.options.coverSize[0]/5],
+        size: [this.options.coverSize[1], spineWidth],
         content: displayTitle,
         properties: {
           color: 'white',
           textAlign: 'center',
-          textShadow: '0px 0px 1px black'
+          lineHeight: displayTitleLineHeight,
+          textShadow: '0px 0px 1px black',
+          fontSize: displayTitleSize + 'px'
         }
       });
       var spineTitleRotation = new Modifier({
