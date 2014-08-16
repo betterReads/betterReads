@@ -71,7 +71,8 @@ define(function(require, exports, module){
       var nodeView = new View();
       var focusTransition = new Transitionable(0);
 
-      var cover = new ImageSurface({
+      var coverView = new View();
+      var coverSurface = new ImageSurface({
         size: this.options.coverSize,
         content: this.options.books[i].url
       });
@@ -85,8 +86,12 @@ define(function(require, exports, module){
           return Transform.rotateY(angle);
         }.bind(this, focusTransition)
       });
+      coverView.add(coverAnimator).add(coverLayout).add(coverSurface);
 
-      var spine = new Surface({
+      var spineView = new View({
+        size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
+      });
+      var spineSurface = new Surface({
         size: [this.options.coverSize[0]/5, this.options.coverSize[1]],
         content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
         properties: {
@@ -95,9 +100,28 @@ define(function(require, exports, module){
         }
       });
       var spineLayout = new Modifier({
+        // size: [150, 20],
         origin: [1, 0.5],
         align: [0, 0]
       });
+
+      var spineTitleView = new View();
+      var spineTitle = new Surface({
+        size: [this.options.coverSize[1], this.options.coverSize[0]/5],
+        content: 'THIS IS A TITLE',
+        properties: {
+          color: 'white',
+          textAlign: 'center'
+        }
+      });
+      var spineTitleRotation = new Modifier({
+        transform: Transform.rotateZ(0.5*Math.PI)
+      });
+      var spineTitleLayout = new Modifier({
+        origin: [0.5, 0],
+        align: [0, 0]
+      });
+
       var spineAnimator = new Modifier({
         transform: function(trans){
           var angle = ((-0.5 * Math.PI) + (trans.get() * this.options.focusAngle * Math.PI));
@@ -105,27 +129,13 @@ define(function(require, exports, module){
         }.bind(this, focusTransition)
       });
 
-      var title = new Surface({
-        size: [undefined, true],
-        content: 'THIS IS A TITLE',
-        properties: {
-          textAlign: 'center'
-        }
-      });
-      var titleLayout = new Modifier({
-        origin: [0.5, 0.5],
-        align: [0.5, 1]
-      });
-      var titleAnimator = new Modifier({
-        // opacity: function(trans){
-          // return trans.get();
-        // }.bind(null, focusTransition)
-        opacity: 1  // TODO: Get transitionable opacity working
-      });
+      spineView.add(spineLayout).add(spineSurface);
+      spineTitleView.add(spineTitleRotation).add(spineTitleLayout).add(spineTitle);
 
-      nodeView.add(coverLayout).add(coverAnimator).add(cover);
-      nodeView.add(spineLayout).add(spineAnimator).add(spine);
-      // nodeView.add(titleLayout).add(titleAnimator).add(title);
+      nodeView.add(coverView);
+      var nodeViewSpine = nodeView.add(spineAnimator);
+      nodeViewSpine.add(spineTitleView);
+      nodeViewSpine.add(spineView);
       
       var nodeSize = new Modifier({
         size: this.options.coverSize
@@ -156,7 +166,7 @@ define(function(require, exports, module){
       });
       this.bookshelf.items.push(renderNode);
 
-      cover.on('click', function(index){
+      coverSurface.on('click', function(index){
         var bookId = this.options.books[index].id;
         this._eventOutput.emit('showBook', {id: bookId});
         this._eventOutput.emit('navigate', {
