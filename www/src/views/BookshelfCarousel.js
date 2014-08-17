@@ -185,13 +185,17 @@ define(function(require, exports, module){
 
   function _createSpine(i, focus){
     var spineWidth = this.options.coverSize[0] / 5;
-    
+    var spineStyle = 'style="'
+      + 'position: relative; top: -50%; left: -50%; '
+      + 'height: ' + (this.options.coverSize[1] * 2) + 'px; '
+      + 'width: ' + (spineWidth * 2) + 'px; '
+      + '-webkit-filter: blur(' + spineWidth + 'px)"'
     var spineView = new View({
       size: [spineWidth, this.options.coverSize[1]],
     });
     var spineSurface = new Surface({
       size: [spineWidth, this.options.coverSize[1]],
-      content: '<img src="' + this.options.books[i].url + '" style="height: 300px; width: 40px; position: relative; top: -50%; left: -50%; -webkit-filter: blur(20px)"/>',
+      content: '<img src="' + this.options.books[i].url + '" ' + spineStyle + '/>',
       properties: {
         background: '#999',
         overflow: 'hidden'
