@@ -29,7 +29,7 @@ define(function(require, exports, module){
 
   BookshelfCarousel.DEFAULT_OPTIONS = {
     books: [],
-    coverSize: [100, 150],
+    coverSize: [150, 225],
     snapSpeed: 300,
     focusAngle: 0.25,
     focusZoomFactor: 3
@@ -56,7 +56,7 @@ define(function(require, exports, module){
 
   function _addInfo(){
     var infoView = new View({
-      size: [undefined, window.innerHeight * 0.20]
+      size: [undefined, window.innerHeight * 0.24]
     });
     var infoSurface = new Surface({
       size: infoView.getSize(),
@@ -105,7 +105,7 @@ define(function(require, exports, module){
     _addBooks.call(this);
 
     this.add(this.bookshelfContainer);
-    this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.5]})).add(this.bookshelf);
+    this.bookshelfContainer.add(new Modifier({origin: [0, 0.5], align: [0, 0.4]})).add(this.bookshelf);
     this.bookshelfContainer.pipe(this.bookshelf.scrollview);
     this.bookshelf.scrollview.pipe(this);
   }
