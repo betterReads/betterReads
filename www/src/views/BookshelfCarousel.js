@@ -89,7 +89,7 @@ define(function(require, exports, module){
     this.bookshelf = new Carousel({
       screenCenter: screenCenter,
       coverCenter: coverCenter,
-      margin: 5000,
+      margin: 10000,
       rotateX: 0.0,
       rotateY: 0.0,
       rotateZ: 0.0,
