@@ -35,11 +35,48 @@ define(function(require, exports, module){
     focusZoomFactor: 3
   };
 
+  BookshelfCarousel.prototype.simplifyTitle = function(index){
+    return this.options.books[index].title.match(/[\w\s'-]+/)[0]
+  }
+
+  BookshelfCarousel.prototype.focus = function(payload){
+    this.focusIndex = payload.bookIndex;
+    var book = this.options.books[this.focusIndex];
+    var infoTitle = this.simplifyTitle(this.focusIndex);
+    var infoAuthor = book.author;
+    var infoRating = book.rating;
+    this.info.setContent('<span style="font-size: 22px;">' + infoTitle + '</span><br>' + infoAuthor + '<br>' + infoRating);
+    this.focusAnimation(this.focusAnimations[this.focusIndex]);
+  }
+
+  BookshelfCarousel.prototype.unfocus = function(payload){
+    var index = payload.bookIndex;
+    this.unfocusAnimation(this.focusAnimations[this.focusIndex]);
+  }
+
   function _addInfo(){
-    console.log(this.getSize());
-    // var infoView = new View({
-    //   size: [undefined, this]
-    // })
+    var infoView = new View({
+      size: [undefined, window.innerHeight * 0.20]
+    });
+    var infoSurface = new Surface({
+      size: infoView.getSize(),
+      properties: {
+        color: 'black',
+        textAlign: 'center',
+        padding: '15px'
+      }
+    });
+    var infoModifier = new Modifier({
+      origin: [0, 1],
+      align: [0, 1],
+      opacity: function(){
+        return this.masterFocus.get();
+      }.bind(this)
+    });
+
+    window.info = this.info = infoSurface;
+    infoView.add(infoModifier).add(infoSurface);
+    this.add(infoView);
   }
 
   function _addCarousel(){
@@ -166,7 +203,7 @@ define(function(require, exports, module){
     });
 
     var maxFontSize = spineWidth * 0.7;
-    var displayTitle = this.options.books[i].title.match(/[\w\s'-]+/)[0];
+    var displayTitle = this.simplifyTitle(i);
     var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
     var displayTitleLineHeight = spineWidth / displayTitleSize;
 
@@ -208,32 +245,26 @@ define(function(require, exports, module){
   }
 
   function _setFocus(){
-    this.focusBook = 0;
+    this.focusIndex = 0;
     this.snapSpeed = this.bookshelf.scrollview.options.snapSpeed || 100;
     this.snapCurve = this.bookshelf.scrollview.options.snapCurve || 'easeInOut';
     this.focusTransition = {duration: this.snapSpeed, curve: this.snapCurve};
+    this.masterFocus = new Transitionable(0);
     this.focusAnimation = function(book){
       book.focus.set(1, this.focusTransition);
+      this.masterFocus.set(1, this.focusTransition);
     };
     this.unfocusAnimation = function(book){
       book.focus.set(0, this.focusTransition);
+      this.masterFocus.set(0, this.focusTransition);
     };
   }
 
   function _bindFocusEvents(){
-    this._eventInput.on('snap', function(payload){
-      this.focusBook = payload.bookIndex;
-      console.log('focus:', this.focusBook);
-      this.focusAnimation(this.focusAnimations[this.focusBook]);
-    }.bind(this));
+    this._eventInput.on('snap', this.focus.bind(this));
+    this._eventInput.on('scrollStart', this.unfocus.bind(this));
 
-    this._eventInput.on('scrollStart', function(payload){
-      var index = payload.bookIndex;
-      console.log('unfocus:', this.focusBook);
-      this.unfocusAnimation(this.focusAnimations[this.focusBook]);
-    }.bind(this));
-
-    this.focusAnimation(this.focusAnimations[this.focusBook]);
+    this.focus({bookIndex: this.focusIndex});
   }
 
   module.exports = BookshelfCarousel;

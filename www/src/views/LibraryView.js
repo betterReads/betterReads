@@ -39,10 +39,14 @@ define(function(require, exports, module){
         var url = books[i].image_url[0];
         var id = books[i].id[0]._;
         var title = books[i].title[0];
+        var author = books[i].authors[0].author[0].name[0];
+        var rating = books[i].average_rating[0];
         var book = {
           url: url,
           id: id,
-          title: title
+          title: title,
+          author: author,
+          rating: rating
         }
         bookData.push(book);
       }
