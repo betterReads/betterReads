@@ -66,9 +66,6 @@ define(function(require, exports, module){
         });
         shelfView.add(shelfSurface);
         this.add(shelfView);
-        // shelfSurface.pipe(scrollView);
-        // shelfSurface.pipe(this);
-        // listOfItems.push(shelfView);
       }
 
 
