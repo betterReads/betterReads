@@ -7,6 +7,8 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ScrollView = require('famous/views/ScrollView');
 
+  var BookshelfCarousel = require('views/BookshelfCarousel');
+
   var betterReads = require('../utils/BetterReads');
 
   function LibraryView(shelf, autoload){
@@ -29,92 +31,42 @@ define(function(require, exports, module){
 
     betterReads.getBooks(params)
     .then(function(data) {
-      // var book = JSON.parse(data)[18];
       var books = JSON.parse(data);
       console.log(books);
-      //need to change image size so it is whatever aspect ratio of book is; there is slight variance around 100:150
-      // var image = new ImageSurface({
-      //     size: [100, 150]
-      // });
-      // image.setContent(book.image_url[0]);
-      // var imageModifier = new Modifier({
-      //     origin: [0.5, 0.5]
-      // });
-      // this.add(imageModifier).add(image);
-      var scrollView = new ScrollView(this.options);
-      var listOfItems = [];
 
-      var background = 'white';
-      //add shelf title
-      if (shelf) {
-        background = shelf.color;
-        var shelfView = new View();
-        var shelfSurface = new Surface({
-          content: '<b>' + shelf.name + '</b> <font color="#403E39"> ' + shelf.count + ' books </font>',
-          size: [undefined, true],
-          properties: {
-            textAlign: 'center',
-            padding: '10px',
-            backgroundColor: background
-          }
-        });
-        shelfView.add(shelfSurface);
-        shelfSurface.pipe(scrollView);
-        shelfSurface.pipe(this);
-        listOfItems.push(shelfView);
-      }
-
-      for (var i = 0; i < books.length; i++) {
-
-        var bookView = new View();
-        var bookMod = new StateModifier({
-          size: [undefined, 150]
-        });
-
-        //truncate title & author
+      var bookData = [];
+      for(var i = 0; i < books.length; i++){
+        var url = books[i].image_url[0];
+        var id = books[i].id[0]._;
         var title = books[i].title[0];
-        if (title.length > 70) {
-          title = title.slice(0, 67) + '...';
-        }
         var author = books[i].authors[0].author[0].name[0];
-        if (author.length > 25) {
-          author = author.slice(0, 22) + '...';
+        var rating = books[i].average_rating[0];
+        var book = {
+          url: url,
+          id: id,
+          title: title,
+          author: author,
+          rating: rating
         }
-        var tab = new Surface({
-          content: title + '<br>by ' + author + '<br>Rating: ' + books[i].average_rating + '/5',
-          size: [undefined, undefined],
-          properties: {
-            textAlign: 'left',
-            backgroundColor: background,
-            padding: '10px 10px 10px 110px'
-          }
-        });
-
-        var image = new ImageSurface({
-          size: [100, 150]
-        });
-        image.setContent(books[i].image_url[0]);
-
-        var bookWrapper = bookView.add(bookMod);
-        bookWrapper.add(image);
-        bookWrapper.add(tab);
-
-        listOfItems.push(bookView);
-        image.pipe(scrollView);
-        image.pipe(this);
+        bookData.push(book);
       }
 
-      scrollView.sequenceFrom(listOfItems);
-      this.add(scrollView);
-
-      this._eventInput.on('scrollListItemClicked', function(eventPayload) {
-        this._eventOutput.emit('navigate:modal', eventPayload);
+      this.bookshelf = new BookshelfCarousel({books: bookData});
+      this.add(this.bookshelf);
+      this.bookshelf.pipe(this);
+      this._eventInput.on('showBook', function(payload){
+        this._eventOutput.emit('showBook', payload);
       }.bind(this));
+      this._eventInput.on('navigate', function(payload){
+        this._eventOutput.emit('navigate', payload);
+      }.bind(this));
+
       if (autoload) {
         this._eventOutput.emit('shelfLoaded', shelf);
       }
     }.bind(this));
   }
+
 
   module.exports = LibraryView;
 });

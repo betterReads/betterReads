@@ -218,6 +218,8 @@ define(function(require, exports, module) {
 
     searchView.pipe(app.content);
     searchView.pipe(bookView);
+  libraryView.pipe(app.content);
+  libraryView.pipe(bookView);
 
     //set up best seller view rendering
     var selectedBook;
