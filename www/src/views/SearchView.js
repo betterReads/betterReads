@@ -49,6 +49,13 @@ define(function(require, exports, module){
         var rating = books[i].average_rating[0];
         var imageURL = books[i].best_book[0].image_url[0];
 
+        if (title.length > 50) {
+          title = title.slice(0, 47) + '...';
+        }
+        if (author.length > 25) {
+          author = author.slice(0, 22) + '...';
+        }        
+
         var bookView = new View();
         var bookMod = new StateModifier({
           size: [undefined, 150]
@@ -60,11 +67,12 @@ define(function(require, exports, module){
         image.setContent(imageURL);
 
         var tab = new Surface({
-          content: title + '<br>' + name + '<br>Rating: ' + rating + '/5',
+          content: title + '<br>by ' + author + '<br>Rating: ' + rating + '/5',
           size: [window.innerWidth - 100, undefined],
           properties: {
-            textAlign: 'right',
-            backgroundColor: 'white'
+            textAlign: 'left',
+            backgroundColor: 'white',
+            padding: '5px 5px'
           }
         });
 
