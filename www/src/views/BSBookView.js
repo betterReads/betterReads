@@ -25,6 +25,7 @@ define(function(require, exports, module){
 
   function _addDetail(isbn, picUrl, link, details, autoload){
     betterReads.getBookDetail({isbn: isbn}).then(function(response) {
+      var that = this;
       //handle bad requests
       if (response==='book not found' || response==='Bad Request') {
         console.log('book not found');
@@ -42,7 +43,7 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         var text = new Surface({
-          content: '<a onClick=\'javascript: window.open("' + link + '", "_system");\'>' + details.Title + '</a><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
+          content: '<a href="' + link + '" target="_system">' + details.Title + '</a><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
@@ -80,8 +81,22 @@ define(function(require, exports, module){
           margin: 200
         });
         var scroll = new ScrollView();
+        var button = new Surface({
+          content: 'Add to "To Read" shelf',
+          properties: {
+            backgroundColor: '#0096B3',
+            color: 'white',
+            textAlign: 'center',
+            padding: '5px 5px'
+          }
+        });
+        var buttonMod = new Modifier({
+          size: [undefined, true],
+          transform: Transform.translate(0, 0, 2)
+        });
+
         var text = new Surface({
-          content: '<a onClick=\'javascript: window.open("' + link + '", "_system");\'>' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+          content: '<br><a href="' + link + '" target="_system">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
@@ -92,13 +107,24 @@ define(function(require, exports, module){
           opacity: 1.0,
           transform: Transform.translate(0, 0, 1)
         });
-        view.add(textMod).add(text);
+        var viewMod = view.add(textMod)
+        viewMod.add(text);
+        viewMod.add(buttonMod).add(button);
+
+        that.grId = bookData.id[0];
+        button.on('click', function() {
+          console.log('clicked the button');
+          console.log(that);
+          console.log(this);
+          this.setContent('Added to shelf');
+          this.setProperties({backgroundColor: 'green'});
+        });
+
         scroll.sequenceFrom([view]);
 
         text.pipe(scroll);
         this.add(scroll);
       }
-      var that = this;
       text.on('click', function() {
         that._eventOutput.emit('loadBestSellers');
       });

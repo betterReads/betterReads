@@ -248,7 +248,7 @@ define(function(require, exports, module) {
       setTimeout(function() {
         loadIfReady();
       }, 1500);
-      bsBookView.on('bookLoaded', function() {
+      bsBookView.on('bookLoaded', function(id) {
         loadIfReady();
       });
       bsBookView.on('loadBestSellers', function() {
