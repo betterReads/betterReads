@@ -38,7 +38,7 @@ define(function(require, exports, module){
 
       var titleView = new View();
       var titleSurface = new Surface({
-        content: '<b>USA Today Weekly Best Sellers<br>' + date + '</b>',
+        content: '<b>USA Today Weekly Best Sellers<br><div style="font-size: 0.8em">' + date + '</div></b>',
         size: [undefined, true],
         properties: {
           textAlign: 'center',
