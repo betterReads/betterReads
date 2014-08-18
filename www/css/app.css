@@ -8,6 +8,11 @@ body {
    font-weight: 100;
 }
 
+a {
+  color: #0096B3;
+  text-decoration: underline;
+}
+
 .backfaceVisibility {
     -webkit-backface-visibility: visible;
     backface-visibility: visible;
@@ -46,7 +51,6 @@ body {
 .button-highlight {
   color: #ffffff;
   background-color: #0096B3;
-	/*background-color: #fa5c4f;*/
 }
 
 .button-horizontal p {
