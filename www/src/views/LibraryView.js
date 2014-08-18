@@ -51,6 +51,28 @@ define(function(require, exports, module){
         bookData.push(book);
       }
 
+
+      if (shelf) {
+        var background = shelf.color;
+        var shelfView = new View();
+        var shelfSurface = new Surface({
+          content: '<b>' + shelf.name + '</b> <font color="#403E39"> ' + shelf.count + ' books </font>',
+          size: [undefined, true],
+          properties: {
+            textAlign: 'center',
+            padding: '10px'
+            // backgroundColor: background
+          }
+        });
+        shelfView.add(shelfSurface);
+        this.add(shelfView);
+        // shelfSurface.pipe(scrollView);
+        // shelfSurface.pipe(this);
+        // listOfItems.push(shelfView);
+      }
+
+
+
       this.bookshelf = new BookshelfCarousel({books: bookData});
       this.add(this.bookshelf);
       this.bookshelf.pipe(this);

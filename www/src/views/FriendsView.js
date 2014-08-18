@@ -39,7 +39,6 @@ define(function(require, exports, module){
         update.action_text[0] = update.action_text[0].replace(/href=/g, 'onClick=\'javascript: window.open(');
         update.action_text[0] = update.action_text[0].replace(/">/g, '", \"_system\");\'>');
         update.action_text[0] = update.action_text[0].replace(/" >/g, '", \"_system\");\'>');
-        console.log(update.action_text[0]);
 
         var tab = new Surface({
           content: '<table><td><img src="' + update.image_url[0] + '"></td><td><b>' + update.actor[0].name[0] + '</b> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
