@@ -14,6 +14,16 @@ define(function(require, exports, module){
     });
   };
 
+  BetterReads.addBook = function(params) {
+    params.accessToken = auth.accessToken;
+    params.accessSecret = auth.accessSecret;
+    return reqwest({
+      url: 'https://betterreadsapi.azurewebsites.net/booksOnShelf',
+      method: 'post',
+      data: params
+    });
+  }
+
   BetterReads.getShelves = function(params, callback) {
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/userShelves',

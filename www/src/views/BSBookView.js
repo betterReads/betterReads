@@ -114,10 +114,12 @@ define(function(require, exports, module){
         that.grId = bookData.id[0];
         button.on('click', function() {
           console.log('clicked the button');
-          console.log(that);
-          console.log(this);
-          this.setContent('Added to shelf');
-          this.setProperties({backgroundColor: 'green'});
+          var _this = this;
+          betterReads.addBook({bookId: that.grId, shelf: 'to-read'}).then(function(response) {
+            console.log(response);
+            _this.setContent('Added to shelf');
+            _this.setProperties({backgroundColor: '#2ecc71'});
+          });
         });
 
         scroll.sequenceFrom([view]);
