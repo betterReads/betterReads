@@ -99,9 +99,9 @@ define(function(require, exports, module){
         });
 
         var text = new Surface({
+          size: [undefined, true],
           content: '<br><a href="' + link + '" target="_system">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
           properties: {
-            size: [undefined, true],
             textAlign: 'center',
             padding: '20px'
           }
