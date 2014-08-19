@@ -28,8 +28,8 @@ define(function(require, exports, module){
     title: 'Some Book',
     detailSize: [undefined, true],
     detailStyle: {
-      backgroundColor: 'white',
-      color: 'crimson',
+      backgroundColor: '#EFF9FF',
+      color: 'black',
       padding: '10px'
     },
     detailCenter: {textAlign: 'center'}
@@ -48,7 +48,7 @@ define(function(require, exports, module){
         var title = book.title[0];
         var author = book.authors[0].author[0].name[0];
         var description = book.description[0];
-        var rating = book.average_rating[0];
+        var rating = 'Rating: ' + book.average_rating[0] + '/5';
 
         this.button.bookId = book.id[0];
         this.titleSurface.setContent(title);
@@ -69,7 +69,7 @@ define(function(require, exports, module){
         var title = book.title[0];
         var author = book.authors[0].author[0].name[0];
         var description = book.description[0];
-        var rating = book.average_rating[0];
+        var rating = 'Rating: ' + book.average_rating[0] + '/5';
 
         this.button.bookId = book.id[0];
         this.titleSurface.setContent(title);
