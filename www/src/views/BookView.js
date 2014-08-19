@@ -72,6 +72,8 @@ define(function(require, exports, module){
         var rating = 'Rating: ' + book.average_rating[0] + '/5';
 
         this.button.bookId = book.id[0];
+        this.button.setContent('Add to "To Read" shelf');
+        this.button.setProperties({backgroundColor: '#0096B3'});        
         this.titleSurface.setContent(title);
         this.authorSurface.setContent(author);
         this.descriptionSurface.setContent(description);
