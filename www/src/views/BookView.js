@@ -7,6 +7,7 @@ define(function(require, exports, module){
   var StateModifier = require('famous/modifiers/StateModifier');
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var ScrollView = require('famous/views/ScrollView');
+  var Modifier = require('famous/core/Modifier');
 
   var WaitingView = require('views/WaitingView');
 
@@ -49,10 +50,12 @@ define(function(require, exports, module){
         var description = book.description[0];
         var rating = book.average_rating[0];
 
+        this.button.bookId = book.id[0];
         this.titleSurface.setContent(title);
         this.authorSurface.setContent(author);
         this.descriptionSurface.setContent(description);
         this.ratingSurface.setContent(rating);
+
         
         this.detailsModifier.setOpacity(1);
         this.loadingView.hide();
@@ -68,6 +71,7 @@ define(function(require, exports, module){
         var description = book.description[0];
         var rating = book.average_rating[0];
 
+        this.button.bookId = book.id[0];
         this.titleSurface.setContent(title);
         this.authorSurface.setContent(author);
         this.descriptionSurface.setContent(description);
@@ -90,6 +94,34 @@ define(function(require, exports, module){
 
   function _addContents(){
     var detailsList = [];
+
+    //set up option to include 'add book' button
+    var start = 1;
+    this.buttonView = new View({
+      size: [undefined, 100]
+    });    
+    var buttonMod = new Modifier({
+      size: [undefined, 100],
+      transform: Transform.translate(0, 0, 2)
+    });
+    this.button = new Surface({
+      content: 'Add to "To Read" shelf',
+      size: [undefined, 30],
+      properties: {
+        backgroundColor: '#0096B3',
+        color: 'white',
+        textAlign: 'center',
+        padding: '5px 5px'
+      }
+    });
+    this.buttonView.add(this.buttonMod).add(this.button);
+    detailsList.push(this.buttonView);
+
+    this.button.bookId = undefined;
+    this.button.on('click', function() {
+      console.log('you clicked me');
+      console.log(this.bookId);
+    });
 
     this.titleSurface = new Surface({
       size: this.options.detailSize,
@@ -119,16 +151,17 @@ define(function(require, exports, module){
     this.details.sequenceFrom(detailsList);
     this.add(this.detailsModifier).add(this.details);
 
-    for(var i = 0; i < detailsList.length; i++){
+    for(var i = start; i < detailsList.length; i++){
       detailsList[i].setProperties(this.options.detailStyle);
       detailsList[i].pipe(this.details);
       detailsList[i].pipe(this);
     }
+
   }
 
   function _bindEvents(){
     this._eventInput.on('showBook', function(eventPayload){
-      this.getBook(eventPayload.id);
+      this.getBook(eventPayload.id, eventPayload.add);
     }.bind(this));
   }
 

@@ -101,7 +101,8 @@ define(function(require, exports, module){
 
         clickSurface.on('click', function(payload){
           this.emit('readABook', {
-            id: payload.id
+            id: payload.id,
+            add: true
           });
         }.bind(clickSurface, eventPayload));
 
