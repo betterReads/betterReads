@@ -121,6 +121,12 @@ define(function(require, exports, module){
     this.button.on('click', function() {
       console.log('you clicked me');
       console.log(this.bookId);
+      var _this = this;
+      betterReads.addBook({bookId: this.bookId, shelf: 'to-read'}).then(function(response) {
+        console.log(response);
+        _this.setContent('Added to shelf');
+        _this.setProperties({backgroundColor: '#2ecc71'});
+      });
     });
 
     this.titleSurface = new Surface({
