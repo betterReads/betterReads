@@ -73,9 +73,12 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         console.log(bookData);
+        var buttonView = new View({
+          size: [undefined, true]
+        });
+
         var view = new View({
-          size: [undefined, true],
-          detailSize: [undefined, true]
+          size: [undefined, true]
         });
         var scroll = new ScrollView({
           margin: 200
@@ -98,7 +101,7 @@ define(function(require, exports, module){
         var text = new Surface({
           content: '<br><a href="' + link + '" target="_system">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
           properties: {
-            size: [undefined, undefined],
+            size: [undefined, true],
             textAlign: 'center',
             padding: '20px'
           }
@@ -109,7 +112,8 @@ define(function(require, exports, module){
         });
         var viewMod = view.add(textMod)
         viewMod.add(text);
-        viewMod.add(buttonMod).add(button);
+        // viewMod.add(buttonMod).add(button);
+        buttonView.add(buttonMod).add(button);
 
         that.grId = bookData.id[0];
         button.on('click', function() {
@@ -122,7 +126,7 @@ define(function(require, exports, module){
           });
         });
 
-        scroll.sequenceFrom([view]);
+        scroll.sequenceFrom([buttonView, view]);
 
         text.pipe(scroll);
         this.add(scroll);
