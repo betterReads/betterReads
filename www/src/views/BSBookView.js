@@ -91,29 +91,36 @@ define(function(require, exports, module){
         var share = new Surface({
           // content: '<button onclick="window.plugins.socialsharing.share(\'Check out this book on Better Reads!\', null, \'https://www.google.nl/images/srpr/logo4w.png\', null)">message and image</button>',
           content: 'Share this book',
+          size: [undefined, true],
           properties: {
-            backgroundColor: 'red',
+            backgroundColor: '#0096B3',
             color: 'white',
             textAlign: 'center',
-            padding: '10px 10px'
+            padding: '5px 5px',
+            border: '1px solid white'
           }
         });
 
         var button = new Surface({
           content: 'Add to "To Read" shelf',
+          size: [undefined, true],
           properties: {
             backgroundColor: '#0096B3',
             color: 'white',
             textAlign: 'center',
-            padding: '5px 5px'
+            padding: '5px 5px',
+            border: '1px solid white'
           }
         });
         var buttonMod = new Modifier({
-          size: [undefined, true],
           transform: Transform.translate(0, 0, 2)
         });
 
-        shareView.add(buttonMod).add(share);
+        var shareMod = new Modifier({
+          transform: Transform.translate(0, 0, 3)
+        });
+
+        shareView.add(shareMod).add(share);
         buttonView.add(buttonMod).add(button);
 
         var text = new Surface({
