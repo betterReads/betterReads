@@ -73,10 +73,13 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         console.log(bookData);
+
+        var shareView = new View ({
+          size: [undefined, true]
+        });
         var buttonView = new View({
           size: [undefined, true]
         });
-
         var view = new View({
           size: [undefined, true]
         });
@@ -84,6 +87,18 @@ define(function(require, exports, module){
           margin: 200
         });
         var scroll = new ScrollView();
+
+        var share = new Surface({
+          // content: '<button onclick="window.plugins.socialsharing.share(\'Check out this book on Better Reads!\', null, \'https://www.google.nl/images/srpr/logo4w.png\', null)">message and image</button>',
+          content: 'Share this book',
+          properties: {
+            backgroundColor: 'red',
+            color: 'white',
+            textAlign: 'center',
+            padding: '10px 10px'
+          }
+        });
+
         var button = new Surface({
           content: 'Add to "To Read" shelf',
           properties: {
@@ -98,6 +113,9 @@ define(function(require, exports, module){
           transform: Transform.translate(0, 0, 2)
         });
 
+        shareView.add(buttonMod).add(share);
+        buttonView.add(buttonMod).add(button);
+
         var text = new Surface({
           size: [undefined, true],
           content: '<br><a href="' + link + '" target="_system">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
@@ -110,10 +128,7 @@ define(function(require, exports, module){
           opacity: 1.0,
           transform: Transform.translate(0, 0, 1)
         });
-        var viewMod = view.add(textMod)
-        viewMod.add(text);
-        // viewMod.add(buttonMod).add(button);
-        buttonView.add(buttonMod).add(button);
+        view.add(textMod).add(text);
 
         that.grId = bookData.id[0];
         button.on('click', function() {
@@ -126,7 +141,7 @@ define(function(require, exports, module){
           });
         });
 
-        scroll.sequenceFrom([buttonView, view]);
+        scroll.sequenceFrom([shareView, buttonView, view]);
 
         text.pipe(scroll);
         this.add(scroll);
