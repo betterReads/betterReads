@@ -124,7 +124,8 @@ define(function(require, exports, module){
         backgroundColor: '#0096B3',
         color: 'white',
         textAlign: 'center',
-        padding: '5px 5px'
+        padding: '5px 5px',
+        border: '1px solid white'
       }
     });
     this.buttonView.add(this.buttonMod).add(this.button);
