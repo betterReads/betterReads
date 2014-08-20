@@ -4,7 +4,7 @@ define(function(require, exports, module){
   var View = require('famous/core/View');
   var Surface = require('famous/core/Surface');
   var StateModifier = require('famous/modifiers/StateModifier');
-  var ScrollView = require('famous/views/ScrollView');
+  var ScrollView = require('famous/views/Scrollview');
 
   function CollectionsView(){
     View.apply(this, arguments);

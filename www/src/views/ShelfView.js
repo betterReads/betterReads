@@ -5,7 +5,7 @@ define(function(require, exports, module){
   var Surface = require('famous/core/Surface');
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var StateModifier = require('famous/modifiers/StateModifier');
-  var ScrollView = require('famous/views/ScrollView');
+  var ScrollView = require('famous/views/Scrollview');
   var LibraryView = require('views/LibraryView');
 
   var betterReads = require('../utils/BetterReads');
