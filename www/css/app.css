@@ -78,6 +78,7 @@ a {
 }
 
 .header-title {
+  padding-top: 20px;
   line-height: 50px;
   font-size: 20px;
   text-align: center;
@@ -89,8 +90,13 @@ a {
 }
 
 .header-left-button-icon {
+    padding-top: 20px;
     font-size: 40px;
     margin-top: 0;
+}
+
+.header-left-button-label {
+  padding-top: 20px;
 }
 
 .scroll-list-item {
