@@ -10,7 +10,9 @@ body {
 
 a {
   color: #0096B3;
+  font-weight: bold;
   text-decoration: underline;
+  font-size: 18px;
 }
 
 .backfaceVisibility {

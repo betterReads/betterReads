@@ -43,7 +43,7 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         var text = new Surface({
-          content: '<a href="' + link + '" target="_system">' + details.Title + '</a><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
+          content: '<div javascript: "window.open\'' + link + '\', \'_system\';">' + details.Title + '</div><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
@@ -83,9 +83,7 @@ define(function(require, exports, module){
         var view = new View({
           size: [undefined, true]
         });
-        var scroll = new ScrollView({
-          margin: 200
-        });
+
         var scroll = new ScrollView();
 
         var share = new Surface({

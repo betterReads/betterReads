@@ -95,6 +95,14 @@ define(function(require, exports, module){
             if (!this.clicked) {
               _this._eventOutput.emit('bestSellerClick', this);
               this.clicked = true;
+              console.log('matrix', this._matrix);
+              console.log('scroll', scrollView);
+              // console.log('scroll _displacement', scrollView._displacement);
+              // console.log('scroll _edgeSpringPosition', scrollView._edgeSpringPosition);
+              // console.log('scroll _pageSpringPosition', scrollView._pageSpringPosition);
+              // console.log('scroll _springState', scrollView._springState);
+              // console.log('scroll _pageSpringPosition', scrollView._pageSpringPosition);
+
               this.imageMod.transformFrom(Transform.translate(0, 0, 1));
               this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._pageSpringPosition), 1), {duration: 1500, curve: Easing.inOutCubic});
 
