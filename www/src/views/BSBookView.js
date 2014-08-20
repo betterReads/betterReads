@@ -87,7 +87,7 @@ define(function(require, exports, module){
         var scroll = new ScrollView();
 
         var share = new Surface({
-          content: 'Share this book',
+          content: '<b>Share this book</b>',
           size: [undefined, true],
           properties: {
             backgroundColor: '#0096B3',
@@ -103,7 +103,7 @@ define(function(require, exports, module){
         shareView.add(shareMod).add(share);
 
         var button = new Surface({
-          content: 'Add to "To Read" shelf',
+          content: '<b>Add to "To Read" shelf</b>',
           size: [undefined, true],
           properties: {
             backgroundColor: '#0096B3',
@@ -120,9 +120,9 @@ define(function(require, exports, module){
 
         var text = new Surface({
           size: [undefined, true],
-          content: '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline;" onClick="javascript: window.open(\'' + link + '\', \'_system\'); event.stopPropagation();">' + bookData.title[0] + '</div><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+          content: '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline; text-align: center;" onClick="javascript: window.open(\'' + link + '\', \'_system\'); event.stopPropagation();">' + bookData.title[0] + '</div><br><div style="text-align: center">' + bookData.authors[0].author[0].name[0] + '</div><br><div style="text-align: center">' + bookData.average_rating[0] + '/5</div><br><br>' + bookData.description[0],
           properties: {
-            textAlign: 'center',
+            // textAlign: 'center',
             padding: '20px'
           }
         });
