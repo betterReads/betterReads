@@ -18,6 +18,15 @@ define(function(require, exports, module){
   function BookshelfCarousel(options){
     View.apply(this, arguments);
 
+    var screenHeight = window.innerHeight;
+    var screenWidth = window.innerWidth;
+    var aspectRatio = screenHeight/screenWidth;
+    this.options.focusZoomFactor = aspectRatio * 2;
+
+    var coverHeight = Math.floor(screenHeight * 0.34);
+    var coverWidth = Math.floor((coverHeight / 3) * 2);
+    this.options.coverSize = [coverWidth, coverHeight];
+
     _addCarousel.call(this);
     _addInfo.call(this);
     _setFocus.call(this);
