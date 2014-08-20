@@ -322,7 +322,6 @@ define(function(require, exports, module) {
       footerIconPosition : 3
     }).addPage({
       title              : 'Explore',
-      // renderable         : shelfTransitionView,
       renderable         : bestSellerView,
       footerIconName     : 'fa-globe',
       footerIconPosition : 4

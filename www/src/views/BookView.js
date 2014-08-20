@@ -35,7 +35,7 @@ define(function(require, exports, module){
     detailCenter: {textAlign: 'center'}
   };
 
-  ShelfView.prototype.getBook = function(id, type){
+  ShelfView.prototype.getBook = function(id, add, type){
     this.loadingView.show();
     this.detailsModifier.setOpacity(0);
 
@@ -56,7 +56,12 @@ define(function(require, exports, module){
         this.descriptionSurface.setContent(description);
         this.ratingSurface.setContent(rating);
 
-        
+        if (add && this.detailsList.length===4) {
+          this.detailsList.unshift(this.buttonView);
+        } else if (!add && this.detailsList.length===5) {
+          this.detailsList.shift();
+        }
+
         this.detailsModifier.setOpacity(1);
         this.loadingView.hide();
       }.bind(this));
@@ -79,6 +84,12 @@ define(function(require, exports, module){
         this.descriptionSurface.setContent(description);
         this.ratingSurface.setContent(rating);
         
+        if (add && this.detailsList.length===4) {
+          this.detailsList.unshift(this.buttonView);
+        } else if (!add && this.detailsList.length===5) {
+          this.detailsList.shift();
+        }
+
         this.detailsModifier.setOpacity(1);
         this.loadingView.hide();
       }.bind(this));
@@ -95,7 +106,7 @@ define(function(require, exports, module){
   }
 
   function _addContents(){
-    var detailsList = [];
+    this.detailsList = [];
 
     //set up option to include 'add book' button
     var start = 1;
@@ -117,7 +128,7 @@ define(function(require, exports, module){
       }
     });
     this.buttonView.add(this.buttonMod).add(this.button);
-    detailsList.push(this.buttonView);
+    this.detailsList.push(this.buttonView);
 
     this.button.bookId = undefined;
     this.button.on('click', function() {
@@ -135,34 +146,34 @@ define(function(require, exports, module){
       size: this.options.detailSize,
       properties: this.options.detailCenter
     });
-    detailsList.push(this.titleSurface);
+    this.detailsList.push(this.titleSurface);
 
     this.authorSurface = new Surface({
       size: this.options.detailSize,
       properties: this.options.detailCenter
     });
-    detailsList.push(this.authorSurface);
+    this.detailsList.push(this.authorSurface);
 
     this.ratingSurface = new Surface({
       size: this.options.detailSize,
       properties: this.options.detailCenter
     });
-    detailsList.push(this.ratingSurface);
+    this.detailsList.push(this.ratingSurface);
 
     this.descriptionSurface = new Surface({
       size: this.options.detailSize
     });
-    detailsList.push(this.descriptionSurface);
+    this.detailsList.push(this.descriptionSurface);
 
     this.detailsModifier = new StateModifier({opacity: 0});
     this.details = new ScrollView();
-    this.details.sequenceFrom(detailsList);
+    this.details.sequenceFrom(this.detailsList);
     this.add(this.detailsModifier).add(this.details);
 
-    for(var i = start; i < detailsList.length; i++){
-      detailsList[i].setProperties(this.options.detailStyle);
-      detailsList[i].pipe(this.details);
-      detailsList[i].pipe(this);
+    for(var i = start; i < this.detailsList.length; i++){
+      this.detailsList[i].setProperties(this.options.detailStyle);
+      this.detailsList[i].pipe(this.details);
+      this.detailsList[i].pipe(this);
     }
 
   }
