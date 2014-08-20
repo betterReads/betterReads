@@ -227,7 +227,7 @@ define(function(require, exports, module) {
       selectedBook = book;
       data = book.content;
       console.log('heard best seller click');
-      console.log(data);
+      // console.log(data);
       var loaded = false;
       var bsBookView = new BSBookView(data, true);
       app.addPage({
@@ -253,7 +253,9 @@ define(function(require, exports, module) {
       });
       bsBookView.on('loadBestSellers', function() {
         app.showPage('Explore');
-        selectedBook.clicked = false;
+        setTimeout(function() {
+          selectedBook.clicked = false;
+        }, 500);
 
         selectedBook.imageMod.setTransform(Transform.translate(0, 0, 1), {duration: 1500, curve: Easing.inOutCubic});
         selectedBook.imageMod.setSize([100, 150], {duration: 1500, curve: Easing.inOutCubic})

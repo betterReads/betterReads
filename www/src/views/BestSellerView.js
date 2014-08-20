@@ -88,13 +88,12 @@ define(function(require, exports, module){
           size: [100, 150]
         });
 
+        var _this = this;;
         //fill screen with image
         (function(i) {
           image.on('click', function() {
             if (!this.clicked) {
-              // console.log(Transform.getTranslate());
-              console.log('scroll', scrollView);
-              this.emit('bestSellerClick', this);
+              _this._eventOutput.emit('bestSellerClick', this);
               this.clicked = true;
               this.imageMod.transformFrom(Transform.translate(0, 0, 1));
               this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._pageSpringPosition), 1), {duration: 1500, curve: Easing.inOutCubic});
@@ -124,10 +123,6 @@ define(function(require, exports, module){
         tab.pipe(scrollView);
         tab.pipe(this);
       }
-      this._eventInput.on('bestSellerClick', function(book) {
-        console.log('book', book);
-        this._eventOutput.emit('bestSellerClick', book);
-      }.bind(this));
 
       scrollView.sequenceFrom(listOfItems);
       this.add(scrollView);

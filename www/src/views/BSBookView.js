@@ -72,7 +72,7 @@ define(function(require, exports, module){
         });
         this.add(opacityMod).add(image);
 
-        console.log(bookData);
+        // console.log(bookData);
 
         var shareView = new View ({
           size: [undefined, true]
@@ -156,7 +156,9 @@ define(function(require, exports, module){
         this.add(scroll);
       }
       text.on('click', function() {
+        console.log('reload best sellers');
         that._eventOutput.emit('loadBestSellers');
+
       });
       if (autoload) {
         this._eventOutput.emit('bookLoaded');
