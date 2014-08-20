@@ -211,13 +211,13 @@ define(function(require, exports, module){
       }
     });
     var spineLayout = new Modifier({
-      origin: [1, 0.5],
+      origin: [0.95, 0.5],
       align: [0, 0]
     });
 
     var maxFontSize = spineWidth * 0.7;
     var displayTitle = this.simplifyTitle(i);
-    var displayTitleSize = Math.min(maxFontSize, (this.options.coverSize[1]/(displayTitle.length) * 2));
+    var displayTitleSize = Math.min(maxFontSize, Math.floor(this.options.coverSize[1]/(displayTitle.length) * 2));
     var displayTitleLineHeight = spineWidth / displayTitleSize;
 
     var spineTitleView = new View();
@@ -239,6 +239,7 @@ define(function(require, exports, module){
       origin: [0.5, 0],
       align: [0, 0]
     });
+    spineTitleLayout.transformFrom(Transform.translate(0, -2.5, 1.5));
 
     var spineAnimator = new Modifier({
       transform: function(focus){
