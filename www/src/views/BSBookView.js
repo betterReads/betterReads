@@ -43,7 +43,7 @@ define(function(require, exports, module){
         this.add(opacityMod).add(image);
 
         var text = new Surface({
-          content: '<div javascript: "window.open\'' + link + '\', \'_system\';">' + details.Title + '</div><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
+          content: '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline;" onClick="javascript: window.open(\'' + link + '\', \'_system\'); event.stopPropagation();">' + details.Title + '</div><br>' + details.Author + '<br><br>' + details.BriefDescription + '<br><br>Additional Goodreads book detail not found',
           properties: {
             size: [undefined, undefined],
             textAlign: 'center',
@@ -120,7 +120,7 @@ define(function(require, exports, module){
 
         var text = new Surface({
           size: [undefined, true],
-          content: '<br><a href="' + link + '" target="_system">' + bookData.title[0] + '</a><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
+          content: '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline;" onClick="javascript: window.open(\'' + link + '\', \'_system\'); event.stopPropagation();">' + bookData.title[0] + '</div><br>' + bookData.authors[0].author[0].name[0] + '<br><br>' + bookData.average_rating[0] + '/5<br><br>' + bookData.description[0],
           properties: {
             textAlign: 'center',
             padding: '20px'
