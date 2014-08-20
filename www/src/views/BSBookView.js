@@ -89,7 +89,6 @@ define(function(require, exports, module){
         var scroll = new ScrollView();
 
         var share = new Surface({
-          // content: '<button onclick="window.plugins.socialsharing.share(\'Check out this book on Better Reads!\', null, \'https://www.google.nl/images/srpr/logo4w.png\', null)">message and image</button>',
           content: 'Share this book',
           size: [undefined, true],
           properties: {
@@ -100,6 +99,10 @@ define(function(require, exports, module){
             border: '1px solid white'
           }
         });
+        var shareMod = new Modifier({
+          transform: Transform.translate(0, 0, 3)
+        });
+        shareView.add(shareMod).add(share);
 
         var button = new Surface({
           content: 'Add to "To Read" shelf',
@@ -115,12 +118,6 @@ define(function(require, exports, module){
         var buttonMod = new Modifier({
           transform: Transform.translate(0, 0, 2)
         });
-
-        var shareMod = new Modifier({
-          transform: Transform.translate(0, 0, 3)
-        });
-
-        shareView.add(shareMod).add(share);
         buttonView.add(buttonMod).add(button);
 
         var text = new Surface({
@@ -147,6 +144,11 @@ define(function(require, exports, module){
             _this.setProperties({backgroundColor: '#2ecc71'});
           });
         });
+
+        share.on('click', function() {
+          console.log('clicked share');
+          window.plugins.socialsharing.share('Check out this book on Better Reads!', null, that.options.URL, that.options.Amazon);
+        });        
 
         scroll.sequenceFrom([shareView, buttonView, view]);
 
