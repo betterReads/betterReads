@@ -154,13 +154,31 @@ define(function(require, exports, module){
 
     this.share.parent = this;
     this.share.on('click', function() {
+      this.setProperties({
+        backgroundColor: '#F28A75'
+      });
+      var _this = this;
+      setTimeout(function() {
+        _this.setProperties({
+          backgroundColor: '#0096B3'
+        });
+      }, 100);
       console.log('clicked share');
       window.plugins.socialsharing.share('Check out this book on Better Reads!', null, this.parent.book.image_url[0], this.parent.book.url[0]);
     });  
 
     this.button.bookId = undefined;
     this.button.on('click', function() {
-      console.log('you clicked me');
+      this.setProperties({
+        backgroundColor: '#F28A75'
+      });
+      var _this = this;
+      setTimeout(function() {
+        _this.setProperties({
+          backgroundColor: '#0096B3'
+        });
+      }, 100);
+      
       console.log(this.bookId);
       var _this = this;
       betterReads.addBook({bookId: this.bookId, shelf: 'to-read'}).then(function(response) {
