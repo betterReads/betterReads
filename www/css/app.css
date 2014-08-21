@@ -45,13 +45,14 @@ a {
 
 .button-content {
 	text-align: center;
-  /*color: #0096B3;*/
-  color: #85BFCF;
+  color: #0096B3;
+  /*color: #85BFCF;*/
 }
 
 .button-highlight {
   color: #ffffff;
-  background-color: #0096B3;
+  /*background-color: #0096B3;*/
+  background-color: #F28A75;
 }
 
 .button-horizontal p {

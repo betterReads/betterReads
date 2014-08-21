@@ -58,6 +58,7 @@ define(function(require, exports, module){
   function _addSearchButton(){
     this.searchButton = new Surface({
       content: '<i class="fa fa-search"></i>',
+      classes: ['clickButton'],
       properties: {
         textAlign: 'center',
         lineHeight: 2.5,
