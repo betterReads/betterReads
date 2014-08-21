@@ -93,7 +93,7 @@ define(function(require, exports, module){
             backgroundColor: '#0096B3',
             color: 'white',
             textAlign: 'center',
-            padding: '5px 5px',
+            padding: '10px 10px',
             border: '1px solid white'
           }
         });
@@ -109,7 +109,7 @@ define(function(require, exports, module){
             backgroundColor: '#0096B3',
             color: 'white',
             textAlign: 'center',
-            padding: '5px 5px',
+            padding: '10px 10px',
             border: '1px solid white'
           }
         });
@@ -148,7 +148,7 @@ define(function(require, exports, module){
           window.plugins.socialsharing.share('Check out this book on Better Reads!', null, that.options.URL, that.options.Amazon);
         });        
 
-        scroll.sequenceFrom([shareView, buttonView, view]);
+        scroll.sequenceFrom([buttonView, shareView, view]);
 
         text.pipe(scroll);
         this.add(scroll);

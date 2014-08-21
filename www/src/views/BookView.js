@@ -56,9 +56,9 @@ define(function(require, exports, module){
         this.descriptionSurface.setContent(description);
         this.ratingSurface.setContent(rating);
 
-        if (add && this.detailsList.length===4) {
+        if (add && this.detailsList.length===5) {
           this.detailsList.unshift(this.buttonView);
-        } else if (!add && this.detailsList.length===5) {
+        } else if (!add && this.detailsList.length===6) {
           this.detailsList.shift();
         }
 
@@ -84,9 +84,9 @@ define(function(require, exports, module){
         this.descriptionSurface.setContent(description);
         this.ratingSurface.setContent(rating);
         
-        if (add && this.detailsList.length===4) {
+        if (add && this.detailsList.length===5) {
           this.detailsList.unshift(this.buttonView);
-        } else if (!add && this.detailsList.length===5) {
+        } else if (!add && this.detailsList.length===6) {
           this.detailsList.shift();
         }
 
@@ -109,27 +109,48 @@ define(function(require, exports, module){
     this.detailsList = [];
 
     //set up option to include 'add book' button
-    var start = 1;
+    var start = 2;
     this.buttonView = new View({
-      size: [undefined, 100]
+      size: [undefined, 40]
     });
     var buttonMod = new Modifier({
-      size: [undefined, 100],
       transform: Transform.translate(0, 0, 2)
     });
     this.button = new Surface({
       content: 'Add to "To Read" shelf',
-      size: [undefined, 30],
+      size: [undefined, true],
       properties: {
         backgroundColor: '#0096B3',
         color: 'white',
         textAlign: 'center',
-        padding: '5px 5px',
+        padding: '10px 10px',
         border: '1px solid white'
       }
     });
     this.buttonView.add(this.buttonMod).add(this.button);
     this.detailsList.push(this.buttonView);
+
+    this.shareView = new View({
+      size: [undefined, 40]
+    });
+    this.share = new Surface({
+      content: '<b>Share this book</b>',
+      size: [undefined, true],
+      properties: {
+        backgroundColor: '#0096B3',
+        color: 'white',
+        textAlign: 'center',
+        padding: '10px 10px',
+        border: '1px solid white'
+      }
+    });
+    this.shareMod = new Modifier({
+      transform: Transform.translate(0, 0, 3)
+    });
+    this.shareView.add(this.shareMod).add(this.share);
+    this.detailsList.push(this.shareView);
+
+
 
     this.button.bookId = undefined;
     this.button.on('click', function() {
