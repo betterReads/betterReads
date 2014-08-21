@@ -52,6 +52,7 @@ define(function(require, exports, module){
       titleSurface.pipe(this);
       titleSurface.pipe(scrollView);
 
+      var colors = ['white', '#EFF9FF'];
       var parent = this;
       for (var i = 0; i < books.length; i++) {
         var bookView = new View();
@@ -74,12 +75,16 @@ define(function(require, exports, module){
           size: [undefined, undefined],
           properties: {
             textAlign: 'left',
-            backgroundColor: 'white',
-            padding: '10px 10px 10px 110px'
+            padding: '10px 10px 10px 110px',
+            backgroundColor: colors[i%2]
           }
         });
 
-        var image = new ImageSurface({});
+        var image = new ImageSurface({
+          properties: {
+            padding: '2px 4px'
+          }
+        });
         image.clicked = false;
         image.content = books[i];
         image.setContent(books[i].URL);
@@ -104,9 +109,10 @@ define(function(require, exports, module){
               // console.log('scroll _pageSpringPosition', scrollView._pageSpringPosition);
 
               this.imageMod.transformFrom(Transform.translate(0, 0, 1));
-              this.imageMod.setTransform(Transform.translate(0, (-1*this._matrix[13]) + (scrollView._displacement + scrollView._pageSpringPosition), 1), {duration: 1500, curve: Easing.inOutCubic});
+              this.imageMod.setTransform(Transform.translate(-4, -2 + (-1*this._matrix[13]) + (scrollView._displacement + scrollView._pageSpringPosition), 1), {duration: 1500, curve: Easing.inOutCubic});
 
-              this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
+              this.imageMod.setSize([328, 484], {duration: 1500, curve: Easing.inOutCubic});
+              // this.imageMod.setSize([320, 480], {duration: 1500, curve: Easing.inOutCubic});
             } else {
               this.clicked = false;
               this.imageMod.setTransform(Transform.translate(0, 0, 1), {duration: 1500, curve: Easing.inOutCubic});

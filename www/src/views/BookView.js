@@ -112,7 +112,7 @@ define(function(require, exports, module){
     var start = 1;
     this.buttonView = new View({
       size: [undefined, 100]
-    });    
+    });
     var buttonMod = new Modifier({
       size: [undefined, 100],
       transform: Transform.translate(0, 0, 2)
