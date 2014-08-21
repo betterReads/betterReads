@@ -73,6 +73,10 @@ a {
 	font-size: 14px;
 }
 
+.clickButton:active {
+  background-color: #F28A75 !important;
+}
+
 .footer-background {
   background-color: #FFFFFF;
 	border-top: 1px solid #CCCCCC;

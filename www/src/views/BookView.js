@@ -121,6 +121,7 @@ define(function(require, exports, module){
     this.button = new Surface({
       content: 'Add to "To Read" shelf',
       size: [undefined, true],
+      classes: ['clickButton'],
       properties: {
         backgroundColor: '#0096B3',
         color: 'white',
@@ -138,6 +139,7 @@ define(function(require, exports, module){
     this.share = new Surface({
       content: '<b>Share this book</b>',
       size: [undefined, true],
+      classes: ['clickButton'],
       properties: {
         backgroundColor: '#0096B3',
         color: 'white',
@@ -154,15 +156,6 @@ define(function(require, exports, module){
 
     this.share.parent = this;
     this.share.on('click', function() {
-      this.setProperties({
-        backgroundColor: '#F28A75'
-      });
-      var _this = this;
-      setTimeout(function() {
-        _this.setProperties({
-          backgroundColor: '#0096B3'
-        });
-      }, 100);
       console.log('clicked share');
       window.plugins.socialsharing.share('Check out this book on Better Reads!', null, this.parent.book.image_url[0], this.parent.book.url[0]);
     });  
@@ -178,7 +171,7 @@ define(function(require, exports, module){
           backgroundColor: '#0096B3'
         });
       }, 100);
-      
+
       console.log(this.bookId);
       var _this = this;
       betterReads.addBook({bookId: this.bookId, shelf: 'to-read'}).then(function(response) {
