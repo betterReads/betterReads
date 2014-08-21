@@ -297,6 +297,8 @@ define(function(require, exports, module) {
           loaded = true;
         }
       });
+      currShelf.pipe(app.content);
+      currShelf.pipe(bookView);
     });
   };
   var startApp = function() {
