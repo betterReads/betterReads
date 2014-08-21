@@ -43,6 +43,7 @@ define(function(require, exports, module){
       betterReads.getBookDetail({isbn: id})
       .then(function(data){
         var book = JSON.parse(data);
+        this.book = book;
         console.log(book);
 
         var title = book.title[0];
@@ -69,6 +70,7 @@ define(function(require, exports, module){
       betterReads.getBookDetail({book_id: id})
       .then(function(data){
         var book = JSON.parse(data);
+        this.book = book;
         console.log(book);
 
         var title = book.title[0];
@@ -150,7 +152,11 @@ define(function(require, exports, module){
     this.shareView.add(this.shareMod).add(this.share);
     this.detailsList.push(this.shareView);
 
-
+    this.share.parent = this;
+    this.share.on('click', function() {
+      console.log('clicked share');
+      window.plugins.socialsharing.share('Check out this book on Better Reads!', null, this.parent.book.image_url[0], this.parent.book.url[0]);
+    });  
 
     this.button.bookId = undefined;
     this.button.on('click', function() {

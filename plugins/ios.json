@@ -53,7 +53,7 @@
         },
         "nl.x-services.plugins.socialsharing": {
             "PACKAGE_NAME": "com.phonegap.helloworld"
-        },    
+        },
         "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "com.br.betterreads"
         }
