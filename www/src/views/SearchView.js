@@ -40,7 +40,7 @@ define(function(require, exports, module){
       console.log(books);
 
       this.resultsList = [];
-      var colors = ['white', '#E5EBEB'];
+      var colors = ['white', '#EFF9FF'];
 
       for (var i = 0; i < books.length; i++) {
         var id = books[i].best_book[0].id[0]._
@@ -62,17 +62,22 @@ define(function(require, exports, module){
         });
 
         var image = new ImageSurface({
-          size: [100, 150]
+          size: [100, 150],
+          properties: {
+            padding: '2px 4px',
+            backgroundColor: colors[i%2]
+          }
         });
         image.setContent(imageURL);
 
         var tab = new Surface({
           content: title + '<br>by ' + author + '<br>Rating: ' + rating + '/5',
+          // size: [undefined, undefined],
           size: [window.innerWidth - 100, undefined],
           properties: {
             textAlign: 'left',
-            backgroundColor: 'white',
-            padding: '5px 5px'
+            backgroundColor: colors[i%2],
+            padding: '10px'
           }
         });
 
