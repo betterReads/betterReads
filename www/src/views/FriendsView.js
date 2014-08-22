@@ -40,16 +40,22 @@ define(function(require, exports, module){
         update.action_text[0] = update.action_text[0].replace(/">/g, '", \"_system\");\'>');
         update.action_text[0] = update.action_text[0].replace(/" >/g, '", \"_system\");\'>');
 
+        var view = new View({
+          size: [undefined, true]
+        });
+        var mod = new Modifier({
+          size: [undefined, true]
+        });
         var tab = new Surface({
-          content: '<table><td><img src="' + update.image_url[0] + '"></td><td><b>' + update.actor[0].name[0] + '</b> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
+          content: '<table><td><img src="' + update.image_url[0] + '"><br></td><td><b>' + update.actor[0].name[0] + '</b> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
           size: [undefined, true],
           properties: {
             backgroundColor: colors[i%2],
-            padding: '15px 5px 25px 5px'
+            padding: '10px 5px 20px 5px'
           }
         });
 
-        listOfItems.push(tab);
+        listOfItems.push(view.add(mod).add(tab));
         tab.pipe(scrollView);
         tab.pipe(that);
       }

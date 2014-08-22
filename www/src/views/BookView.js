@@ -8,10 +8,10 @@ define(function(require, exports, module){
   var ImageSurface = require('famous/surfaces/ImageSurface');
   var ScrollView = require('famous/views/Scrollview');
   var Modifier = require('famous/core/Modifier');
-
   var WaitingView = require('views/WaitingView');
-
   var betterReads = require('../utils/BetterReads');
+
+  var test;
 
   function ShelfView(){
     View.apply(this, arguments);
@@ -46,7 +46,7 @@ define(function(require, exports, module){
         this.book = book;
         console.log(book);
 
-        var title = book.title[0];
+        var title = '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline;" onClick="javascript: window.open(\'' + book.url[0] + '\', \'_system\'); event.stopPropagation();">' + book.title[0] + '</div>';
         var author = book.authors[0].author[0].name[0];
         var description = book.description[0];
         var rating = 'Rating: ' + book.average_rating[0] + '/5';
@@ -72,8 +72,8 @@ define(function(require, exports, module){
         var book = JSON.parse(data);
         this.book = book;
         console.log(book);
-
-        var title = book.title[0];
+        
+        var title = '<div style="font-size: 18px; font-weight: bold; color: #0096B3; text-decoration: underline;" onClick="javascript: window.open(\'' + book.url[0] + '\', \'_system\'); event.stopPropagation();">' + book.title[0] + '</div>';
         var author = book.authors[0].author[0].name[0];
         var description = book.description[0];
         var rating = 'Rating: ' + book.average_rating[0] + '/5';
@@ -205,7 +205,7 @@ define(function(require, exports, module){
     this.detailsList.push(this.descriptionSurface);
 
     this.detailsModifier = new StateModifier({opacity: 0});
-    this.details = new ScrollView();
+    this.details = window.scroll = new ScrollView();
     this.details.sequenceFrom(this.detailsList);
     this.add(this.detailsModifier).add(this.details);
 
