@@ -74,6 +74,9 @@ a {
 	font-size: 14px;
 }
 
+.clickButton {
+  font-weight: bold;
+}
 .clickButton:active {
   background-color: #F28A75 !important;
 }
