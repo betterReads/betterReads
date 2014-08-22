@@ -54,7 +54,7 @@ define(function(require, exports, module){
     var infoTitle = this.simplifyTitle(this.focusIndex);
     var infoAuthor = book.author;
     var infoRating = book.rating;
-    this.info.setContent('<div  style="border-top: 1px solid #F28A75; color: #F28A75;"><span style="font-size: 22px;">' + infoTitle + '</span><br>' + infoAuthor + '<br>' + infoRating + '</div>');
+    this.info.setContent('<div  style="border-top: 1px solid #F28A75; color: #F28A75;"><span style="font-size: 22px; font-weight: bold">' + infoTitle + '</span><br>' + infoAuthor + '<br>' + infoRating + '</div>');
     this.focusAnimation(this.focusAnimations[this.focusIndex]);
   }
 

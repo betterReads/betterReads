@@ -71,7 +71,7 @@ define(function(require, exports, module){
         image.setContent(imageURL);
 
         var tab = new Surface({
-          content: title + '<br>by ' + author + '<br>Rating: ' + rating + '/5',
+          content: '<div style="font-weight: bold">' + title + '</div>by ' + author + '<br>Rating: ' + rating + '/5',
           // size: [undefined, undefined],
           size: [window.innerWidth - 100, undefined],
           properties: {
