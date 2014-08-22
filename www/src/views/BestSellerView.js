@@ -71,7 +71,7 @@ define(function(require, exports, module){
         }        
 
         var tab = new Surface({
-          content: '<b>#' + books[i].Rank + '</b><br>' + title + '<br>' + author,
+          content: '<div style="font-weight: bold; color: #F28A75; font-size: 18px">#' + books[i].Rank + '</div><div style="font-weight: bold">' + title + '</div>by ' + author,
           size: [undefined, undefined],
           properties: {
             textAlign: 'left',
