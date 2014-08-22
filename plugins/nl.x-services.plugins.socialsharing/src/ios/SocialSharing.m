@@ -185,9 +185,9 @@
     } else {
       CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"not available"];
       [self writeJavascript:[pluginResult toErrorCallbackString:command.callbackId]];
-      // required for iOS6 when sharing via Twitter and no account has been setup [#162]
-      [self.viewController dismissViewControllerAnimated:YES completion:nil];
     }
+    // required for iOS6 (issues #162 and #167)
+    [self.viewController dismissViewControllerAnimated:YES completion:nil];
   }];
 }
 
@@ -402,6 +402,11 @@
       image = [UIImage imageWithData:[NSData dataWithContentsOfFile:[[NSURL URLWithString:imageName] path]]];
     } else if ([imageName hasPrefix:@"data:"]) {
       // using a base64 encoded string
+      NSURL *imageURL = [NSURL URLWithString:imageName];
+      NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+      image = [UIImage imageWithData:imageData];
+    } else if ([imageName hasPrefix:@"assets-library://"]) {
+      // use assets-library
       NSURL *imageURL = [NSURL URLWithString:imageName];
       NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
       image = [UIImage imageWithData:imageData];

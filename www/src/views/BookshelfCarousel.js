@@ -217,7 +217,7 @@ define(function(require, exports, module){
 
     var maxFontSize = spineWidth * 0.7;
     var displayTitle = this.simplifyTitle(i);
-    var displayTitleSize = Math.min(maxFontSize, Math.floor(this.options.coverSize[1]/(displayTitle.length) * 2));
+    var displayTitleSize = Math.min(maxFontSize, Math.floor(this.options.coverSize[1]/(displayTitle.length) * 1.75));
     var displayTitleLineHeight = spineWidth / displayTitleSize;
 
     var spineTitleView = new View();
@@ -226,9 +226,10 @@ define(function(require, exports, module){
       content: displayTitle,
       properties: {
         color: 'white',
+        fontWeight: 'bold',
         textAlign: 'center',
         lineHeight: displayTitleLineHeight,
-        textShadow: '0px 0px 1px black',
+        textShadow: '0px 0px 4px black',
         fontSize: displayTitleSize + 'px'
       }
     });
