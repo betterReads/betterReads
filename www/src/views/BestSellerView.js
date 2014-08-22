@@ -61,8 +61,8 @@ define(function(require, exports, module){
         });
 
         var title = books[i].Title;
-        if (title.length > 70) {
-          title = title.slice(0, 67) + '...';
+        if (title.length > 45) {
+          title = title.slice(0, 42) + '...';
         }
 
         var author = books[i].Author;
@@ -71,11 +71,11 @@ define(function(require, exports, module){
         }        
 
         var tab = new Surface({
-          content: '<div style="font-weight: bold; color: #F28A75; font-size: 18px">#' + books[i].Rank + '</div><div style="font-weight: bold">' + title + '</div>by ' + author,
+          content: '<div style="font-weight: bold; color: #F28A75; font-size: 40px">' + books[i].Rank + '</div><div style="font-weight: bold">' + title + '</div>by ' + author,
           size: [undefined, undefined],
           properties: {
             textAlign: 'left',
-            padding: '10px 10px 10px 110px',
+            padding: '5px 10px 10px 110px',
             backgroundColor: colors[i%2]
           }
         });

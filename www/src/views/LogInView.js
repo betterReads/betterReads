@@ -71,7 +71,7 @@ define(function(require, exports, module){
       // size: [100, 100]
       classes: ['preLoad']
     });
-    this.brLogo.setContent('./resources/betterreads-icon-color-usd.png');
+    this.brLogo.setContent('./resources/betterreads-icon-color2-usd.png');
 
     this.button = new ImageSurface({
       // size: [100, 100]
