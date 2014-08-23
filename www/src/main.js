@@ -277,11 +277,9 @@ define(function(require, exports, module) {
           renderable: waitingView
         }).showPage('Loading');
       }, 0);
+      
       bookView.on('contentLoaded', function() {
-        console.log('content loaded');
-        setTimeout(function(){
-          app.showPage('Book');
-        }, 10);
+        app.showPage('Book');
       });
     });
 

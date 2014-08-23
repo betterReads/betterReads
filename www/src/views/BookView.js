@@ -37,8 +37,10 @@ define(function(require, exports, module){
 
   ShelfView.prototype.getBook = function(id, add, type){
     this._eventOutput.emit('loadingContent');
-    // this.loadingView.show();
-    // this.detailsModifier.setOpacity(0);
+    test = true;
+    while (test) {
+      test = this.details.goToPreviousPage();
+    }
 
     if (type==='isbn') { 
       betterReads.getBookDetail({isbn: id})
@@ -64,8 +66,6 @@ define(function(require, exports, module){
           this.detailsList.shift();
         }
 
-        // this.detailsModifier.setOpacity(1);
-        // this.loadingView.hide();
         this._eventOutput.emit('contentLoaded');
         this.detailsModifier.setOpacity(1);
       }.bind(this));
@@ -95,8 +95,6 @@ define(function(require, exports, module){
           this.detailsList.shift();
         }
 
-        // this.detailsModifier.setOpacity(1);
-        // this.loadingView.hide();
         this._eventOutput.emit('contentLoaded');
         this.detailsModifier.setOpacity(1);
       }.bind(this));
