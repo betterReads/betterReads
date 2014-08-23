@@ -78,6 +78,7 @@ define(function(require, exports, module){
     var infoModifier = new Modifier({
       origin: [0, 1],
       align: [0, 1],
+      transform: Transform.translate(0, 0, 5),
       opacity: function(){
         return this.masterFocus.get();
       }.bind(this)
