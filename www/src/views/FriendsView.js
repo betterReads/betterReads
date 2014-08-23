@@ -47,7 +47,7 @@ define(function(require, exports, module){
           size: [undefined, true]
         });
         var tab = new Surface({
-          content: '<table><td><img src="' + update.image_url[0] + '"><br></td><td><div style="font-weight:bold;">' + update.actor[0].name[0] + '</div> ' + update.action_text[0] + '<br>' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</td></table>',
+          content: '<table><td><img src="' + update.image_url[0] + '"><br></td><td style="padding-left: 10px;"><div style="font-weight:bold">' + update.actor[0].name[0] + '</div> ' + update.action_text[0] + '<br><div style="font-size: 14px; color: #808080;">' + moment(update.updated_at[0]).format('MMMM Do YYYY, h:mm a') + '</div></div></td></table>',
           size: [undefined, true],
           properties: {
             backgroundColor: colors[i%2],
