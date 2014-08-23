@@ -98,7 +98,7 @@ define(function(require, exports, module){
       transform: Transform.translate(0, 0, -1000)
     })).add(new Surface({
       properties: {
-        backgroundColor: '#eee'
+        backgroundColor: '#EFF9FF'
       }
     }));
 
