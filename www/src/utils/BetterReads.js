@@ -22,7 +22,7 @@ define(function(require, exports, module){
       method: 'post',
       data: params
     });
-  }
+  };
 
   BetterReads.getShelves = function(params, callback) {
     return reqwest({
@@ -42,12 +42,13 @@ define(function(require, exports, module){
   };
 
   BetterReads.getBookDetail = function(params){
+    params.id = BetterReads.userId;
     return reqwest({
       url: 'https://betterreadsapi.azurewebsites.net/bookDetail',
       method: 'get',
       data: params
     });
-  }
+  };
 
   BetterReads.authenticate = function(callback) {
     return reqwest({
@@ -114,7 +115,7 @@ define(function(require, exports, module){
         assocId: credentials.assocId,
         USATodayKey: credentials.USATodayKey}
     });
-  }
+  };
 
   module.exports = BetterReads;
 });

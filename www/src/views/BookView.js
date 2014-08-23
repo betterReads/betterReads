@@ -16,7 +16,7 @@ define(function(require, exports, module){
   function ShelfView(){
     View.apply(this, arguments);
 
-    _addPlaceholder.call(this);
+    // _addPlaceholder.call(this);
     _addContents.call(this);
     _bindEvents.call(this);
   }
@@ -36,8 +36,9 @@ define(function(require, exports, module){
   };
 
   ShelfView.prototype.getBook = function(id, add, type){
-    this.loadingView.show();
-    this.detailsModifier.setOpacity(0);
+    this._eventOutput.emit('loadingContent');
+    // this.loadingView.show();
+    // this.detailsModifier.setOpacity(0);
 
     if (type==='isbn') { 
       betterReads.getBookDetail({isbn: id})
@@ -63,8 +64,10 @@ define(function(require, exports, module){
           this.detailsList.shift();
         }
 
+        // this.detailsModifier.setOpacity(1);
+        // this.loadingView.hide();
+        this._eventOutput.emit('contentLoaded');
         this.detailsModifier.setOpacity(1);
-        this.loadingView.hide();
       }.bind(this));
     } else {
       betterReads.getBookDetail({book_id: id})
@@ -80,7 +83,7 @@ define(function(require, exports, module){
 
         this.button.bookId = book.id[0];
         this.button.setContent('Add to "To Read" shelf');
-        this.button.setProperties({backgroundColor: '#0096B3'});        
+        this.button.setProperties({backgroundColor: '#0096B3'});   
         this.titleSurface.setContent(title);
         this.authorSurface.setContent(author);
         this.descriptionSurface.setContent(description);
@@ -92,8 +95,10 @@ define(function(require, exports, module){
           this.detailsList.shift();
         }
 
+        // this.detailsModifier.setOpacity(1);
+        // this.loadingView.hide();
+        this._eventOutput.emit('contentLoaded');
         this.detailsModifier.setOpacity(1);
-        this.loadingView.hide();
       }.bind(this));
     }
 

@@ -267,6 +267,26 @@ define(function(require, exports, module) {
       });
     });
 
+    //set up book view waiting and detail rendering
+    bookView.on('loadingContent', function() {
+      var waitingView = new WaitingView();
+      console.log('loading book content!');
+      setTimeout(function() {
+        app.addPage({
+          title: 'Loading',
+          renderable: waitingView
+        }).showPage('Loading');
+      }, 0);
+      bookView.on('contentLoaded', function() {
+        console.log('content loaded');
+        setTimeout(function(){
+          app.showPage('Book');
+        }, 10);
+      });
+    });
+
+
+
     //set up shelf view rendering
     shelvesView.on('shelfClick', function(shelf) {
       // var waitingView = new WaitingView();
