@@ -51,10 +51,10 @@
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.phonegap.helloworld"
         },
-        "nl.x-services.plugins.socialsharing": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
-        },
         "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "com.br.betterreads"
+        },
+        "nl.x-services.plugins.socialsharing": {
             "PACKAGE_NAME": "com.br.betterreads"
         }
     },

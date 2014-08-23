@@ -91,6 +91,16 @@ define(function(require, exports, module){
   function _addCarousel(){
     this.bookshelfContainer = new ContainerSurface();
     this.bookshelfContainer.context.setPerspective(500);
+    this.bookshelfContainer.add(new Modifier({
+      size: [window.innerWidth * 3, window.innerHeight * 3],
+      origin: [0.5, 0.5],
+      align: [0.5, 0.5],
+      transform: Transform.translate(0, 0, -1000)
+    })).add(new Surface({
+      properties: {
+        backgroundColor: '#EFF9FF'
+      }
+    }));
 
     var screenCenter = ((window.innerWidth/2) - (this.options.coverSize[0]/2));
     var coverCenter = this.options.coverSize[0]/2;
@@ -217,7 +227,7 @@ define(function(require, exports, module){
 
     var maxFontSize = spineWidth * 0.7;
     var displayTitle = this.simplifyTitle(i);
-    var displayTitleSize = Math.min(maxFontSize, Math.floor(this.options.coverSize[1]/(displayTitle.length) * 2));
+    var displayTitleSize = Math.min(maxFontSize, Math.floor(this.options.coverSize[1]/(displayTitle.length) * 1.75));
     var displayTitleLineHeight = spineWidth / displayTitleSize;
 
     var spineTitleView = new View();
@@ -226,9 +236,10 @@ define(function(require, exports, module){
       content: displayTitle,
       properties: {
         color: 'white',
+        fontWeight: 'bold',
         textAlign: 'center',
         lineHeight: displayTitleLineHeight,
-        textShadow: '0px 0px 1px black',
+        textShadow: '0px 0px 4px black',
         fontSize: displayTitleSize + 'px'
       }
     });

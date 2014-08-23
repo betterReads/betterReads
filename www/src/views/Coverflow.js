@@ -278,6 +278,9 @@ define(function(require, exports, module) {
         }.bind(this));
 
         this._particle.on('end', function() {
+        }.bind(this));
+
+        this._eventOutput.on('settled', function(){
             if (!this.options.paginated || (this.options.paginated && this._springState !== SpringStates.NONE))
                 var index = this.getCurrentIndex();
                 this.goToPage(index);
@@ -354,6 +357,7 @@ define(function(require, exports, module) {
                 period: this.options.edgePeriod,
                 dampingRatio: this.options.edgeDamp
             };
+            this._eventOutput.emit('settled');
         }
         else if (springState === SpringStates.PAGE) {
             this._pageSpringPosition = position;
@@ -401,7 +405,10 @@ define(function(require, exports, module) {
         if (offset) _shiftOrigin.call(this, offset);
 
         if (Math.abs(this.getVelocity()) < 0.025) {
-            this.setVelocity(0);
+            if(this._touchCount === 0){
+                this.setVelocity(0);
+                this._eventOutput.emit('settled');
+            }
         }
     }
 
