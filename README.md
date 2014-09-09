@@ -4,6 +4,17 @@
 
 betterReads is a mobile app that leverages the power of [Famo.us](http://famo.us/) to streamline the goodreads experience for users. The official goodreads mobile app is in need of an update, and so we're using the [betterReadsAPI](https://github.com/betterReads/betterReadsAPI) to make our own goodreads app that removes the clutter and the glut of excess features and focuses on what users want: their books.
 
+Here are some screenshot examples of the iOS app in action:
+
+![3D Virtual Bookshelf](/../screenshots/screenshots/br_01.gif?raw=true)<br>
+3D Virtual Bookshelf
+
+![Fluid Interface](/../screenshots/screenshots/br_03.gif?raw=true)<br>
+Fluid Interface
+
+![Improved Discovery](/../screenshots/screenshots/br_02.gif?raw=true)<br>
+Improved Discovery
+
 ## Team
 
   - __Development Team Members__: [Austen Talbot](https://github.com/austentalbot), [Adam Price](https://github.com/aesprice)
